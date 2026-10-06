@@ -1,0 +1,1324 @@
+/* ============================================================
+   ABONOS | ECOMARKET PRO
+   ============================================================
+
+   Diseño basado directamente en el patrón visual de PRODUCTOS.
+
+   IMPORTANTE:
+   - No modificar .main aquí.
+   - dashboard.css controla la estructura general.
+   - Este archivo solamente controla el módulo Abonos.
+   ============================================================ */
+
+
+/* ============================================================
+   PAGINA PRINCIPAL
+   ============================================================ */
+
+.abonos-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+
+.abonos-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+/* ============================================================
+   TITULO
+   ============================================================ */
+
+.abonos-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.abonos-title h1 i {
+
+    font-size: 27px;
+}
+
+
+.abonos-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   ALERTA MODO CONSULTA
+   ============================================================ */
+
+.abonos-page .alert-info {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+}
+
+
+.abonos-page .alert-info > i {
+
+    margin-top: 2px;
+
+    font-size: 18px;
+}
+
+
+.abonos-page .alert-info strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+
+.abonos-page .alert-info span {
+
+    display: block;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   ESTADISTICAS
+   ============================================================ */
+
+.abonos-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ============================================================
+   TARJETA KPI
+   ============================================================ */
+
+.abono-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    transition: all .2s ease;
+}
+
+
+.abono-stat-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 6px 18px rgba(0, 0, 0, .08);
+}
+
+
+/* ============================================================
+   ICONO KPI
+   ============================================================ */
+
+.abono-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+
+/* ============================================================
+   COLORES KPI
+   ============================================================ */
+
+.abonos-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+}
+
+
+.recaudado-icon {
+
+    background: #eaf8ef;
+
+    color: #16a34a;
+}
+
+
+.deuda-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+}
+
+
+/* ============================================================
+   INFORMACION KPI
+   ============================================================ */
+
+.abono-stat-info h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.abono-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   ACCIONES PRINCIPALES
+   ============================================================ */
+
+.abonos-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 18px;
+}
+
+
+/* ============================================================
+   BOTON BASE
+   ============================================================ */
+
+.abono-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+.abono-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.abono-btn:active {
+
+    transform: translateY(0);
+}
+
+
+/* ============================================================
+   BOTON GUARDAR / NUEVO
+   ============================================================ */
+
+.abono-btn-save {
+
+    background: #2563eb;
+
+    color: #fff;
+}
+
+
+.abono-btn-save:hover {
+
+    background: #1d4ed8;
+}
+
+
+/* ============================================================
+   BOTON ACTUALIZAR
+   ============================================================ */
+
+.abono-btn-update {
+
+    background: #f59e0b;
+
+    color: #fff;
+}
+
+
+.abono-btn-update:hover {
+
+    background: #d97706;
+}
+
+
+/* ============================================================
+   BOTON CANCELAR
+   ============================================================ */
+
+.abono-btn-cancel {
+
+    background: #e5e7eb;
+
+    color: #374151;
+}
+
+
+.abono-btn-cancel:hover {
+
+    background: #d1d5db;
+}
+
+
+/* ============================================================
+   TARJETA PRINCIPAL
+   ============================================================ */
+
+.abonos-card {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   HEADER TARJETA
+   ============================================================ */
+
+.abonos-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.abonos-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+
+.abonos-card-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.abonos-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   BADGE DEL ROL
+   ============================================================ */
+
+.abonos-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.abonos-role-badge.role-admin {
+
+    color: #1d4ed8;
+
+    background: #eff6ff;
+}
+
+
+.abonos-role-badge.role-empleado {
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+}
+
+
+/* ============================================================
+   CONTENEDOR TABLA
+   ============================================================ */
+
+.abonos-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+
+.abonos-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+
+/* ============================================================
+   CABECERA
+   ============================================================ */
+
+.abonos-table thead {
+
+    background: #f8fafc;
+}
+
+
+.abonos-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   CELDAS
+   ============================================================ */
+
+.abonos-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+
+.abonos-table tbody tr {
+
+    transition: background .2s ease;
+}
+
+
+.abonos-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.abonos-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* ============================================================
+   CLIENTE
+   ============================================================ */
+
+.abono-cliente {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.abono-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   FACTURA
+   ============================================================ */
+
+.abono-factura {
+
+    color: #475569;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   MONTO
+   ============================================================ */
+
+.abono-monto {
+
+    color: #16a34a;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   FECHA
+   ============================================================ */
+
+.abono-fecha {
+
+    color: #64748b;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   DESCRIPCION
+   ============================================================ */
+
+.abono-descripcion {
+
+    max-width: 260px;
+
+    color: #64748b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   ACCIONES
+   ============================================================ */
+
+.abono-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.abono-action-btn {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+.abono-action-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   EDITAR
+   ============================================================ */
+
+.abono-btn-edit {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.abono-btn-edit:hover {
+
+    background: #dbeafe;
+}
+
+
+/* ============================================================
+   ELIMINAR
+   ============================================================ */
+
+.abono-btn-delete {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+
+.abono-btn-delete:hover {
+
+    background: #fee2e2;
+}
+
+
+/* ============================================================
+   ESTADO VACIO
+   ============================================================ */
+
+.abonos-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+}
+
+
+.abonos-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.abonos-empty span {
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.abono-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, .58);
+
+    backdrop-filter: blur(3px);
+}
+
+
+/* ============================================================
+   MODAL ACTIVO
+   ============================================================ */
+
+.abono-modal.active {
+
+    display: flex;
+}
+
+
+/* ============================================================
+   CONTENIDO MODAL
+   ============================================================ */
+
+.abono-modal-content {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, .22);
+
+    animation: abonoModalEntrada .2s ease;
+}
+
+
+@keyframes abonoModalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+                translateY(-15px)
+                scale(.98);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+                translateY(0)
+                scale(1);
+    }
+}
+
+
+/* ============================================================
+   HEADER MODAL
+   ============================================================ */
+
+.abono-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.abono-modal-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 20px;
+}
+
+
+.abono-modal-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.abono-modal-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   CERRAR MODAL
+   ============================================================ */
+
+.abono-modal-cerrar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: all .2s ease;
+}
+
+
+.abono-modal-cerrar:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+/* ============================================================
+   FORMULARIO
+   ============================================================ */
+
+#formAbono {
+
+    padding: 24px;
+}
+
+
+/* ============================================================
+   GRID
+   ============================================================ */
+
+.abonos-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* ============================================================
+   GRUPO
+   ============================================================ */
+
+.abono-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+
+.abono-form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.abono-form-group label i {
+
+    color: #2563eb;
+
+    width: 15px;
+}
+
+
+/* ============================================================
+   INPUT Y SELECT
+   ============================================================ */
+
+.abono-form-group input,
+.abono-form-group select {
+
+    width: 100%;
+
+    min-height: 43px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    transition: all .2s ease;
+}
+
+
+/* ============================================================
+   FOCUS
+   ============================================================ */
+
+.abono-form-group input:focus,
+.abono-form-group select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, .10);
+}
+
+
+/* ============================================================
+   DESHABILITADO
+   ============================================================ */
+
+.abono-form-group input:disabled,
+.abono-form-group select:disabled {
+
+    background: #f8fafc;
+
+    color: #94a3b8;
+
+    cursor: not-allowed;
+}
+
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+
+.abono-form-group input::placeholder {
+
+    color: #9ca3af;
+}
+
+
+/* ============================================================
+   TEXTO DE AYUDA
+   ============================================================ */
+
+.abono-help-text {
+
+    margin-top: 6px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    line-height: 1.4;
+}
+
+
+/* ============================================================
+   RESUMEN
+   ============================================================ */
+
+.abono-resumen {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+    padding: 15px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #f8fafc;
+}
+
+
+/* ============================================================
+   ITEM RESUMEN
+   ============================================================ */
+
+.abono-resumen-item {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.abono-resumen-item span {
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    font-weight: 700;
+
+    letter-spacing: .3px;
+}
+
+
+.abono-resumen-item strong {
+
+    color: #111827;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   SALDO
+   ============================================================ */
+
+.abono-resumen-item .saldo-disponible {
+
+    color: #16a34a;
+
+    font-size: 15px;
+}
+
+
+/* ============================================================
+   BOTONES FORMULARIO
+   ============================================================ */
+
+.abonos-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   RESPONSIVE TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .abonos-stats {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE MOVIL
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .abonos-page {
+
+        padding: 18px 15px 30px;
+    }
+
+
+    .abonos-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .abonos-form-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .abono-resumen {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .abonos-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .abonos-buttons .abono-btn {
+
+        width: 100%;
+    }
+
+
+    .abono-modal {
+
+        padding: 10px;
+    }
+
+
+    .abono-modal-content {
+
+        max-height: 94vh;
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE MOVILES PEQUEÑOS
+   ============================================================ */
+
+@media (max-width: 500px) {
+
+    .abonos-title h1 {
+
+        font-size: 23px;
+    }
+
+
+    .abono-stat-card {
+
+        min-height: 85px;
+    }
+
+
+    .abono-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+    }
+
+
+    .abono-stat-info h3 {
+
+        font-size: 20px;
+    }
+
+}

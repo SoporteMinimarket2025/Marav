@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Caja | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/caja.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEETALERT2
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =========================================================
+     CONTENEDOR PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO CAJA
+    ====================================================== -->
+
+    <main class="caja-page">
+
+
+        <!-- =================================================
+             ENCABEZADO
+        ================================================== -->
+
+        <section class="caja-header">
+
+            <div class="caja-header-text">
+
+                <h1>
+                    <i class="fa-solid fa-cash-register"></i>
+                    Gestión de Caja
+                </h1>
+
+                <p>
+                    Control de aperturas, ingresos, egresos y cierres de caja
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AVISO EMPLEADO
+        ================================================== -->
+
+        <div class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>Modo consulta</strong>
+
+                <p>
+                    Puedes consultar la información de caja,
+                    pero no tienes permisos para abrir, cerrar
+                    o registrar movimientos.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             KPI
+        ================================================== -->
+
+        <section class="caja-stats">
+
+
+            <!-- =============================================
+                 ESTADO CAJA
+            ============================================== -->
+
+            <div class="caja-stat-card">
+
+                <div class="caja-stat-icon caja-icon-blue">
+
+                    <i class="fa-solid fa-cash-register"></i>
+
+                </div>
+
+                <div class="caja-stat-info">
+
+                    <span>
+                        Estado de Caja
+                    </span>
+
+                    <strong id="estadoCaja">
+                        Sin caja
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 SALDO INICIAL
+            ============================================== -->
+
+            <div class="caja-stat-card">
+
+                <div class="caja-stat-icon caja-icon-purple">
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+                <div class="caja-stat-info">
+
+                    <span>
+                        Saldo Inicial
+                    </span>
+
+                    <strong id="saldoInicial">
+                        $0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 INGRESOS
+            ============================================== -->
+
+            <div class="caja-stat-card">
+
+                <div class="caja-stat-icon caja-icon-green">
+
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+
+                </div>
+
+                <div class="caja-stat-info">
+
+                    <span>
+                        Ingresos
+                    </span>
+
+                    <strong id="totalIngresos">
+                        $0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 EGRESOS
+            ============================================== -->
+
+            <div class="caja-stat-card">
+
+                <div class="caja-stat-icon caja-icon-red">
+
+                    <i class="fa-solid fa-arrow-trend-down"></i>
+
+                </div>
+
+                <div class="caja-stat-info">
+
+                    <span>
+                        Egresos
+                    </span>
+
+                    <strong id="totalEgresos">
+                        $0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 SALDO FINAL
+            ============================================== -->
+
+            <div class="caja-stat-card">
+
+                <div class="caja-stat-icon caja-icon-teal">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                </div>
+
+                <div class="caja-stat-info">
+
+                    <span>
+                        Saldo Final
+                    </span>
+
+                    <strong id="saldoFinal">
+                        $0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACCIONES ADMIN
+        ================================================== -->
+
+        <section class="caja-actions"
+                 th:if="${rolUsuario == 'ADMIN'}">
+
+            <button id="btnAbrirCaja"
+                    class="caja-btn caja-btn-primary">
+
+                <i class="fa-solid fa-cash-register"></i>
+
+                Abrir Caja
+
+            </button>
+
+        </section>
+
+
+        <!-- =================================================
+             TARJETA PRINCIPAL
+        ================================================== -->
+
+        <section class="caja-card">
+
+
+            <!-- =================================================
+                 CABECERA TARJETA
+            ================================================== -->
+
+            <div class="caja-card-header">
+
+                <div>
+
+                    <h2>
+                        Historial de Caja
+                    </h2>
+
+                    <p>
+                        Consulta las aperturas y cierres registrados
+                    </p>
+
+                </div>
+
+
+                <!-- =============================================
+                     BADGE ROL
+                ============================================== -->
+
+                <span class="caja-role-badge role-admin"
+                      th:if="${rolUsuario == 'ADMIN'}">
+
+                    <i class="fa-solid fa-user-shield"></i>
+
+                    Administrador
+
+                </span>
+
+
+                <span class="caja-role-badge role-empleado"
+                      th:if="${rolUsuario == 'EMPLEADO'}">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                    Solo consulta
+
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="caja-table-container">
+
+                <table class="caja-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Usuario
+                        </th>
+
+                        <th>
+                            Apertura
+                        </th>
+
+                        <th>
+                            Cierre
+                        </th>
+
+                        <th>
+                            Saldo Inicial
+                        </th>
+
+                        <th>
+                            Ingresos
+                        </th>
+
+                        <th>
+                            Egresos
+                        </th>
+
+                        <th>
+                            Saldo Final
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaCaja">
+
+                    <!-- JS -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =================================================
+                 ESTADO VACIO
+            ================================================== -->
+
+            <div id="cajaEmpty"
+                 class="caja-empty"
+                 style="display:none;">
+
+                <div class="caja-empty-icon">
+
+                    <i class="fa-solid fa-cash-register"></i>
+
+                </div>
+
+                <h3>
+                    No hay registros de caja
+                </h3>
+
+                <p>
+                    Cuando se abra una caja,
+                    aparecerá aquí el historial.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL ABRIR CAJA
+========================================================= -->
+
+<div id="modalCaja"
+     class="caja-modal">
+
+    <div class="caja-modal-content">
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
+
+        <div class="caja-modal-header">
+
+            <div>
+
+                <h2>
+
+                    <i class="fa-solid fa-cash-register"></i>
+
+                    Abrir Caja
+
+                </h2>
+
+                <p>
+                    Registra el saldo inicial de la caja
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    id="btnCerrarModal"
+                    class="caja-modal-close">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formCaja">
+
+
+            <div class="caja-form-grid">
+
+
+                <!-- =========================================
+                     SALDO INICIAL
+                ========================================== -->
+
+                <div class="caja-form-group caja-form-full">
+
+                    <label for="saldoInicialInput">
+
+                        <i class="fa-solid fa-wallet"></i>
+
+                        Saldo inicial
+
+                    </label>
+
+                    <input type="number"
+                           id="saldoInicialInput"
+                           min="0"
+                           step="0.01"
+                           placeholder="Ej: 100000"
+                           required>
+
+                    <small>
+                        Dinero disponible al momento de abrir la caja.
+                    </small>
+
+                </div>
+
+
+                <!-- =========================================
+                     INFORMACION
+                ========================================== -->
+
+                <div class="caja-info-box caja-form-full">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <div>
+
+                        <strong>
+                            Información
+                        </strong>
+
+                        <p>
+                            La caja se abrirá con estado
+                            <strong>ABIERTA</strong>
+                            y el saldo inicial registrado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="caja-form-actions">
+
+                <button type="button"
+                        id="btnCancelarCaja"
+                        class="caja-btn caja-btn-secondary">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+                <button type="submit"
+                        class="caja-btn caja-btn-success">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Abrir Caja
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL MOVIMIENTO
+========================================================= -->
+
+<div id="modalMovimiento"
+     class="caja-modal">
+
+    <div class="caja-modal-content">
+
+
+        <div class="caja-modal-header">
+
+            <div>
+
+                <h2 id="tituloMovimiento">
+
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+
+                    Movimiento
+
+                </h2>
+
+                <p id="descripcionMovimiento">
+                    Registra un movimiento de caja
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    id="btnCerrarMovimiento"
+                    class="caja-modal-close">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <form id="formMovimiento">
+
+            <div class="caja-form-grid">
+
+
+                <div class="caja-form-group caja-form-full">
+
+                    <label for="valorMovimiento">
+
+                        <i class="fa-solid fa-dollar-sign"></i>
+
+                        Valor
+
+                    </label>
+
+                    <input type="number"
+                           id="valorMovimiento"
+                           min="0.01"
+                           step="0.01"
+                           placeholder="Ej: 50000"
+                           required>
+
+                </div>
+
+
+                <div class="caja-info-box caja-form-full">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <div>
+
+                        <strong>
+                            Movimiento de caja
+                        </strong>
+
+                        <p id="textoMovimiento">
+                            El valor se agregará al movimiento seleccionado.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="caja-form-actions">
+
+                <button type="button"
+                        id="btnCancelarMovimiento"
+                        class="caja-btn caja-btn-secondary">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+                <button type="submit"
+                        id="btnGuardarMovimiento"
+                        class="caja-btn caja-btn-success">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Registrar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ROL
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/
+        "EMPLEADO";
+
+</script>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/caja.js}"></script>
+
+
+</body>
+
+</html>
+

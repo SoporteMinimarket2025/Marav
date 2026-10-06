@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO DE LA PAGINA
+    ====================================================== -->
+
+    <title>Productos | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+         Se mantiene igual que Clientes.
+         dashboard.css controla la estructura general,
+         sidebar, topbar y contenido principal.
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/productos.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         Iconos utilizados en el modulo.
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEETALERT2
+         Alertas, confirmaciones y mensajes.
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+     Fragmento global de EcoMarket PRO.
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =========================================================
+     CONTENEDOR PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+         Fragmento global.
+         Incluye tambien el buscador #buscarTopbar.
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO DEL MODULO PRODUCTOS
+    ====================================================== -->
+
+    <main class="productos-page">
+
+
+        <!-- =================================================
+             ENCABEZADO
+        ================================================== -->
+
+        <section class="productos-header">
+
+            <div class="productos-title">
+
+                <h1>
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    Gestión de Productos
+                </h1>
+
+                <p>
+                    Control de productos, precios y proveedores
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MENSAJE PARA EMPLEADOS
+
+             El empleado puede consultar y buscar,
+             pero no puede modificar productos.
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>Modo consulta</strong>
+
+                <span>
+                    Puedes consultar y buscar productos,
+                    pero no tienes permisos para modificarlos.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             TARJETAS KPI
+        ================================================== -->
+
+        <section class="productos-stats">
+
+
+            <!-- =================================================
+                 TOTAL PRODUCTOS
+            ================================================== -->
+
+            <div class="producto-stat-card">
+
+                <div class="producto-stat-icon productos-icon">
+
+                    <i class="fa-solid fa-boxes-stacked"></i>
+
+                </div>
+
+                <div class="producto-stat-info">
+
+                    <h3 id="totalProductos">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Productos
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROVEEDORES ACTIVOS
+            ================================================== -->
+
+            <div class="producto-stat-card">
+
+                <div class="producto-stat-icon proveedores-icon">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                </div>
+
+                <div class="producto-stat-info">
+
+                    <h3 id="totalProveedores">
+                        0
+                    </h3>
+
+                    <p>
+                        Proveedores Activos
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRECIO PROMEDIO
+            ================================================== -->
+
+            <div class="producto-stat-card">
+
+                <div class="producto-stat-icon precio-icon">
+
+                    <i class="fa-solid fa-dollar-sign"></i>
+
+                </div>
+
+                <div class="producto-stat-info">
+
+                    <h3 id="precioPromedio">
+                        $0
+                    </h3>
+
+                    <p>
+                        Precio Promedio
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACCIONES
+
+             Solamente ADMIN puede crear productos.
+        ================================================== -->
+
+        <div class="productos-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button type="button"
+                    id="btnNuevoProducto"
+                    class="producto-btn producto-btn-save"
+                    onclick="abrirModalProducto()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Producto
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             TARJETA PRINCIPAL
+        ================================================== -->
+
+        <section class="productos-card">
+
+
+            <!-- =================================================
+                 ENCABEZADO DE LA TARJETA
+            ================================================== -->
+
+            <div class="productos-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-clipboard-list"></i>
+
+                        Productos Registrados
+
+                    </h2>
+
+                    <p>
+                        Lista de productos disponibles en EcoMarket PRO
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     INDICADOR DEL ROL
+                ================================================== -->
+
+                <span class="productos-role-badge"
+                      th:classappend="${rolUsuario == 'ADMIN'}
+                                      ? ' role-admin'
+                                      : ' role-empleado'">
+
+                    <i th:class="${rolUsuario == 'ADMIN'}
+                                  ? 'fa-solid fa-user-shield'
+                                  : 'fa-solid fa-eye'">
+                    </i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'}
+                                    ? 'Administrador'
+                                    : 'Solo consulta'">
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="productos-table-container">
+
+                <table class="productos-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Producto
+                        </th>
+
+                        <th>
+                            Descripción
+                        </th>
+
+                        <th>
+                            Precio
+                        </th>
+
+                        <th>
+                            Proveedor
+                        </th>
+
+                        <!-- =====================================
+                             SOLO ADMIN
+                        ====================================== -->
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaProductos">
+
+                    <!--
+                        El contenido se genera dinámicamente
+                        desde productos.js.
+                    -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =================================================
+                 ESTADO VACIO
+            ================================================== -->
+
+            <div id="productosVacio"
+                 class="productos-empty"
+                 style="display:none;">
+
+                <i class="fa-solid fa-box-open productos-empty-icon"></i>
+
+                <span>
+                    No hay productos registrados.
+                </span>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL PRODUCTO
+
+     Solo se renderiza para ADMIN.
+     El empleado no necesita tener el formulario disponible.
+========================================================= -->
+
+<div id="modalProducto"
+     class="producto-modal"
+     th:if="${rolUsuario == 'ADMIN'}"
+     aria-hidden="true"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="tituloFormulario">
+
+
+    <div class="producto-modal-content">
+
+
+        <!-- =================================================
+             ENCABEZADO DEL MODAL
+        ================================================== -->
+
+        <div class="producto-modal-header">
+
+            <div>
+
+                <h2 id="tituloFormulario">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    Nuevo Producto
+
+                </h2>
+
+                <p id="subtituloFormulario">
+                    Registra un nuevo producto en EcoMarket PRO
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 CERRAR MODAL
+            ================================================== -->
+
+            <button type="button"
+                    class="producto-modal-cerrar"
+                    onclick="cerrarModalProducto()"
+                    aria-label="Cerrar">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formProducto">
+
+
+            <!-- =================================================
+                 ID OCULTO
+
+                 Se utiliza cuando estamos editando.
+            ================================================== -->
+
+            <input type="hidden"
+                   id="productoId">
+
+
+            <!-- =================================================
+                 GRID DEL FORMULARIO
+            ================================================== -->
+
+            <div class="productos-form-grid">
+
+
+                <!-- =================================================
+                     NOMBRE
+                ================================================== -->
+
+                <div class="producto-form-group">
+
+                    <label for="nombre">
+
+                        <i class="fa-solid fa-tag"></i>
+
+                        Nombre del producto
+
+                    </label>
+
+                    <input type="text"
+                           id="nombre"
+                           name="nombre"
+                           maxlength="150"
+                           placeholder="Ej. Arroz Diana"
+                           required>
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPCION
+                ================================================== -->
+
+                <div class="producto-form-group">
+
+                    <label for="descripcion">
+
+                        <i class="fa-solid fa-align-left"></i>
+
+                        Descripción
+
+                    </label>
+
+                    <input type="text"
+                           id="descripcion"
+                           name="descripcion"
+                           maxlength="255"
+                           placeholder="Descripción del producto">
+
+                </div>
+
+
+                <!-- =================================================
+                     PRECIO
+                ================================================== -->
+
+                <div class="producto-form-group">
+
+                    <label for="precio">
+
+                        <i class="fa-solid fa-dollar-sign"></i>
+
+                        Precio
+
+                    </label>
+
+                    <input type="number"
+                           id="precio"
+                           name="precio"
+                           min="0"
+                           step="0.01"
+                           placeholder="Ej. 5000"
+                           required>
+
+                </div>
+
+
+                <!-- =================================================
+                     PROVEEDOR
+                ================================================== -->
+
+                <div class="producto-form-group">
+
+                    <label for="proveedor">
+
+                        <i class="fa-solid fa-truck"></i>
+
+                        Proveedor
+
+                    </label>
+
+                    <select id="proveedor"
+                            name="proveedor"
+                            required>
+
+                        <option value="">
+                            Seleccione un proveedor
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="productos-buttons">
+
+
+                <!-- =============================================
+                     CANCELAR
+                ============================================== -->
+
+                <button type="button"
+                        id="btnCancelar"
+                        class="producto-btn producto-btn-cancel"
+                        onclick="cerrarModalProducto()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+                <!-- =============================================
+                     GUARDAR
+                ============================================== -->
+
+                <button type="submit"
+                        id="btnGuardar"
+                        class="producto-btn producto-btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar Producto
+
+                </button>
+
+
+                <!-- =============================================
+                     ACTUALIZAR
+
+                     Oculto inicialmente.
+                ============================================== -->
+
+                <button type="button"
+                        id="btnActualizar"
+                        class="producto-btn producto-btn-update"
+                        style="display:none;">
+
+                    <i class="fa-solid fa-pen-to-square"></i>
+
+                    Actualizar Producto
+
+                </button>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ROL DEL USUARIO
+
+     Thymeleaf inserta el rol real.
+     "EMPLEADO" funciona como respaldo si se abre
+     el archivo fuera de Spring.
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+<!-- =========================================================
+     JAVASCRIPT DEL MODULO
+========================================================= -->
+
+<script th:src="@{/js/productos.js}"></script>
+
+
+</body>
+
+</html>

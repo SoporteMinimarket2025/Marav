@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Abonos | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/abonos.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEETALERT2
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =========================================================
+     CONTENEDOR PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <main class="abonos-page">
+
+
+        <!-- =================================================
+             ENCABEZADO
+        ================================================== -->
+
+        <section class="abonos-header">
+
+            <div class="abonos-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+
+                    Gestión de Abonos
+
+                </h1>
+
+                <p>
+                    Control de pagos y abonos de clientes con crédito
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MODO CONSULTA EMPLEADO
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>Modo consulta</strong>
+
+                <span>
+                    Puedes consultar y buscar abonos,
+                    pero no tienes permisos para modificarlos.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             TARJETAS KPI
+        ================================================== -->
+
+        <section class="abonos-stats">
+
+
+            <!-- =================================================
+                 TOTAL ABONOS
+            ================================================== -->
+
+            <div class="abono-stat-card">
+
+                <div class="abono-stat-icon abonos-icon">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                </div>
+
+                <div class="abono-stat-info">
+
+                    <h3 id="totalAbonos">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Abonos
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TOTAL RECAUDADO
+            ================================================== -->
+
+            <div class="abono-stat-card">
+
+                <div class="abono-stat-icon recaudado-icon">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                </div>
+
+                <div class="abono-stat-info">
+
+                    <h3 id="totalRecaudado">
+                        $0
+                    </h3>
+
+                    <p>
+                        Total Recaudado
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CLIENTES CON DEUDA
+            ================================================== -->
+
+            <div class="abono-stat-card">
+
+                <div class="abono-stat-icon deuda-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <div class="abono-stat-info">
+
+                    <h3 id="clientesConDeuda">
+                        0
+                    </h3>
+
+                    <p>
+                        Clientes con Deuda
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACCIONES ADMIN
+        ================================================== -->
+
+        <div class="abonos-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button type="button"
+                    id="btnNuevoAbono"
+                    class="abono-btn abono-btn-save"
+                    onclick="abrirModalAbono()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Abono
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             TARJETA PRINCIPAL
+        ================================================== -->
+
+        <section class="abonos-card">
+
+
+            <!-- =================================================
+                 HEADER TARJETA
+            ================================================== -->
+
+            <div class="abonos-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                        Abonos Registrados
+
+                    </h2>
+
+                    <p>
+                        Historial de pagos realizados por los clientes
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     BADGE ROL
+                ================================================== -->
+
+                <span class="abonos-role-badge"
+                      th:classappend="${rolUsuario == 'ADMIN'}
+                                      ? ' role-admin'
+                                      : ' role-empleado'">
+
+                    <i th:class="${rolUsuario == 'ADMIN'}
+                                  ? 'fa-solid fa-user-shield'
+                                  : 'fa-solid fa-eye'">
+                    </i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'}
+                                    ? 'Administrador'
+                                    : 'Solo consulta'">
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="abonos-table-container">
+
+                <table class="abonos-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Cliente
+                        </th>
+
+                        <th>
+                            Factura
+                        </th>
+
+                        <th>
+                            Monto
+                        </th>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Descripción
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaAbonos">
+
+                    <!--
+                        Los registros se cargan
+                        dinámicamente desde abonos.js.
+                    -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =================================================
+                 ESTADO VACIO
+            ================================================== -->
+
+            <div id="abonosVacio"
+                 class="abonos-empty"
+                 style="display:none;">
+
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+
+                <span>
+                    No hay abonos registrados.
+                </span>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL ABONO
+
+     Solo ADMIN.
+========================================================= -->
+
+<div id="modalAbono"
+     class="abono-modal"
+     th:if="${rolUsuario == 'ADMIN'}"
+     aria-hidden="true"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="tituloFormularioAbono">
+
+
+    <div class="abono-modal-content">
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
+
+        <div class="abono-modal-header">
+
+            <div>
+
+                <h2 id="tituloFormularioAbono">
+
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+
+                    Nuevo Abono
+
+                </h2>
+
+                <p id="subtituloFormularioAbono">
+                    Registra un nuevo pago de un cliente con deuda
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 CERRAR
+            ================================================== -->
+
+            <button type="button"
+                    class="abono-modal-cerrar"
+                    onclick="cerrarModalAbono()"
+                    aria-label="Cerrar">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formAbono">
+
+
+            <!-- =================================================
+                 ID ABONO
+            ================================================== -->
+
+            <input type="hidden"
+                   id="abonoId">
+
+
+            <!-- =================================================
+                 GRID
+            ================================================== -->
+
+            <div class="abonos-form-grid">
+
+
+                <!-- =================================================
+                     CLIENTE
+                ================================================== -->
+
+                <div class="abono-form-group">
+
+                    <label for="idCliente">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Cliente
+
+                    </label>
+
+                    <select id="idCliente"
+                            name="idCliente"
+                            required>
+
+                        <option value="">
+                            Seleccione un cliente con deuda
+                        </option>
+
+                    </select>
+
+                    <small id="clienteDeudaTexto"
+                           class="abono-help-text">
+
+                        Seleccione un cliente para continuar.
+
+                    </small>
+
+                </div>
+
+
+                <!-- =================================================
+                     FACTURA
+                ================================================== -->
+
+                <div class="abono-form-group">
+
+                    <label for="idVenta">
+
+                        <i class="fa-solid fa-file-invoice"></i>
+
+                        Factura
+
+                    </label>
+
+                    <select id="idVenta"
+                            name="idVenta"
+                            required
+                            disabled>
+
+                        <option value="">
+                            Seleccione primero un cliente
+                        </option>
+
+                    </select>
+
+                    <small id="facturaSaldoTexto"
+                           class="abono-help-text">
+
+                        Las facturas se cargarán al seleccionar el cliente.
+
+                    </small>
+
+                </div>
+
+
+                <!-- =================================================
+                     MONTO
+                ================================================== -->
+
+                <div class="abono-form-group">
+
+                    <label for="monto">
+
+                        <i class="fa-solid fa-dollar-sign"></i>
+
+                        Monto del abono
+
+                    </label>
+
+                    <input type="number"
+                           id="monto"
+                           name="monto"
+                           min="1"
+                           step="0.01"
+                           placeholder="Ej. 50000"
+                           required
+                           disabled>
+
+                </div>
+
+
+                <!-- =================================================
+                     DESCRIPCION
+                ================================================== -->
+
+                <div class="abono-form-group">
+
+                    <label for="descripcion">
+
+                        <i class="fa-solid fa-align-left"></i>
+
+                        Descripción
+
+                    </label>
+
+                    <input type="text"
+                           id="descripcion"
+                           name="descripcion"
+                           maxlength="150"
+                           placeholder="Ej. Abono parcial">
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 RESUMEN
+            ================================================== -->
+
+            <div class="abono-resumen">
+
+                <div class="abono-resumen-item">
+
+                    <span>
+                        Cliente
+                    </span>
+
+                    <strong id="resumenCliente">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="abono-resumen-item">
+
+                    <span>
+                        Factura
+                    </span>
+
+                    <strong id="resumenFactura">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="abono-resumen-item">
+
+                    <span>
+                        Saldo disponible
+                    </span>
+
+                    <strong id="resumenSaldo"
+                            class="saldo-disponible">
+
+                        $0
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="abonos-buttons">
+
+
+                <!-- =================================================
+                     CANCELAR
+                ================================================== -->
+
+                <button type="button"
+                        id="btnCancelarAbono"
+                        class="abono-btn abono-btn-cancel"
+                        onclick="cerrarModalAbono()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+                <!-- =================================================
+                     GUARDAR
+                ================================================== -->
+
+                <button type="submit"
+                        id="btnGuardarAbono"
+                        class="abono-btn abono-btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar Abono
+
+                </button>
+
+
+                <!-- =================================================
+                     ACTUALIZAR
+                ================================================== -->
+
+                <button type="button"
+                        id="btnActualizarAbono"
+                        class="abono-btn abono-btn-update"
+                        style="display:none;">
+
+                    <i class="fa-solid fa-pen-to-square"></i>
+
+                    Actualizar Abono
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ROL DEL USUARIO
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/abonos.js}"></script>
+
+
+</body>
+
+</html>

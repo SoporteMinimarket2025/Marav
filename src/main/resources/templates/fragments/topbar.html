@@ -1,0 +1,278 @@
+<div th:fragment="topbar">
+
+    <div class="topbar">
+
+
+        <!-- =====================================================
+             🔎 BUSCADOR GLOBAL
+        ====================================================== -->
+
+        <div class="search">
+
+            <input
+                    type="text"
+                    id="buscarTopbar"
+                    placeholder="Buscar...">
+
+        </div>
+
+
+
+        <!-- =====================================================
+             👤 USUARIO LOGUEADO
+        ====================================================== -->
+
+        <div class="user-box"
+             onclick="toggleUserMenu(event)">
+
+
+            <!-- =================================================
+                 FOTO
+            ================================================== -->
+
+            <img
+                    src="/images/user.png"
+                    alt="Usuario"
+                    class="user-avatar">
+
+
+
+            <!-- =================================================
+                 INFORMACIÓN DEL USUARIO
+            ================================================== -->
+
+            <div class="user-info">
+
+
+                <!-- =================================================
+                     NOMBRE REAL
+                ================================================== -->
+
+                <strong
+                        th:text="${usuario != null
+                                  ? usuario
+                                  : 'Usuario'}">
+
+                    Usuario
+
+                </strong>
+
+
+
+                <!-- =================================================
+                     ROL
+                ================================================== -->
+
+                <p
+                        th:text="${rolUsuario == 'ADMIN'
+                                  ? 'Administrador'
+                                  : 'Empleado'}">
+
+                    Empleado
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FLECHA
+            ================================================== -->
+
+            <span class="dropdown-arrow">
+                ▼
+            </span>
+
+
+
+            <!-- =================================================
+                 MENÚ DESPLEGABLE
+            ================================================== -->
+
+            <div id="userDropdown"
+                 class="user-dropdown"
+                 onclick="event.stopPropagation()">
+
+
+
+                <!-- =================================================
+                     CABECERA DEL MENÚ
+                ================================================== -->
+
+                <div class="dropdown-header">
+
+
+                    <img
+                            src="/images/user.png"
+                            alt="Usuario">
+
+
+
+                    <div>
+
+
+                        <!-- NOMBRE -->
+
+                        <strong
+                                th:text="${usuario != null
+                                          ? usuario
+                                          : 'Usuario'}">
+
+                            Usuario
+
+                        </strong>
+
+
+
+                        <!-- ROL -->
+
+                        <span
+                                th:text="${rolUsuario == 'ADMIN'
+                                          ? 'Administrador'
+                                          : 'Empleado'}">
+
+                            Empleado
+
+                        </span>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     MI PERFIL
+                ================================================== -->
+
+                <a th:href="@{/configuracion}"
+                   th:if="${rolUsuario == 'ADMIN'}">
+
+                    📖 Manual
+
+                </a>
+
+
+
+                <!-- =================================================
+                     MI NEGOCIO
+                ================================================== -->
+
+                <a th:href="@{/dashboard}">
+
+                    🏪 Mi Negocio
+
+                </a>
+
+
+
+                <!-- =================================================
+                     DIVISOR
+                ================================================== -->
+
+                <div class="dropdown-divider"></div>
+
+
+
+                <!-- =================================================
+                     CERRAR SESIÓN
+                ================================================== -->
+
+                <a th:href="@{/logout}"
+                   class="logout-link">
+
+                    🔴 Cerrar sesión
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         🔽 SCRIPT MENÚ USUARIO
+    ====================================================== -->
+
+    <script>
+
+        function toggleUserMenu(event) {
+
+            if (event) {
+
+                event.stopPropagation();
+
+            }
+
+
+            const menu =
+                document.getElementById(
+                    "userDropdown"
+                );
+
+
+            if (!menu) {
+
+                return;
+
+            }
+
+
+            menu.classList.toggle(
+                "show"
+            );
+
+        }
+
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+
+                const box =
+                    document.querySelector(
+                        ".user-box"
+                    );
+
+
+                const menu =
+                    document.getElementById(
+                        "userDropdown"
+                    );
+
+
+                if (!box || !menu) {
+
+                    return;
+
+                }
+
+
+                if (!box.contains(
+                    event.target
+                )) {
+
+                    menu.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</div>

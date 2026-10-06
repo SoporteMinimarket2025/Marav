@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Crear negocio | EcoMarket PRO</title>
+
+    <link rel="stylesheet"
+          href="/css/registro.css">
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+    <!-- ======================================================
+         TITULO
+    ======================================================= -->
+
+    <h2>Crear negocio</h2>
+
+
+    <!-- ======================================================
+         NEGOCIO
+    ======================================================= -->
+
+    <input
+            id="negocio"
+            type="text"
+            placeholder="Nombre del negocio"
+            autocomplete="organization"
+    >
+
+
+    <!-- ======================================================
+         ADMINISTRADOR
+    ======================================================= -->
+
+    <input
+            id="nombre"
+            type="text"
+            placeholder="Nombre completo"
+            autocomplete="name"
+    >
+
+
+    <!-- ======================================================
+         EMAIL
+    ======================================================= -->
+
+    <input
+            id="email"
+            type="email"
+            placeholder="Correo electrónico"
+            autocomplete="email"
+    >
+
+
+    <!-- ======================================================
+         PASSWORD
+    ======================================================= -->
+
+    <input
+            id="password"
+            type="password"
+            placeholder="Contraseña"
+            autocomplete="new-password"
+    >
+
+
+    <!-- ======================================================
+         BOTON
+    ======================================================= -->
+
+    <button
+            id="btnRegistrar"
+            type="button"
+            onclick="registrar()">
+
+        Crear cuenta
+
+    </button>
+
+
+    <!-- ======================================================
+         MENSAJE
+    ======================================================= -->
+
+    <div
+            id="msg"
+            class="msg">
+    </div>
+
+
+</div>
+
+
+<script>
+
+    // ======================================================
+    // REGISTRAR
+    // ======================================================
+
+    function registrar() {
+
+
+        // ==================================================
+        // OBTENER DATOS
+        // ==================================================
+
+        const negocio =
+            document.getElementById("negocio")
+                .value
+                .trim();
+
+
+        const nombre =
+            document.getElementById("nombre")
+                .value
+                .trim();
+
+
+        const email =
+            document.getElementById("email")
+                .value
+                .trim();
+
+
+        const password =
+            document.getElementById("password")
+                .value;
+
+
+        const msg =
+            document.getElementById("msg");
+
+
+        const btn =
+            document.getElementById("btnRegistrar");
+
+
+        // ==================================================
+        // LIMPIAR MENSAJE
+        // ==================================================
+
+        msg.innerHTML = "";
+
+
+        // ==================================================
+        // VALIDAR CAMPOS
+        // ==================================================
+
+        if (!negocio ||
+            !nombre ||
+            !email ||
+            !password) {
+
+            msg.style.color =
+                "#dc2626";
+
+            msg.innerHTML =
+                "⚠️ Por favor completa todos los campos.";
+
+            return;
+        }
+
+
+        // ==================================================
+        // DATOS
+        // ==================================================
+
+        const data = {
+
+            nombreNegocio: negocio,
+
+            nombre: nombre,
+
+            email: email,
+
+            password: password
+
+        };
+
+
+        // ==================================================
+        // DESACTIVAR BOTON
+        // ==================================================
+
+        btn.disabled = true;
+
+        btn.innerText =
+            "Creando cuenta...";
+
+
+        // ==================================================
+        // ENVIAR AL BACKEND
+        // ==================================================
+
+        fetch("/registro", {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/json"
+
+            },
+
+            body: JSON.stringify(data)
+
+        })
+
+
+            // ==================================================
+            // LEER RESPUESTA
+            // ==================================================
+
+            .then(response => {
+
+                return response.text();
+
+            })
+
+
+            .then(res => {
+
+                // ==================================================
+                // QUITAR ESPACIOS
+                // ==================================================
+
+                const respuesta =
+                    res.trim();
+
+
+                console.log(
+                    "Respuesta /registro:",
+                    respuesta
+                );
+
+
+                // ==================================================
+                // REGISTRO CORRECTO
+                // ==================================================
+
+                if (respuesta === "REGISTRO_OK") {
+
+                    msg.style.color =
+                        "#16a34a";
+
+
+                    msg.innerHTML = `
+                    <strong>✓ ¡Registro exitoso!</strong><br>
+                    Tu negocio fue creado correctamente.<br>
+                    Redirigiendo al inicio de sesión...
+                `;
+
+
+                    btn.disabled = true;
+
+                    btn.innerText =
+                        "Cuenta creada";
+
+
+                    // ==================================================
+                    // IR AL LOGIN
+                    // ==================================================
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "/login?registro=ok";
+
+                    }, 2000);
+
+
+                    return;
+                }
+
+
+                // ==================================================
+                // EMAIL EXISTENTE
+                // ==================================================
+
+                if (respuesta === "EMAIL_EXISTE") {
+
+                    msg.style.color =
+                        "#dc2626";
+
+
+                    msg.innerHTML =
+                        "❌ El correo electrónico ya está registrado.";
+
+
+                    btn.disabled = false;
+
+                    btn.innerText =
+                        "Crear cuenta";
+
+
+                    return;
+                }
+
+
+                // ==================================================
+                // OTROS ERRORES
+                // ==================================================
+
+                if (respuesta === "NEGOCIO_REQUERIDO") {
+
+                    msg.style.color =
+                        "#dc2626";
+
+
+                    msg.innerHTML =
+                        "⚠️ Debes ingresar el nombre del negocio.";
+
+
+                    btn.disabled = false;
+
+                    btn.innerText =
+                        "Crear cuenta";
+
+
+                    return;
+                }
+
+
+                if (respuesta === "NOMBRE_REQUERIDO") {
+
+                    msg.style.color =
+                        "#dc2626";
+
+
+                    msg.innerHTML =
+                        "⚠️ Debes ingresar el nombre del administrador.";
+
+
+                    btn.disabled = false;
+
+                    btn.innerText =
+                        "Crear cuenta";
+
+
+                    return;
+                }
+
+
+                if (respuesta === "EMAIL_REQUERIDO") {
+
+                    msg.style.color =
+                        "#dc2626";
+
+
+                    msg.innerHTML =
+                        "⚠️ Debes ingresar un correo electrónico.";
+
+
+                    btn.disabled = false;
+
+                    btn.innerText =
+                        "Crear cuenta";
+
+
+                    return;
+                }
+
+
+                if (respuesta === "PASSWORD_REQUERIDO") {
+
+                    msg.style.color =
+                        "#dc2626";
+
+
+                    msg.innerHTML =
+                        "⚠️ Debes ingresar una contraseña.";
+
+
+                    btn.disabled = false;
+
+                    btn.innerText =
+                        "Crear cuenta";
+
+
+                    return;
+                }
+
+
+                // ==================================================
+                // ERROR DESCONOCIDO
+                // ==================================================
+
+                msg.style.color =
+                    "#dc2626";
+
+
+                msg.innerHTML =
+                    "❌ Ocurrió un error al crear la cuenta.";
+
+
+                btn.disabled = false;
+
+                btn.innerText =
+                    "Crear cuenta";
+
+            })
+
+
+            // ==================================================
+            // ERROR DE CONEXION
+            // ==================================================
+
+            .catch(error => {
+
+                console.error(
+                    "Error:",
+                    error
+                );
+
+
+                msg.style.color =
+                    "#dc2626";
+
+
+                msg.innerHTML =
+                    "❌ No se pudo conectar con el servidor.";
+
+
+                btn.disabled = false;
+
+                btn.innerText =
+                    "Crear cuenta";
+
+            });
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

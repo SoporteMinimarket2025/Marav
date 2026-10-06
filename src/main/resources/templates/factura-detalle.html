@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Detalle Factura | </title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS PROPIO DEL DETALLE DE FACTURA
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/factura-detalle.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="fragments/sidebar :: sidebar"></div>
+
+
+<!-- =========================================================
+     CONTENIDO PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="fragments/topbar :: topbar"></div>
+
+
+    <!-- =====================================================
+         CONTENEDOR DEL DETALLE
+    ====================================================== -->
+
+    <div class="factura-detalle-page">
+
+
+        <!-- =================================================
+             ENCABEZADO
+        ================================================== -->
+
+        <div class="factura-detalle-header">
+
+            <div class="factura-detalle-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-file-invoice"></i>
+
+                    Factura
+
+                    <span th:text="${factura.numeroFactura}">
+                        FAC-0001
+                    </span>
+
+                </h1>
+
+                <p>
+                    Información completa de la venta
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMACIÓN PRINCIPAL
+        ================================================== -->
+
+        <div class="factura-info-grid">
+
+
+            <!-- =============================================
+                 INFORMACIÓN GENERAL
+            ============================================== -->
+
+            <div class="factura-info-card">
+
+                <div class="factura-info-card-header">
+
+                    <h2>
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        Información General
+                    </h2>
+
+                </div>
+
+
+                <div class="factura-info-body">
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-solid fa-hashtag"></i>
+                            Factura
+                        </span>
+
+                        <strong th:text="${factura.numeroFactura}">
+                            FAC-0001
+                        </strong>
+
+                    </div>
+
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-regular fa-calendar"></i>
+                            Fecha
+                        </span>
+
+                        <strong th:text="${factura.fecha}">
+                            2026-09-23
+                        </strong>
+
+                    </div>
+
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Estado
+                        </span>
+
+                        <span class="detalle-estado"
+                              th:classappend="${factura.estado == 'COMPLETADA'} ? ' estado-completada' : ' estado-pendiente'">
+
+                            <i class="fa-solid fa-circle"></i>
+
+                            <span th:text="${factura.estado}">
+                                COMPLETADA
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 INFORMACIÓN DEL CLIENTE
+            ============================================== -->
+
+            <div class="factura-info-card">
+
+                <div class="factura-info-card-header">
+
+                    <h2>
+                        <i class="fa-solid fa-user"></i>
+                        Cliente
+                    </h2>
+
+                </div>
+
+
+                <div class="factura-info-body"
+                     th:if="${cliente != null}">
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-solid fa-user"></i>
+                            Nombre
+                        </span>
+
+                        <strong th:text="${cliente.nombre}">
+                            Cliente
+                        </strong>
+
+                    </div>
+
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-solid fa-phone"></i>
+                            Teléfono
+                        </span>
+
+                        <strong th:text="${cliente.telefono}">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="factura-dato">
+
+                        <span class="dato-label">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Dirección
+                        </span>
+
+                        <strong th:text="${cliente.direccion}">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     CLIENTE CONTADO
+                ========================================== -->
+
+                <div class="factura-info-body"
+                     th:if="${cliente == null}">
+
+                    <div class="cliente-contado">
+
+                        <div class="cliente-contado-icon">
+
+                            <i class="fa-solid fa-user"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Cliente de contado
+                            </strong>
+
+                            <span>
+                                Venta realizada sin cliente registrado
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 ACCIONES
+            ============================================== -->
+
+            <div class="factura-info-card factura-acciones-card">
+
+                <div class="factura-info-card-header">
+
+                    <h2>
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        Acciones
+                    </h2>
+
+                </div>
+
+
+                <div class="factura-acciones">
+
+                    <!-- PDF -->
+
+                    <a th:href="@{/facturas/pdf/{id}(id=${factura.id})}"
+                       class="factura-btn factura-btn-pdf">
+
+                        <i class="fa-solid fa-file-pdf"></i>
+
+                        Descargar PDF
+
+                    </a>
+
+
+                    <!-- TIRILLA -->
+
+                    <a th:href="@{/facturas/pdf-tirilla/{id}(id=${factura.id})}"
+                       class="factura-btn factura-btn-tirilla">
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        Descargar Tirilla
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PRODUCTOS FACTURADOS
+        ================================================== -->
+
+        <div class="factura-productos-card">
+
+
+            <!-- =============================================
+                 CABECERA
+            ============================================== -->
+
+            <div class="factura-productos-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-box-open"></i>
+
+                        Productos Facturados
+
+                    </h2>
+
+                    <p>
+                        Productos incluidos en esta venta
+                    </p>
+
+                </div>
+
+
+                <!-- CONTADOR -->
+
+                <div class="factura-productos-badge">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    <span id="cantidadProductos">
+                        0 productos
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 TABLA
+            ============================================== -->
+
+            <div class="factura-table-container">
+
+                <table class="factura-detalle-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>Producto</th>
+
+                        <th>Cantidad</th>
+
+                        <th>Precio</th>
+
+                        <th>Subtotal</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaProductos">
+
+                    <tr th:each="d : ${detalles}">
+
+                        <!-- PRODUCTO -->
+
+                        <td>
+
+                            <div class="detalle-producto">
+
+                                <div class="detalle-producto-avatar">
+
+                                    <i class="fa-solid fa-box"></i>
+
+                                </div>
+
+                                <span th:text="${d.nombreProducto}">
+                                    Producto
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- CANTIDAD -->
+
+                        <td>
+
+                            <span class="detalle-cantidad"
+                                  th:text="${d.cantidad}">
+                                1
+                            </span>
+
+                        </td>
+
+
+                        <!-- PRECIO -->
+
+                        <td>
+
+                            <span class="detalle-precio">
+
+                                $
+
+                                <span th:text="${#numbers.formatDecimal(d.precio,0,0)}">
+                                    0
+                                </span>
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- SUBTOTAL -->
+
+                        <td>
+
+                            <strong class="detalle-subtotal">
+
+                                $
+
+                                <span th:text="${#numbers.formatDecimal(d.subtotal,0,0)}">
+                                    0
+                                </span>
+
+                            </strong>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- =====================================
+                         SIN PRODUCTOS
+                    ====================================== -->
+
+                    <tr th:if="${#lists.isEmpty(detalles)}">
+
+                        <td colspan="4"
+                            class="factura-detalle-empty">
+
+                            <i class="fa-solid fa-box-open"></i>
+
+                            <span>
+                                No hay productos registrados en esta factura.
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             RESUMEN DE FACTURA
+        ================================================== -->
+
+        <div class="factura-resumen-card">
+
+
+            <div class="factura-resumen-header">
+
+                <h2>
+
+                    <i class="fa-solid fa-calculator"></i>
+
+                    Resumen de Factura
+
+                </h2>
+
+            </div>
+
+
+            <div class="factura-resumen-body">
+
+
+                <!-- SUBTOTAL -->
+
+                <div class="resumen-linea">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+
+                        $
+
+                        <span th:text="${#numbers.formatDecimal(factura.subtotal,0,0)}">
+                            0
+                        </span>
+
+                    </strong>
+
+                </div>
+
+
+                <!-- IVA -->
+
+                <div class="resumen-linea">
+
+                    <span>
+                        IVA
+                    </span>
+
+                    <strong>
+
+                        $
+
+                        <span th:text="${#numbers.formatDecimal(factura.iva,0,0)}">
+                            0
+                        </span>
+
+                    </strong>
+
+                </div>
+
+
+                <div class="resumen-separador"></div>
+
+
+                <!-- TOTAL -->
+
+                <div class="resumen-linea resumen-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+
+                        $
+
+                        <span th:text="${#numbers.formatDecimal(factura.total,0,0)}">
+                            0
+                        </span>
+
+                    </strong>
+
+                </div>
+
+
+                <!-- DEVOLUCIONES -->
+
+                <div class="resumen-linea resumen-devuelto">
+
+                    <span>
+                        Total Devuelto
+                    </span>
+
+                    <strong>
+
+                        $
+
+                        <span th:text="${#numbers.formatDecimal(factura.totalDevuelto != null ? factura.totalDevuelto : 0,0,0)}">
+                            0
+                        </span>
+
+                    </strong>
+
+                </div>
+
+
+                <div class="resumen-separador"></div>
+
+
+                <!-- TOTAL NETO -->
+
+                <div class="resumen-neto">
+
+                    <span>
+                        Total Neto
+                    </span>
+
+                    <strong>
+
+                        $
+
+                        <span th:text="${#numbers.formatDecimal(factura.totalNeto != null ? factura.totalNeto : factura.total,0,0)}">
+                            0
+                        </span>
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/factura-detalle.js}"></script>
+
+
+</body>
+</html>
+

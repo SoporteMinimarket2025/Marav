@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <title>Inventario | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MÓDULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/inventario.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEET ALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}">
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}">
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENIDO INVENTARIO
+    ====================================================== -->
+
+    <div class="inventario-page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="inventario-header">
+
+            <div class="inventario-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-boxes-stacked"></i>
+
+                    Gestión de Inventario
+
+                </h1>
+
+
+                <p>
+
+                    Administración y consulta del inventario registrado
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MENSAJE EMPLEADO
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Modo consulta
+                </strong>
+
+                <span>
+
+                    Puedes consultar y buscar el inventario,
+                    pero no tienes permisos para modificarlo.
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             KPIs
+        ================================================== -->
+
+        <div class="inventario-stats">
+
+
+            <!-- =================================================
+                 TOTAL INVENTARIO
+            ================================================== -->
+
+            <div class="inventario-stat-card">
+
+                <div class="inventario-stat-icon inventario-icon">
+
+                    <i class="fa-solid fa-boxes-stacked"></i>
+
+                </div>
+
+
+                <div class="inventario-stat-info">
+
+                    <h3 id="totalInventario">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Inventario
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STOCK BAJO
+            ================================================== -->
+
+            <div class="inventario-stat-card">
+
+                <div class="inventario-stat-icon stock-bajo-icon">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+
+                <div class="inventario-stat-info">
+
+                    <h3 id="stockBajo">
+                        0
+                    </h3>
+
+                    <p>
+                        Stock Bajo
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 VENCIDOS
+            ================================================== -->
+
+            <div class="inventario-stat-card">
+
+                <div class="inventario-stat-icon vencidos-icon">
+
+                    <i class="fa-solid fa-calendar-xmark"></i>
+
+                </div>
+
+
+                <div class="inventario-stat-info">
+
+                    <h3 id="vencidos">
+                        0
+                    </h3>
+
+                    <p>
+                        Productos Vencidos
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACCIONES ADMIN
+        ================================================== -->
+
+        <div class="inventario-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button
+                    type="button"
+                    id="btnNuevoInventario"
+                    class="inventario-btn inventario-btn-save"
+                    onclick="abrirModalInventario()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Inventario
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CARD INVENTARIO
+        ================================================== -->
+
+        <div class="inventario-card">
+
+
+            <!-- =================================================
+                 HEADER TABLA
+            ================================================== -->
+
+            <div class="inventario-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-box-open"></i>
+
+                        Inventario Registrado
+
+                    </h2>
+
+
+                    <p>
+
+                        Lista de productos y existencias disponibles en EcoMarket PRO
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     INDICADOR DE ROL
+                ================================================== -->
+
+                <div class="inventario-role-badge"
+                     th:classappend="${rolUsuario == 'ADMIN'}
+                                     ? ' role-admin'
+                                     : ' role-empleado'">
+
+                    <i class="fa-solid"
+                       th:classappend="${rolUsuario == 'ADMIN'}
+                                      ? ' fa-user-shield'
+                                      : ' fa-eye'">
+                    </i>
+
+
+                    <span th:text="${rolUsuario == 'ADMIN'
+                                    ? 'Administrador'
+                                    : 'Solo consulta'}">
+
+                        Solo consulta
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="inventario-table-container">
+
+                <table class="inventario-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Producto
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Mínimo
+                        </th>
+
+                        <th>
+                            Lote
+                        </th>
+
+                        <th>
+                            Ubicación
+                        </th>
+
+                        <th>
+                            Vencimiento
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaInventario">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- =================================================
+                 ESTADO VACÍO
+            ================================================== -->
+
+            <div id="inventarioVacio"
+                 class="inventario-empty"
+                 style="display:none;">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <span>
+                    No hay registros de inventario disponibles.
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL INVENTARIO
+========================================================= -->
+
+<div id="modalInventario"
+     class="inventario-modal">
+
+
+    <!-- =====================================================
+         CONTENIDO MODAL
+    ====================================================== -->
+
+    <div class="inventario-modal-content">
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
+
+        <div class="inventario-modal-header">
+
+            <div>
+
+                <h2 id="tituloFormularioInventario">
+
+                    <i class="fa-solid fa-circle-plus"></i>
+
+                    Nuevo Inventario
+
+                </h2>
+
+
+                <p id="subtituloFormularioInventario">
+
+                    Registra la información del inventario
+
+                </p>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="inventario-modal-cerrar"
+                    onclick="cerrarModalInventario()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formInventario">
+
+
+            <!-- =================================================
+                 ID OCULTO
+            ================================================== -->
+
+            <input type="hidden"
+                   id="inventarioId">
+
+
+
+            <div class="inventario-form-grid">
+
+
+                <!-- =================================================
+                     PRODUCTO
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="productoId">
+
+                        <i class="fa-solid fa-box"></i>
+
+                        Producto
+
+                    </label>
+
+
+                    <select id="productoId"
+                            required>
+
+                        <option value="">
+                            Seleccione un producto
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STOCK ACTUAL
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="stockActual">
+
+                        <i class="fa-solid fa-cubes"></i>
+
+                        Stock Actual
+
+                    </label>
+
+
+                    <input
+                            type="number"
+                            id="stockActual"
+                            min="0"
+                            step="1"
+                            placeholder="Ingrese el stock actual"
+                            required>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     STOCK MÍNIMO
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="stockMinimo">
+
+                        <i class="fa-solid fa-arrow-down-9-1"></i>
+
+                        Stock Mínimo
+
+                    </label>
+
+
+                    <input
+                            type="number"
+                            id="stockMinimo"
+                            min="0"
+                            step="1"
+                            placeholder="Ingrese el stock mínimo"
+                            required>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     LOTE
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="lote">
+
+                        <i class="fa-solid fa-barcode"></i>
+
+                        Lote
+
+                    </label>
+
+
+                    <input
+                            type="text"
+                            id="lote"
+                            maxlength="100"
+                            placeholder="Ingrese el lote">
+
+                </div>
+
+
+
+                <!-- =================================================
+                     UBICACIÓN
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="ubicacion">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Ubicación
+
+                    </label>
+
+
+                    <input
+                            type="text"
+                            id="ubicacion"
+                            maxlength="150"
+                            placeholder="Ej: Estante A1">
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FECHA VENCIMIENTO
+                ================================================== -->
+
+                <div class="inventario-form-group">
+
+                    <label for="fechaVencimiento">
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        Fecha de Vencimiento
+
+                    </label>
+
+
+                    <input
+                            type="date"
+                            id="fechaVencimiento">
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="inventario-buttons">
+
+
+                <!-- GUARDAR -->
+
+                <button
+                        type="button"
+                        id="btnGuardar"
+                        class="inventario-btn inventario-btn-save"
+                        onclick="guardarInventario()">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar
+
+                </button>
+
+
+
+                <!-- ACTUALIZAR -->
+
+                <button
+                        type="button"
+                        id="btnActualizar"
+                        class="inventario-btn inventario-btn-update"
+                        style="display:none;"
+                        onclick="actualizarInventario()">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Actualizar
+
+                </button>
+
+
+
+                <!-- CANCELAR -->
+
+                <button
+                        type="button"
+                        id="btnCancelar"
+                        class="inventario-btn inventario-btn-cancel"
+                        onclick="cerrarModalInventario()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     VARIABLE ROL
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/inventario.js}">
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1151 @@
+
+/* =========================================================
+   📦 INVENTARIO | ECOMARKET PRO
+========================================================= */
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+========================================================= */
+
+.inventario-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.inventario-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+.inventario-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.inventario-title h1 i {
+
+    font-size: 27px;
+}
+
+
+.inventario-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+
+/* =========================================================
+   MENSAJE MODO CONSULTA
+========================================================= */
+
+.inventario-page .alert-info {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+}
+
+
+.inventario-page .alert-info > i {
+
+    margin-top: 2px;
+
+    font-size: 18px;
+}
+
+
+.inventario-page .alert-info strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+
+.inventario-page .alert-info span {
+
+    display: block;
+
+    font-size: 13px;
+}
+
+
+
+/* =========================================================
+   KPIs
+========================================================= */
+
+.inventario-stats {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+.inventario-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+    transition: all 0.2s ease;
+}
+
+
+.inventario-stat-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+.inventario-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+
+.inventario-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+}
+
+
+.stock-bajo-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+}
+
+
+.vencidos-icon {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+.inventario-stat-info h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.inventario-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.inventario-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 18px;
+}
+
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.inventario-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.inventario-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.inventario-btn:active {
+
+    transform: translateY(0);
+}
+
+
+.inventario-btn-save {
+
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+
+.inventario-btn-save:hover {
+
+    background: #1d4ed8;
+}
+
+
+.inventario-btn-update {
+
+    background: #f59e0b;
+
+    color: #ffffff;
+}
+
+
+.inventario-btn-update:hover {
+
+    background: #d97706;
+}
+
+
+.inventario-btn-cancel {
+
+    background: #e5e7eb;
+
+    color: #374151;
+}
+
+
+.inventario-btn-cancel:hover {
+
+    background: #d1d5db;
+}
+
+
+.inventario-btn-edit {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.inventario-btn-edit:hover {
+
+    background: #dbeafe;
+}
+
+
+.inventario-btn-delete {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+
+.inventario-btn-delete:hover {
+
+    background: #fee2e2;
+}
+
+
+
+/* =========================================================
+   CARD TABLA
+========================================================= */
+
+.inventario-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+    overflow: hidden;
+}
+
+
+.inventario-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.inventario-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+
+.inventario-card-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.inventario-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+
+/* =========================================================
+   BADGE ROL
+========================================================= */
+
+.inventario-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+.inventario-role-badge.role-admin {
+
+    color: #1d4ed8;
+
+    background: #eff6ff;
+}
+
+
+.inventario-role-badge.role-empleado {
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+}
+
+
+
+/* =========================================================
+   TABLA
+========================================================= */
+
+.inventario-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.inventario-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+}
+
+
+.inventario-table thead {
+
+    background: #f8fafc;
+}
+
+
+.inventario-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.3px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.inventario-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+
+.inventario-table tbody tr {
+
+    transition: background 0.2s ease;
+}
+
+
+.inventario-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.inventario-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+
+/* =========================================================
+   PRODUCTO EN TABLA
+========================================================= */
+
+.inventario-producto {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.inventario-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+.inventario-stock {
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.inventario-minimo {
+
+    color: #475569;
+
+    font-weight: 500;
+}
+
+
+.inventario-lote {
+
+    color: #475569;
+}
+
+
+.inventario-ubicacion {
+
+    max-width: 180px;
+
+    color: #64748b;
+}
+
+
+.inventario-vencimiento {
+
+    color: #475569;
+
+    white-space: nowrap;
+}
+
+
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+.inventario-estado {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.estado-disponible {
+
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+.estado-stock-bajo {
+
+    background: #fef3c7;
+
+    color: #b45309;
+}
+
+
+.estado-vencido {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+
+
+/* =========================================================
+   ACCIONES TABLA
+========================================================= */
+
+.inventario-actions-table {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.inventario-action-btn {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.inventario-action-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.inventario-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, 0.58);
+
+    backdrop-filter: blur(3px);
+}
+
+
+.inventario-modal.active {
+
+    display: flex;
+}
+
+
+.inventario-modal-content {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+
+    animation: inventarioModalEntrada 0.2s ease;
+}
+
+
+@keyframes inventarioModalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(-15px) scale(0.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+}
+
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+
+.inventario-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.inventario-modal-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 20px;
+}
+
+
+.inventario-modal-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.inventario-modal-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+.inventario-modal-cerrar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: all 0.2s ease;
+}
+
+
+.inventario-modal-cerrar:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+#formInventario {
+
+    padding: 24px;
+}
+
+
+.inventario-form-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+.inventario-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.inventario-form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.inventario-form-group label i {
+
+    color: #2563eb;
+
+    width: 15px;
+}
+
+
+.inventario-form-group input,
+
+.inventario-form-group select {
+
+    width: 100%;
+
+    min-height: 43px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    transition: all 0.2s ease;
+}
+
+
+.inventario-form-group input:focus,
+
+.inventario-form-group select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+.inventario-form-group input::placeholder {
+
+    color: #9ca3af;
+}
+
+
+
+/* =========================================================
+   BOTONES MODAL
+========================================================= */
+
+.inventario-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+
+/* =========================================================
+   ESTADO VACÍO
+========================================================= */
+
+.inventario-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+}
+
+
+.inventario-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.inventario-empty span {
+
+    font-size: 14px;
+}
+
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .inventario-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+
+@media (max-width: 700px) {
+
+    .inventario-page {
+
+        padding: 18px 15px 30px;
+
+    }
+
+
+    .inventario-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .inventario-form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .inventario-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .inventario-buttons .inventario-btn {
+
+        width: 100%;
+
+    }
+
+
+    .inventario-modal {
+
+        padding: 10px;
+
+    }
+
+
+    .inventario-modal-content {
+
+        max-height: 94vh;
+
+    }
+
+}
+
+
+
+@media (max-width: 500px) {
+
+    .inventario-title h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .inventario-stat-card {
+
+        min-height: 85px;
+
+    }
+
+
+    .inventario-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+
+    }
+
+
+    .inventario-stat-info h3 {
+
+        font-size: 20px;
+
+    }
+
+}

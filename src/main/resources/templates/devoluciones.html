@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Devoluciones | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/devoluciones.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEET ALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =========================================================
+     CONTENIDO PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+    <!-- =====================================================
+         PAGINA DEVOLUCIONES
+    ====================================================== -->
+
+    <div class="devoluciones-page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="devoluciones-header">
+
+            <div class="devoluciones-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-arrow-rotate-left"></i>
+
+                    Devoluciones
+
+                </h1>
+
+                <p>
+                    Gestiona y consulta las devoluciones registradas
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MODO CONSULTA
+             SOLO EMPLEADO
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Modo consulta
+                </strong>
+
+                <span>
+                    Puedes consultar y buscar devoluciones,
+                    pero no tienes permisos para modificarlas.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ESTADISTICAS / KPI
+        ================================================== -->
+
+        <div class="devoluciones-stats">
+
+
+            <!-- =============================================
+                 TOTAL DEVOLUCIONES
+            ============================================== -->
+
+            <div class="devolucion-stat-card">
+
+                <div class="devolucion-stat-icon devoluciones-icon">
+
+                    <i class="fa-solid fa-rotate-left"></i>
+
+                </div>
+
+                <div class="devolucion-stat-info">
+
+                    <h3 id="totalDevoluciones">
+                        0
+                    </h3>
+
+                    <p>
+                        Total devoluciones
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 MONTO DEVUELTO
+            ============================================== -->
+
+            <div class="devolucion-stat-card">
+
+                <div class="devolucion-stat-icon monto-icon">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                </div>
+
+                <div class="devolucion-stat-info">
+
+                    <h3 id="montoDevuelto">
+                        $0
+                    </h3>
+
+                    <p>
+                        Monto devuelto
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PRODUCTOS DEVUELTOS
+            ============================================== -->
+
+            <div class="devolucion-stat-card">
+
+                <div class="devolucion-stat-icon productos-icon">
+
+                    <i class="fa-solid fa-box-open"></i>
+
+                </div>
+
+                <div class="devolucion-stat-info">
+
+                    <h3 id="productosDevueltos">
+                        0
+                    </h3>
+
+                    <p>
+                        Productos devueltos
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACCIONES
+             SOLO ADMIN
+        ================================================== -->
+
+        <div class="devoluciones-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button type="button"
+                    id="btnNuevaDevolucion"
+                    class="devolucion-btn devolucion-btn-save"
+                    onclick="abrirModalDevolucion()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nueva devolución
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             CARD PRINCIPAL
+        ================================================== -->
+
+        <div class="devoluciones-card">
+
+
+            <!-- =================================================
+                 ENCABEZADO CARD
+            ================================================== -->
+
+            <div class="devoluciones-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Historial de devoluciones
+
+                    </h2>
+
+                    <p>
+                        Lista de devoluciones registradas
+                        en EcoMarket PRO.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================================
+                     BADGE DEL ROL
+                ================================================== -->
+
+                <div class="devoluciones-role-badge"
+                     th:classappend="${rolUsuario == 'ADMIN'}
+                     ? ' role-admin'
+                     : ' role-empleado'">
+
+                    <i class="fa-solid"
+                       th:classappend="${rolUsuario == 'ADMIN'}
+                       ? ' fa-user-shield'
+                       : ' fa-eye'"></i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'
+                                    ? 'Administrador'
+                                    : 'Solo consulta'}">
+
+                        Solo consulta
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="devoluciones-table-container">
+
+                <table class="devoluciones-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Factura
+                        </th>
+
+                        <th>
+                            Cliente
+                        </th>
+
+                        <th>
+                            Producto
+                        </th>
+
+                        <th>
+                            Cantidad
+                        </th>
+
+                        <th>
+                            Monto
+                        </th>
+
+                        <th>
+                            Motivo
+                        </th>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaDevoluciones">
+
+                    <tr>
+
+                        <td colspan="9"
+                            class="devoluciones-empty">
+
+                            <div class="empty-content">
+
+                                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                                <strong>
+                                    Cargando devoluciones...
+                                </strong>
+
+                                <span>
+                                    Por favor espera un momento.
+                                </span>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL
+     SOLO ADMIN
+========================================================= -->
+
+<div id="modalDevolucion"
+     class="devolucion-modal"
+     th:if="${rolUsuario == 'ADMIN'}">
+
+
+    <div class="devolucion-modal-content">
+
+
+        <!-- =================================================
+             ENCABEZADO MODAL
+        ================================================== -->
+
+        <div class="devolucion-modal-header">
+
+            <div>
+
+                <h2>
+
+                    <i id="iconoTituloDevolucion"
+                       class="fa-solid fa-arrow-rotate-left"></i>
+
+                    <span id="tituloDevolucion">
+                        Nueva devolución
+                    </span>
+
+                </h2>
+
+                <p id="subtituloDevolucion">
+                    Registra una nueva devolución de venta.
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="devolucion-modal-cerrar"
+                    onclick="cerrarModalDevolucion()"
+                    title="Cerrar">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formDevolucion"
+              onsubmit="guardarDevolucion(event)">
+
+
+            <!-- =================================================
+                 ID OCULTO
+            ================================================== -->
+
+            <input type="hidden"
+                   id="devolucionId">
+
+
+            <!-- =================================================
+                 GRID DEL FORMULARIO
+            ================================================== -->
+
+            <div class="devoluciones-form-grid">
+
+
+                <!-- =================================================
+                     FACTURA
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="ventaId">
+
+                        <i class="fa-solid fa-file-invoice"></i>
+
+                        Factura
+
+                    </label>
+
+                    <select id="ventaId"
+                            required>
+
+                        <option value="">
+                            Seleccione una factura
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCTO
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="productoId">
+
+                        <i class="fa-solid fa-box"></i>
+
+                        Producto
+
+                    </label>
+
+                    <select id="productoId"
+                            required
+                            disabled>
+
+                        <option value="">
+                            Seleccione un producto
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     CLIENTE
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="clienteNombre">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Cliente
+
+                    </label>
+
+                    <input type="text"
+                           id="clienteNombre"
+                           placeholder="Cliente de la venta"
+                           readonly>
+
+                </div>
+
+
+                <!-- =================================================
+                     CANTIDAD
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="cantidad">
+
+                        <i class="fa-solid fa-hashtag"></i>
+
+                        Cantidad
+
+                    </label>
+
+                    <input type="number"
+                           id="cantidad"
+                           min="1"
+                           step="1"
+                           required
+                           disabled>
+
+                    <small id="cantidadDisponible"
+                           class="devolucion-cantidad-info">
+
+                        Seleccione un producto.
+
+                    </small>
+
+                </div>
+
+
+                <!-- =================================================
+                     MONTO
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="monto">
+
+                        <i class="fa-solid fa-money-bill-wave"></i>
+
+                        Monto
+
+                    </label>
+
+                    <input type="text"
+                           id="monto"
+                           placeholder="$0"
+                           readonly>
+
+                </div>
+
+
+                <!-- =================================================
+                     ESTADO
+                ================================================== -->
+
+                <div class="devolucion-form-group">
+
+                    <label for="estado">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        Estado
+
+                    </label>
+
+                    <select id="estado">
+
+                        <option value="ACTIVA">
+                            Activa
+                        </option>
+
+                        <option value="ANULADA">
+                            Anulada
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- =================================================
+                     MOTIVO
+                ================================================== -->
+
+                <div class="devolucion-form-group devolucion-form-full">
+
+                    <label for="motivo">
+
+                        <i class="fa-solid fa-comment-dots"></i>
+
+                        Motivo
+
+                    </label>
+
+                    <textarea id="motivo"
+                              maxlength="500"
+                              placeholder="Ingrese el motivo de la devolución..."></textarea>
+
+                    <small class="devolucion-field-info">
+                        Máximo 500 caracteres.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="devoluciones-buttons">
+
+                <button type="button"
+                        class="devolucion-btn devolucion-btn-cancel"
+                        onclick="cerrarModalDevolucion()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+                <button type="submit"
+                        id="btnGuardarDevolucion"
+                        class="devolucion-btn devolucion-btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    <span>
+                        Guardar devolución
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ROL DEL USUARIO
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+<!-- =========================================================
+     JAVASCRIPT DEL MODULO
+========================================================= -->
+
+<script th:src="@{/js/devoluciones.js}"></script>
+
+
+</body>
+
+</html>

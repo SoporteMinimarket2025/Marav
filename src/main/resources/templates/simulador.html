@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Simulador Solar</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+<h1>☀️ Simulador Solar EcoMarket</h1>
+
+<div class="simulador">
+
+    <label>Ciudad</label>
+    <select id="ciudad">
+        <option value="5.5">Medellín</option>
+        <option value="5.0">Bogotá</option>
+        <option value="6.0">Barranquilla</option>
+    </select>
+
+    <label>Consumo mensual</label>
+    <input type="number" id="consumo">
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="resultado"></div>
+
+</div>
+
+<script>
+    function calcular() {
+
+        let consumo = document.getElementById("consumo").value;
+        let radiacion = document.getElementById("ciudad").value;
+
+        let produccionPanel = 48;
+        let costoKwh = 700;
+
+        let paneles = Math.ceil(consumo / (produccionPanel * radiacion));
+        let ahorro = consumo * costoKwh;
+
+        document.getElementById("resultado").innerHTML =
+            "Paneles: " + paneles + "<br>" +
+            "Ahorro: $" + ahorro;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <!-- ========================================= -->
+    <!-- CONFIGURACIÓN -->
+    <!-- ========================================= -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Recuperar Contraseña | EcoMarket PRO
+    </title>
+
+    <!-- ========================================= -->
+    <!-- FUENTE -->
+    <!-- ========================================= -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+          rel="stylesheet">
+
+    <!-- ========================================= -->
+    <!-- CSS -->
+    <!-- ========================================= -->
+
+    <link rel="stylesheet"
+          href="/css/login.css">
+
+</head>
+
+<body>
+
+<!-- ========================================= -->
+<!-- SLIDER -->
+<!-- ========================================= -->
+
+<div class="slider">
+
+    <div class="slide slide1 active">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Recupera el acceso a tu negocio en segundos
+        </div>
+
+    </div>
+
+    <div class="slide slide2">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Tu información siempre protegida
+        </div>
+
+    </div>
+
+    <div class="slide slide3">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Continúa administrando tu tienda sin interrupciones
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- PANEL -->
+<!-- ========================================= -->
+
+<div class="panel">
+
+    <div class="box">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img src="/images/logo.png"
+                 alt="EcoMarket Logo">
+
+        </div>
+
+        <!-- TÍTULO -->
+
+        <h2 style="
+            text-align:center;
+            color:#166534;
+            margin-top:15px;
+            margin-bottom:20px;
+        ">
+            Recuperar contraseña
+        </h2>
+
+        <p style="
+            text-align:center;
+            font-size:14px;
+            color:#666;
+            margin-bottom:20px;
+        ">
+            Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.
+        </p>
+
+        <!-- MENSAJE ÉXITO -->
+
+        <div th:if="${param.enviado}"
+             style="
+                background:#dcfce7;
+                color:#166534;
+                padding:10px;
+                border-radius:8px;
+                margin-bottom:15px;
+                text-align:center;
+             ">
+
+            Se envió un enlace de recuperación a tu correo.
+
+        </div>
+
+        <!-- MENSAJE ERROR -->
+
+        <div th:if="${param.error}"
+             style="
+                background:#fee2e2;
+                color:#991b1b;
+                padding:10px;
+                border-radius:8px;
+                margin-bottom:15px;
+                text-align:center;
+             ">
+
+            No existe una cuenta registrada con ese correo.
+
+        </div>
+
+        <!-- FORMULARIO -->
+
+        <form action="/enviar-recuperacion"
+              method="post"
+              class="form active">
+
+            <input
+                    type="email"
+                    name="email"
+                    placeholder="Correo registrado"
+                    required>
+
+            <button type="submit">
+
+                Enviar enlace de recuperación
+
+            </button>
+
+            <div class="toggle">
+
+                <a href="/login"
+                   style="
+                   text-decoration:none;
+                   color:#2563eb;
+                   ">
+
+                    Volver al login
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================= -->
+
+<script>
+
+    let slides =
+        document.querySelectorAll(".slide");
+
+    let index = 0;
+
+    setInterval(() => {
+
+        slides[index]
+            .classList.remove("active");
+
+        index =
+            (index + 1) % slides.length;
+
+        slides[index]
+            .classList.add("active");
+
+    }, 5000);
+
+</script>
+
+</body>
+</html>

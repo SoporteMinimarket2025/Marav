@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Usuarios | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/usuarios.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEET ALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}">
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+
+     IMPORTANTE:
+     Se utiliza .main igual que en CLIENTES.
+     No utilizar .main-content.
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}">
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENIDO USUARIOS
+    ====================================================== -->
+
+    <div class="usuarios-page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="usuarios-header">
+
+            <div class="usuarios-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Gestión de Usuarios
+
+                </h1>
+
+
+                <p>
+
+                    Administración y consulta de usuarios registrados
+
+                </p>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 INDICADOR DE ROL
+            ============================================== -->
+
+            <div class="usuarios-role-badge"
+                 th:classappend="${rolUsuario == 'ADMIN'}
+                                 ? ' role-admin'
+                                 : ' role-empleado'">
+
+                <i class="fa-solid"
+                   th:classappend="${rolUsuario == 'ADMIN'}
+                                   ? ' fa-user-shield'
+                                   : ' fa-eye'">
+                </i>
+
+                <span th:text="${rolUsuario == 'ADMIN'
+                                ? 'Administrador'
+                                : 'Solo consulta'}">
+
+                    Solo consulta
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MENSAJE MODO CONSULTA
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Modo consulta
+                </strong>
+
+                <span>
+
+                    Puedes consultar y buscar los usuarios
+                    de tu negocio, pero no puedes crear,
+                    editar, activar, desactivar ni eliminar usuarios.
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             KPIs
+        ================================================== -->
+
+        <div class="usuarios-stats">
+
+
+            <!-- =============================================
+                 TOTAL USUARIOS
+            ============================================== -->
+
+            <div class="usuario-stat-card">
+
+                <div class="usuario-stat-icon usuarios-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <div class="usuario-stat-info">
+
+                    <h3 id="totalUsuarios">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Usuarios
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 ADMINISTRADORES
+            ============================================== -->
+
+            <div class="usuario-stat-card">
+
+                <div class="usuario-stat-icon admins-icon">
+
+                    <i class="fa-solid fa-user-shield"></i>
+
+                </div>
+
+
+                <div class="usuario-stat-info">
+
+                    <h3 id="totalAdmins">
+                        0
+                    </h3>
+
+                    <p>
+                        Administradores
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 EMPLEADOS
+            ============================================== -->
+
+            <div class="usuario-stat-card">
+
+                <div class="usuario-stat-icon empleados-icon">
+
+                    <i class="fa-solid fa-user-tie"></i>
+
+                </div>
+
+
+                <div class="usuario-stat-info">
+
+                    <h3 id="totalEmpleados">
+                        0
+                    </h3>
+
+                    <p>
+                        Empleados
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 USUARIOS ACTIVOS
+            ============================================== -->
+
+            <div class="usuario-stat-card">
+
+                <div class="usuario-stat-icon activos-icon">
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                </div>
+
+
+                <div class="usuario-stat-info">
+
+                    <h3 id="totalActivos">
+                        0
+                    </h3>
+
+                    <p>
+                        Usuarios Activos
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACCIONES ADMIN
+        ================================================== -->
+
+        <div class="usuarios-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button
+                    type="button"
+                    id="btnNuevoUsuario"
+                    class="usuario-btn usuario-btn-save">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+                Nuevo Usuario
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CARD TABLA
+        ================================================== -->
+
+        <div class="usuarios-card">
+
+
+            <!-- =================================================
+                 HEADER TABLA
+            ================================================== -->
+
+            <div class="usuarios-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-address-book"></i>
+
+                        Usuarios Registrados
+
+                    </h2>
+
+
+                    <p>
+
+                        Lista de usuarios disponibles en EcoMarket PRO
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =============================================
+                     ROL
+                ============================================== -->
+
+                <div class="usuarios-role-badge"
+                     th:classappend="${rolUsuario == 'ADMIN'}
+                                     ? ' role-admin'
+                                     : ' role-empleado'">
+
+                    <i class="fa-solid"
+                       th:classappend="${rolUsuario == 'ADMIN'}
+                                       ? ' fa-user-shield'
+                                       : ' fa-eye'">
+                    </i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'
+                                    ? 'Administrador'
+                                    : 'Solo consulta'}">
+
+                        Solo consulta
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="usuarios-table-container">
+
+                <table class="usuarios-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Usuario
+                        </th>
+
+                        <th>
+                            Documento
+                        </th>
+
+                        <th>
+                            Correo
+                        </th>
+
+                        <th>
+                            Rol
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th>
+                            Fecha creación
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaUsuarios">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL USUARIO
+
+     Solo existe para ADMIN.
+========================================================= -->
+
+<div id="modalUsuario"
+     class="usuario-modal"
+     th:if="${rolUsuario == 'ADMIN'}">
+
+
+    <!-- =====================================================
+         CONTENIDO MODAL
+    ====================================================== -->
+
+    <div class="usuario-modal-content">
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
+
+        <div class="usuario-modal-header">
+
+            <div>
+
+                <h2 id="tituloModal">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    Nuevo Usuario
+
+                </h2>
+
+
+                <p>
+
+                    Registra o actualiza la información del usuario
+
+                </p>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    id="btnCerrarModal"
+                    class="usuario-modal-cerrar"
+                    aria-label="Cerrar">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formUsuario">
+
+
+            <!-- ID OCULTO -->
+
+            <input type="hidden"
+                   id="usuarioId"
+                   name="usuarioId">
+
+
+
+            <!-- =================================================
+                 INFORMACION PERSONAL
+            ================================================== -->
+
+            <div class="usuario-form-section">
+
+                <div class="usuario-form-section-title">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    <span>
+                        Información personal
+                    </span>
+
+                </div>
+
+
+                <div class="usuarios-form-grid">
+
+
+                    <!-- =========================================
+                         NOMBRE
+                    ========================================== -->
+
+                    <div class="usuario-form-group usuario-form-full">
+
+                        <label for="nombre">
+
+                            <i class="fa-solid fa-user"></i>
+
+                            Nombre completo *
+
+                        </label>
+
+
+                        <input
+                                type="text"
+                                id="nombre"
+                                name="nombre"
+                                maxlength="100"
+                                placeholder="Ingrese el nombre completo"
+                                required>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         TIPO IDENTIFICACION
+                    ========================================== -->
+
+                    <div class="usuario-form-group">
+
+                        <label for="tipoIdentificacion">
+
+                            <i class="fa-solid fa-address-card"></i>
+
+                            Tipo de identificación *
+
+                        </label>
+
+
+                        <select
+                                id="tipoIdentificacion"
+                                name="tipoIdentificacion"
+                                required>
+
+                            <option value="">
+                                Seleccione tipo
+                            </option>
+
+                            <option value="CC">
+                                CC - Cédula de Ciudadanía
+                            </option>
+
+                            <option value="TI">
+                                TI - Tarjeta de Identidad
+                            </option>
+
+                            <option value="CE">
+                                CE - Cédula de Extranjería
+                            </option>
+
+                            <option value="NIT">
+                                NIT
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         DOCUMENTO
+                    ========================================== -->
+
+                    <div class="usuario-form-group">
+
+                        <label for="numeroIdentificacion">
+
+                            <i class="fa-solid fa-hashtag"></i>
+
+                            Número de identificación *
+
+                        </label>
+
+
+                        <input
+                                type="text"
+                                id="numeroIdentificacion"
+                                name="numeroIdentificacion"
+                                maxlength="30"
+                                placeholder="Ingrese el documento"
+                                required>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         CORREO
+                    ========================================== -->
+
+                    <div class="usuario-form-group usuario-form-full">
+
+                        <label for="email">
+
+                            <i class="fa-solid fa-envelope"></i>
+
+                            Correo electrónico *
+
+                        </label>
+
+
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                maxlength="150"
+                                placeholder="correo@ejemplo.com"
+                                required>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ACCESO Y PERMISOS
+            ================================================== -->
+
+            <div class="usuario-form-section">
+
+                <div class="usuario-form-section-title">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <span>
+                        Acceso y permisos
+                    </span>
+
+                </div>
+
+
+                <div class="usuarios-form-grid">
+
+
+                    <!-- =========================================
+                         CONTRASEÑA
+                    ========================================== -->
+
+                    <div class="usuario-form-group">
+
+                        <label for="password">
+
+                            <i class="fa-solid fa-key"></i>
+
+                            Contraseña
+                            <span id="passwordObligatoria">*</span>
+
+                        </label>
+
+
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                maxlength="100"
+                                placeholder="Ingrese la contraseña">
+
+
+                        <small id="ayudaPassword">
+
+                            La contraseña es obligatoria al crear.
+
+                        </small>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         ROL
+                    ========================================== -->
+
+                    <div class="usuario-form-group">
+
+                        <label for="rol">
+
+                            <i class="fa-solid fa-user-tag"></i>
+
+                            Rol *
+
+                        </label>
+
+
+                        <select
+                                id="rol"
+                                name="rol"
+                                required>
+
+                            <option value="EMPLEADO">
+                                Empleado
+                            </option>
+
+                            <option value="ADMIN">
+                                Administrador
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- =========================================
+                         ESTADO
+                    ========================================== -->
+
+                    <div class="usuario-form-group">
+
+                        <label for="estado">
+
+                            <i class="fa-solid fa-toggle-on"></i>
+
+                            Estado *
+
+                        </label>
+
+
+                        <select
+                                id="estado"
+                                name="estado"
+                                required>
+
+                            <option value="true">
+                                Activo
+                            </option>
+
+                            <option value="false">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="usuarios-buttons">
+
+
+                <!-- CANCELAR -->
+
+                <button
+                        type="button"
+                        id="btnCancelar"
+                        class="usuario-btn usuario-btn-cancel">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+
+
+                <!-- GUARDAR -->
+
+                <button
+                        type="submit"
+                        id="btnGuardar"
+                        class="usuario-btn usuario-btn-save">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar
+
+                </button>
+
+
+
+                <!-- ACTUALIZAR -->
+
+                <button
+                        type="submit"
+                        id="btnActualizar"
+                        class="usuario-btn usuario-btn-update"
+                        style="display:none;">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Actualizar
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ROL DEL USUARIO LOGUEADO
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/usuarios.js}">
+</script>
+
+
+</body>
+
+</html>

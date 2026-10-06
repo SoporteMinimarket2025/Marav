@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <title>Clientes | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MÓDULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/clientes.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEET ALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}">
+</div>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}">
+    </div>
+
+
+
+    <!-- =====================================================
+         CONTENIDO CLIENTES
+    ====================================================== -->
+
+    <div class="clientes-page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="clientes-header">
+
+            <div class="clientes-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-users"></i>
+
+                    Gestión de Clientes
+
+                </h1>
+
+
+                <p>
+
+                    Administración y consulta de clientes registrados
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             MENSAJE EMPLEADO
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Modo consulta
+                </strong>
+
+                <span>
+
+                    Puedes consultar y buscar clientes,
+                    pero no tienes permisos para modificarlos.
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             KPIs
+        ================================================== -->
+
+        <div class="clientes-stats">
+
+
+            <!-- TOTAL CLIENTES -->
+
+            <div class="cliente-stat-card">
+
+                <div class="cliente-stat-icon clientes-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <div class="cliente-stat-info">
+
+                    <h3 id="totalClientes">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Clientes
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CLIENTES ACTIVOS -->
+
+            <div class="cliente-stat-card">
+
+                <div class="cliente-stat-icon activos-icon">
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                </div>
+
+
+                <div class="cliente-stat-info">
+
+                    <h3 id="clientesActivos">
+                        0
+                    </h3>
+
+                    <p>
+                        Clientes Activos
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DEUDA -->
+
+            <div class="cliente-stat-card">
+
+                <div class="cliente-stat-icon deuda-icon">
+
+                    <i class="fa-solid fa-money-bill-wave"></i>
+
+                </div>
+
+
+                <div class="cliente-stat-info">
+
+                    <h3 id="totalDeuda">
+                        $0
+                    </h3>
+
+                    <p>
+                        Deuda Total
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACCIONES
+        ================================================== -->
+
+        <div class="clientes-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button
+                    type="button"
+                    id="btnNuevoCliente"
+                    class="cliente-btn cliente-btn-save"
+                    onclick="abrirModalCliente()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Cliente
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             TABLA CLIENTES
+        ================================================== -->
+
+        <div class="clientes-card">
+
+
+            <!-- HEADER TABLA -->
+
+            <div class="clientes-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-address-book"></i>
+
+                        Clientes Registrados
+
+                    </h2>
+
+                    <p>
+
+                        Lista de clientes disponibles en EcoMarket PRO
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- INDICADOR ROL -->
+
+                <div class="clientes-role-badge"
+                     th:classappend="${rolUsuario == 'ADMIN'} ? ' role-admin' : ' role-empleado'">
+
+                    <i class="fa-solid"
+                       th:classappend="${rolUsuario == 'ADMIN'}
+                                      ? ' fa-user-shield'
+                                      : ' fa-eye'">
+                    </i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'
+                                    ? 'Administrador'
+                                    : 'Solo consulta'}">
+
+                        Solo consulta
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TABLA -->
+
+            <div class="clientes-table-container">
+
+                <table class="clientes-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Cliente
+                        </th>
+
+                        <th>
+                            Documento
+                        </th>
+
+                        <th>
+                            Teléfono
+                        </th>
+
+                        <th>
+                            Dirección
+                        </th>
+
+                        <th>
+                            Deuda
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaClientes">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL CLIENTE
+========================================================= -->
+
+<div id="modalCliente"
+     class="cliente-modal">
+
+
+    <!-- =====================================================
+         CONTENIDO MODAL
+    ====================================================== -->
+
+    <div class="cliente-modal-content">
+
+
+        <!-- =================================================
+             HEADER MODAL
+        ================================================== -->
+
+        <div class="cliente-modal-header">
+
+            <div>
+
+                <h2 id="tituloFormulario">
+
+                    <i class="fa-solid fa-circle-plus"></i>
+
+                    Nuevo Cliente
+
+                </h2>
+
+
+                <p id="subtituloFormulario">
+
+                    Registra la información del cliente
+
+                </p>
+
+            </div>
+
+
+            <button
+                    type="button"
+                    class="cliente-modal-cerrar"
+                    onclick="cerrarModalCliente()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORMULARIO
+        ================================================== -->
+
+        <form id="formCliente">
+
+
+            <!-- ID OCULTO -->
+
+            <input type="hidden"
+                   id="id">
+
+
+
+            <div class="clientes-form-grid">
+
+
+                <!-- =========================================
+                     NOMBRE
+                ========================================== -->
+
+                <div class="cliente-form-group">
+
+                    <label for="nombre">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Nombre del Cliente
+
+                    </label>
+
+                    <input
+                            type="text"
+                            id="nombre"
+                            placeholder="Ingrese el nombre completo"
+                            maxlength="150"
+                            required>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     TIPO IDENTIFICACIÓN
+                ========================================== -->
+
+                <div class="cliente-form-group">
+
+                    <label for="tipoIdentificacion">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        Tipo de Identificación
+
+                    </label>
+
+                    <select id="tipoIdentificacion"
+                            required>
+
+                        <option value="">
+                            Seleccione tipo
+                        </option>
+
+                        <option value="CC">
+                            CC - Cédula de Ciudadanía
+                        </option>
+
+                        <option value="TI">
+                            TI - Tarjeta de Identidad
+                        </option>
+
+                        <option value="CE">
+                            CE - Cédula de Extranjería
+                        </option>
+
+                        <option value="NIT">
+                            NIT
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     DOCUMENTO
+                ========================================== -->
+
+                <div class="cliente-form-group">
+
+                    <label for="numeroIdentificacion">
+
+                        <i class="fa-solid fa-hashtag"></i>
+
+                        Número de Identificación
+
+                    </label>
+
+                    <input
+                            type="text"
+                            id="numeroIdentificacion"
+                            placeholder="Ingrese el documento"
+                            maxlength="30"
+                            required>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     TELÉFONO
+                ========================================== -->
+
+                <div class="cliente-form-group">
+
+                    <label for="telefono">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        Teléfono
+
+                    </label>
+
+                    <input
+                            type="text"
+                            id="telefono"
+                            placeholder="Ingrese el teléfono"
+                            maxlength="30">
+
+                </div>
+
+
+
+                <!-- =========================================
+                     DIRECCIÓN
+                ========================================== -->
+
+                <div class="cliente-form-group cliente-form-full">
+
+                    <label for="direccion">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Dirección
+
+                    </label>
+
+                    <input
+                            type="text"
+                            id="direccion"
+                            placeholder="Ingrese la dirección"
+                            maxlength="200">
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTONES
+            ================================================== -->
+
+            <div class="clientes-buttons">
+
+
+                <!-- GUARDAR -->
+
+                <button
+                        type="button"
+                        id="btnGuardar"
+                        class="cliente-btn cliente-btn-save"
+                        onclick="guardarCliente()">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar
+
+                </button>
+
+
+
+                <!-- ACTUALIZAR -->
+
+                <button
+                        type="button"
+                        id="btnActualizar"
+                        class="cliente-btn cliente-btn-update"
+                        style="display:none;"
+                        onclick="actualizarCliente()">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Actualizar
+
+                </button>
+
+
+
+                <!-- CANCELAR -->
+
+                <button
+                        type="button"
+                        id="btnCancelar"
+                        class="cliente-btn cliente-btn-cancel"
+                        onclick="cancelarEdicion()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     VARIABLE ROL
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/clientes.js}">
+</script>
+
+
+</body>
+
+</html>
+

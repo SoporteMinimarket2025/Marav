@@ -1,0 +1,1281 @@
+/* =========================================================
+   🚚 PROVEEDORES | ECOMARKET PRO
+   DISEÑO BASADO EN CLIENTES
+========================================================= */
+
+
+/* =========================================================
+   BOX SIZING
+========================================================= */
+
+.proveedores-page,
+.proveedores-page *,
+#modalProveedor,
+#modalProveedor * {
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   PAGINA PRINCIPAL
+========================================================= */
+
+.proveedores-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.proveedores-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+
+}
+
+
+.proveedores-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+}
+
+
+.proveedores-title h1 i {
+
+    font-size: 27px;
+
+}
+
+
+.proveedores-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   ALERTA MODO CONSULTA
+   MISMO PATRON DE CLIENTES
+========================================================= */
+
+.proveedores-page .alert-info {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+
+}
+
+
+.proveedores-page .alert-info > i {
+
+    margin-top: 2px;
+
+    font-size: 18px;
+
+}
+
+
+.proveedores-page .alert-info strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+
+}
+
+
+.proveedores-page .alert-info span {
+
+    display: block;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   KPIs
+========================================================= */
+
+.proveedores-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.proveedor-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.proveedor-stat-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 6px 18px rgba(0, 0, 0, .08);
+
+}
+
+
+/* =========================================================
+   ICONOS KPI
+========================================================= */
+
+.proveedor-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+
+}
+
+
+/* TOTAL */
+
+.proveedores-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+
+}
+
+
+/* ACTIVOS */
+
+.activos-icon {
+
+    background: #eaf8ef;
+
+    color: #16a34a;
+
+}
+
+
+/* EMPRESAS */
+
+.empresas-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+
+}
+
+
+/* =========================================================
+   INFORMACION KPI
+========================================================= */
+
+.proveedor-stat-info h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+
+.proveedor-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   ACCIONES PRINCIPALES
+========================================================= */
+
+.proveedores-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.proveedor-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+}
+
+
+.proveedor-btn:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+.proveedor-btn:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* GUARDAR */
+
+.proveedor-btn-save {
+
+    background: #2563eb;
+
+    color: #fff;
+
+}
+
+
+.proveedor-btn-save:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+/* ACTUALIZAR */
+
+.proveedor-btn-update {
+
+    background: #f59e0b;
+
+    color: #fff;
+
+}
+
+
+.proveedor-btn-update:hover {
+
+    background: #d97706;
+
+}
+
+
+/* CANCELAR */
+
+.proveedor-btn-cancel {
+
+    background: #e5e7eb;
+
+    color: #374151;
+
+}
+
+
+.proveedor-btn-cancel:hover {
+
+    background: #d1d5db;
+
+}
+
+
+/* =========================================================
+   TARJETA PRINCIPAL
+========================================================= */
+
+.proveedores-card {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   HEADER TARJETA
+========================================================= */
+
+.proveedores-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.proveedores-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+
+}
+
+
+.proveedores-card-header h2 i {
+
+    color: #2563eb;
+
+}
+
+
+.proveedores-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   BADGE ROL
+========================================================= */
+
+.proveedores-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+.proveedores-role-badge.role-admin {
+
+    color: #1d4ed8;
+
+    background: #eff6ff;
+
+}
+
+
+.proveedores-role-badge.role-empleado {
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+
+}
+
+
+/* =========================================================
+   TABLA
+========================================================= */
+
+.proveedores-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+.proveedores-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+
+}
+
+
+.proveedores-table thead {
+
+    background: #f8fafc;
+
+}
+
+
+.proveedores-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.proveedores-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+
+}
+
+
+.proveedores-table tbody tr {
+
+    transition:
+            background .2s ease;
+
+}
+
+
+.proveedores-table tbody tr:hover {
+
+    background: #f8fafc;
+
+}
+
+
+.proveedores-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================================
+   NOMBRE PROVEEDOR
+   MISMO ESTILO DE CLIENTE / PRODUCTO
+========================================================= */
+
+.proveedor-nombre {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #111827;
+
+}
+
+
+.proveedor-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   NIT
+========================================================= */
+
+.proveedor-nit {
+
+    font-weight: 500;
+
+    color: #475569;
+
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.proveedor-email {
+
+    color: #475569;
+
+}
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+.estado-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.estado-activo {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
+
+
+.estado-inactivo {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+}
+
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.proveedor-acciones {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.proveedor-btn-table {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+
+}
+
+
+.proveedor-btn-table:hover {
+
+    transform: translateY(-1px);
+
+}
+
+
+/* EDITAR */
+
+.proveedor-btn-edit {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+}
+
+
+.proveedor-btn-edit:hover {
+
+    background: #dbeafe;
+
+}
+
+
+/* ELIMINAR */
+
+.proveedor-btn-delete {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+}
+
+
+.proveedor-btn-delete:hover {
+
+    background: #fee2e2;
+
+}
+
+
+/* =========================================================
+   ESTADO VACIO
+========================================================= */
+
+.proveedores-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+
+}
+
+
+.proveedores-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+
+}
+
+
+.proveedores-empty span {
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   MODAL
+   MISMO PATRON DE CLIENTES
+========================================================= */
+
+.proveedor-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+            rgba(15, 23, 42, .58);
+
+    backdrop-filter: blur(3px);
+
+}
+
+
+.proveedor-modal.active {
+
+    display: flex;
+
+}
+
+
+/* =========================================================
+   CONTENIDO MODAL
+========================================================= */
+
+.proveedor-modal-content {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, .22);
+
+    animation:
+            proveedorModalEntrada .2s ease;
+
+}
+
+
+@keyframes proveedorModalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+                translateY(-15px)
+                scale(.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+                translateY(0)
+                scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+
+.proveedor-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.proveedor-modal-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 20px;
+
+}
+
+
+.proveedor-modal-header h2 i {
+
+    color: #2563eb;
+
+}
+
+
+.proveedor-modal-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   BOTON CERRAR
+========================================================= */
+
+.proveedor-modal-cerrar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: all .2s ease;
+
+}
+
+
+.proveedor-modal-cerrar:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+#formProveedor {
+
+    padding: 24px;
+
+}
+
+
+.proveedores-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+}
+
+
+.proveedor-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.proveedor-form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.proveedor-form-group label i {
+
+    color: #2563eb;
+
+    width: 15px;
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.proveedor-form-group input,
+.proveedor-form-group select {
+
+    width: 100%;
+
+    min-height: 43px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    transition: all .2s ease;
+
+}
+
+
+.proveedor-form-group input:focus,
+.proveedor-form-group select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, .10);
+
+}
+
+
+.proveedor-form-group input::placeholder {
+
+    color: #9ca3af;
+
+}
+
+
+/* =========================================================
+   BOTONES FORMULARIO
+========================================================= */
+
+.proveedores-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 900
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .proveedores-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 700
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .proveedores-page {
+
+        padding: 18px 15px 30px;
+
+    }
+
+
+    .proveedores-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .proveedores-form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .proveedores-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .proveedores-buttons .proveedor-btn {
+
+        width: 100%;
+
+    }
+
+
+    .proveedor-modal {
+
+        padding: 10px;
+
+    }
+
+
+    .proveedor-modal-content {
+
+        max-height: 94vh;
+
+    }
+
+
+    .proveedores-actions .proveedor-btn {
+
+        width: 100%;
+
+    }
+
+
+    .proveedores-actions {
+
+        justify-content: stretch;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 500
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .proveedores-title h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .proveedor-stat-card {
+
+        min-height: 85px;
+
+    }
+
+
+    .proveedor-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+
+    }
+
+
+    .proveedor-stat-info h3 {
+
+        font-size: 20px;
+
+    }
+
+}

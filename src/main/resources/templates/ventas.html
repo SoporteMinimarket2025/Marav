@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <!-- =====================================================
+       📄 CONFIGURACIÓN
+  ====================================================== -->
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+
+  <!-- =====================================================
+       🏷️ TÍTULO
+  ====================================================== -->
+
+  <title>Ventas | EcoMarket PRO</title>
+
+
+  <!-- =====================================================
+       🎨 CSS GLOBAL
+  ====================================================== -->
+
+  <link rel="stylesheet"
+        th:href="@{/css/dashboard.css}">
+
+
+  <!-- =====================================================
+       🎨 CSS DEL MÓDULO
+  ====================================================== -->
+
+  <link rel="stylesheet"
+        th:href="@{/css/ventas.css}">
+
+
+  <!-- =====================================================
+       ⭐ FONT AWESOME
+  ====================================================== -->
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+  <!-- =====================================================
+       🔔 SWEETALERT
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     📌 SIDEBAR GLOBAL
+====================================================== -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =====================================================
+     📌 CONTENEDOR PRINCIPAL
+     dashboard.css controla su posición.
+====================================================== -->
+
+<div class="main">
+
+
+  <!-- =================================================
+       🔝 TOPBAR GLOBAL
+  ================================================== -->
+
+  <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+  <!-- =================================================
+       🛒 PÁGINA DE VENTAS
+  ================================================== -->
+
+  <main class="ventas-page">
+
+
+    <!-- =================================================
+         🏷️ ENCABEZADO
+    ================================================== -->
+
+    <header class="ventas-header">
+
+      <div class="ventas-title">
+
+        <h1>
+
+          <i class="fa-solid fa-cash-register"></i>
+
+          Punto de Venta
+
+        </h1>
+
+        <p>
+          Registra ventas y gestiona el carrito de productos
+        </p>
+
+      </div>
+
+    </header>
+
+
+    <!-- =================================================
+         📦 CONTENEDOR PRINCIPAL DEL POS
+    ================================================== -->
+
+    <div class="ventas-layout">
+
+
+      <!-- =================================================
+           📦 PRODUCTOS
+      ================================================== -->
+
+      <section class="ventas-card productos-card">
+
+
+        <!-- =============================================
+             ENCABEZADO
+        ============================================== -->
+
+        <div class="ventas-card-header">
+
+          <div>
+
+            <h2>
+
+              <i class="fa-solid fa-box-open"></i>
+
+              Productos
+
+            </h2>
+
+            <p>
+              Selecciona un producto para agregarlo al carrito
+            </p>
+
+          </div>
+
+
+          <span class="ventas-badge">
+
+                        <i class="fa-solid fa-store"></i>
+
+                        Disponible
+
+                    </span>
+
+        </div>
+
+
+        <!-- =============================================
+             LISTA DE PRODUCTOS
+             ventas.js carga los productos aquí.
+        ============================================== -->
+
+        <div id="listaProductos"
+             class="productos">
+
+          <div class="ventas-loading">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            <span>
+                            Cargando productos...
+                        </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =================================================
+           🛒 CARRITO
+      ================================================== -->
+
+      <section class="ventas-card carrito-card">
+
+
+        <!-- =============================================
+             ENCABEZADO DEL CARRITO
+        ============================================== -->
+
+        <div class="ventas-card-header carrito-title">
+
+          <div>
+
+            <h2>
+
+              <i class="fa-solid fa-cart-shopping"></i>
+
+              Carrito
+
+            </h2>
+
+            <p>
+              Productos seleccionados para la venta
+            </p>
+
+          </div>
+
+
+          <!-- =========================================
+               🔢 CONTADOR
+               ventas.js actualiza este elemento.
+          ========================================== -->
+
+          <span class="carrito-badge"
+                id="cantidadCarrito">
+
+                        0 productos
+
+                    </span>
+
+        </div>
+
+
+
+        <!-- =============================================
+             🛒 PRODUCTOS SELECCIONADOS
+        ============================================== -->
+
+        <div id="items"
+             class="carrito-items">
+
+          <div class="carrito-vacio">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <p>
+              No hay productos seleccionados
+            </p>
+
+            <span>
+                            Selecciona productos para comenzar
+                        </span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             💰 RESUMEN DE LA VENTA
+        ============================================== -->
+
+        <div class="ventas-total">
+
+
+          <!-- SUBTOTAL -->
+
+          <div class="total-linea">
+
+                        <span>
+
+                            <i class="fa-solid fa-receipt"></i>
+
+                            Subtotal
+
+                        </span>
+
+            <strong id="subtotal">
+              $0
+            </strong>
+
+          </div>
+
+
+          <!-- IVA -->
+
+          <div class="iva-check">
+
+            <input type="checkbox"
+                   id="aplicarIVA"
+                   onchange="renderCarrito()">
+
+            <label for="aplicarIVA">
+
+              <i class="fa-solid fa-percent"></i>
+
+              Aplicar IVA (19%)
+
+            </label>
+
+          </div>
+
+
+          <!-- VALOR IVA -->
+
+          <div class="total-linea">
+
+                        <span>
+
+                            <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                            IVA
+
+                        </span>
+
+            <strong id="valorIVA">
+              $0
+            </strong>
+
+          </div>
+
+
+          <!-- SEPARADOR -->
+
+          <div class="total-separador"></div>
+
+
+          <!-- TOTAL -->
+
+          <div class="total-final">
+
+                        <span>
+                            Total Venta
+                        </span>
+
+            <strong id="total">
+              $0
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- =============================================
+             👤 CLIENTE
+        ============================================== -->
+
+        <div class="ventas-form-group">
+
+          <label for="cliente">
+
+            <i class="fa-solid fa-user"></i>
+
+            Cliente
+
+          </label>
+
+          <select id="cliente">
+
+            <option value="">
+              Cliente opcional
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- =============================================
+             📱 WHATSAPP
+        ============================================== -->
+
+        <div class="ventas-form-group">
+
+          <label for="telefonoWhatsapp">
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            WhatsApp
+
+          </label>
+
+          <input type="text"
+                 id="telefonoWhatsapp"
+                 placeholder="Número de WhatsApp opcional">
+
+        </div>
+
+
+
+        <!-- =============================================
+             💳 MÉTODO DE PAGO
+        ============================================== -->
+
+        <div class="ventas-form-group">
+
+          <label for="metodoPago">
+
+            <i class="fa-solid fa-credit-card"></i>
+
+            Método de pago
+
+          </label>
+
+          <select id="metodoPago"
+                  onchange="cambiarMetodoPago()">
+
+            <option value="EFECTIVO">
+              💵 EFECTIVO
+            </option>
+
+            <option value="NEQUI">
+              📱 NEQUI
+            </option>
+
+            <option value="DAVIPLATA">
+              🏦 DAVIPLATA
+            </option>
+
+            <option value="TRANSFERENCIA">
+              🏦 TRANSFERENCIA
+            </option>
+
+            <option value="DEUDA">
+              🧾 DEUDA
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- =============================================
+             💵 EFECTIVO RECIBIDO
+        ============================================== -->
+
+        <div class="ventas-form-group"
+             id="grupoEfectivo">
+
+          <label for="efectivo">
+
+            <i class="fa-solid fa-money-bill-wave"></i>
+
+            Efectivo recibido
+
+          </label>
+
+          <input type="number"
+                 id="efectivo"
+                 min="0"
+                 step="1"
+                 placeholder="Ingrese el efectivo recibido">
+
+        </div>
+
+
+
+        <!-- =============================================
+             🔁 CAMBIO
+        ============================================== -->
+
+        <div class="ventas-form-group"
+             id="grupoCambio">
+
+          <label for="cambio">
+
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+            Cambio
+
+          </label>
+
+          <input type="text"
+                 id="cambio"
+                 readonly
+                 placeholder="$0">
+
+        </div>
+
+
+
+        <!-- =============================================
+             📲 WHATSAPP FACTURA
+        ============================================== -->
+
+        <div class="iva-check whatsapp-check">
+
+          <input type="checkbox"
+                 id="whatsapp">
+
+          <label for="whatsapp">
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            Enviar factura por WhatsApp
+
+          </label>
+
+        </div>
+
+
+
+        <!-- =============================================
+             ✅ FINALIZAR VENTA
+        ============================================== -->
+
+        <button type="button"
+                id="btnFinalizarVenta"
+                class="ventas-btn ventas-btn-finalizar"
+                onclick="finalizarVenta()">
+
+          <i class="fa-solid fa-check"></i>
+
+          Finalizar Venta
+
+        </button>
+
+
+      </section>
+
+
+    </div>
+
+
+  </main>
+
+
+</div>
+
+
+<!-- =====================================================
+     📜 JAVASCRIPT
+====================================================== -->
+
+<script th:src="@{/js/ventas.js}"></script>
+
+
+</body>
+
+</html>

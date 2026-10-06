@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | </title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+<div th:fragment="sidebar">
+
+    <div class="sidebar">
+
+        <!-- ========================================= -->
+        <!-- LOGO -->
+        <!-- ========================================= -->
+
+        <div class="logo">
+
+            <img th:src="@{/images/logo.png}"
+                 alt="Logo">
+
+            <div>
+                <h2></h2>
+                <p>Sistema de Ventas</p>
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- MENÚ -->
+        <!-- ========================================= -->
+
+        <div class="menu">
+
+            <!-- DASHBOARD -->
+
+            <div class="menu-title">
+                Principal
+            </div>
+
+            <a th:href="@{/dashboard}"
+               th:classappend="${menuActivo == 'dashboard'} ? ' active' : ''">
+
+                📊 Dashboard
+            </a>
+
+            <!-- OPERACIONES -->
+
+            <div class="menu-title">
+                Operaciones
+            </div>
+
+            <a th:href="@{/ventas}"
+               th:classappend="${menuActivo == 'ventas'} ? ' active' : ''">
+
+                🛒 Ventas
+
+            </a>
+
+            <a th:href="@{/facturas}"
+               th:classappend="${menuActivo == 'facturas'} ? ' active' : ''">
+
+                🧾 Facturación
+
+            </a>
+
+            <a th:href="@{/devoluciones}"
+               th:classappend="${menuActivo == 'devoluciones'} ? ' active' : ''">
+
+                ↩️ Devoluciones
+
+            </a>
+
+            <a th:href="@{/abonos}"
+               th:classappend="${menuActivo == 'abonos'} ? ' active' : ''">
+
+                💰 Abonos
+
+            </a>
+
+            <!-- INVENTARIO -->
+
+            <div class="menu-title">
+                Inventario
+            </div>
+
+            <a th:href="@{/inventario}"
+               th:classappend="${menuActivo == 'inventario'} ? ' active' : ''">
+
+                📋 Inventario
+
+            </a>
+
+            <a th:href="@{/productos}"
+               th:classappend="${menuActivo == 'productos'} ? ' active' : ''">
+
+                📦 Productos
+
+            </a>
+
+            <a th:href="@{/proveedores}"
+               th:classappend="${menuActivo == 'proveedores'} ? ' active' : ''">
+
+                🚚 Proveedores
+
+            </a>
+
+            <!-- CLIENTES -->
+
+            <div class="menu-title">
+                Clientes
+            </div>
+
+            <a th:href="@{/clientes}"
+               th:classappend="${menuActivo == 'clientes'} ? ' active' : ''">
+
+                👥 Clientes
+
+            </a>
+
+            <!-- FINANZAS -->
+
+            <div class="menu-title">
+                Finanzas
+            </div>
+
+            <a th:href="@{/caja}"
+               th:classappend="${menuActivo == 'caja'} ? ' active' : ''">
+
+                💵 Caja
+
+            </a>
+
+
+            <!-- ADMINISTRACIÓN -->
+
+            <div class="menu-title">
+                Administración
+            </div>
+
+            <a th:href="@{/usuarios}"
+               th:classappend="${menuActivo == 'usuarios'} ? ' active' : ''">
+
+                👤 Usuarios
+
+            </a>
+
+            <a th:href="@{/configuracion}"
+               th:classappend="${menuActivo == 'configuracion'} ? ' active' : ''">
+
+                📖 Manual
+
+            </a>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <div class="logout">
+
+            <a th:href="@{/logout}">
+                🚪 Cerrar Sesión
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+
+<div class="main">
+
+
+    <!-- ======================================================
+         TOPBAR FRAGMENT
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+    <!-- BIENVENIDA -->
+    <div class="welcome">
+
+        <h1>
+
+            Bienvenido,
+
+            <span th:text="${usuario}">
+                Admin
+            </span>
+
+            👋
+
+        </h1>
+
+        <p>
+            Panel Administrativo
+        </p>
+
+    </div>
+
+    <!-- KPI -->
+    <div class="kpis">
+
+        <div class="card green">
+
+            <h3>💰 Ventas Hoy</h3>
+
+            <h1 th:text="${ventasHoy}">
+                0
+            </h1>
+
+            <p>Total vendido hoy</p>
+
+        </div>
+
+        <div class="card dark">
+
+            <h3>📦 Productos</h3>
+
+            <h1 th:text="${totalProductos}">
+                0
+            </h1>
+
+            <p>Productos registrados</p>
+
+        </div>
+
+        <div class="card lime">
+
+            <h3>👥 Clientes</h3>
+
+            <h1 th:text="${totalClientes}">
+                0
+            </h1>
+
+            <p>Clientes registrados</p>
+
+        </div>
+
+        <div class="card emerald">
+
+            <h3>📈 Ganancias Mes</h3>
+
+            <h1 th:text="${gananciasMes}">
+                0
+            </h1>
+
+            <p>Ventas del mes</p>
+
+        </div>
+
+        <div class="card blue">
+
+            <h3>💵 Caja</h3>
+
+            <h1 th:text="${saldoCaja}">
+                0
+            </h1>
+
+            <p>Disponible hoy</p>
+
+        </div>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="grid">
+
+        <!-- IZQUIERDA -->
+        <div>
+
+            <!-- VENTAS -->
+            <div class="box">
+
+                <div class="box-title">
+                    <h3>🛒 Ventas Recientes</h3>
+                </div>
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Factura</th>
+                        <th>Método</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="venta : ${ventasRecientes}">
+
+                        <td th:text="${venta.numeroFactura}">
+                            FAC-001
+                        </td>
+
+                        <td th:text="${venta.metodoPago}">
+                            EFECTIVO
+                        </td>
+
+                        <td th:text="${venta.total}">
+                            0
+                        </td>
+
+                        <td th:text="${venta.estado}">
+                            COMPLETADA
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- INVENTARIO -->
+            <div class="box">
+
+                <div class="box-title">
+
+                    <h3>
+                        📦 Inventario con Stock Bajo
+                    </h3>
+
+                </div>
+
+                <div th:each="item : ${inventarioBajo}"
+                     class="inventory">
+
+                    <div>
+
+                        <strong>
+
+                            Producto ID:
+                            <span th:text="${item.productoId}">
+                                1
+                            </span>
+
+                        </strong>
+
+                        <p>
+
+                            Stock:
+                            <span th:text="${item.stockActual}">
+                                0
+                            </span>
+
+                        </p>
+
+                    </div>
+
+                    <span class="badge low">
+                        Bajo
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DERECHA -->
+        <div>
+
+            <div class="box">
+
+                <div class="box-title">
+                    <h3>📈 Ventas Semanales</h3>
+                </div>
+
+                <canvas id="ventasChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- ========================================= -->
+
+    <!-- SIMULADOR SOLAR -->
+
+    <!-- ========================================= -->
+
+    <div class="box solar-box">
+
+
+        <div class="box-title">
+
+            <h3>
+                ☀️ Simulador Solar
+            </h3>
+
+        </div>
+
+        <div class="simulator">
+
+            <!-- FORMULARIO -->
+
+            <div class="solar-form">
+
+                <label>
+                    📍 Ciudad
+                </label>
+
+                <select id="ciudad">
+
+                    <option value="5.5">Medellín</option>
+                    <option value="5.0">Bogotá</option>
+                    <option value="5.8">Cali</option>
+                    <option value="6.0">Barranquilla</option>
+                    <option value="5.4">Pereira</option>
+                    <option value="5.3">Manizales</option>
+                    <option value="5.7">Bucaramanga</option>
+                    <option value="6.2">Cartagena</option>
+                    <option value="6.1">Santa Marta</option>
+                    <option value="5.9">Valledupar</option>
+
+                </select>
+
+                <label>
+                    ⚡ Consumo mensual (kWh)
+                </label>
+
+                <input
+                        type="number"
+                        id="consumo"
+                        placeholder="Ejemplo: 350">
+
+                <label>
+                    💰 Valor factura actual
+                </label>
+
+                <input
+                        type="number"
+                        id="factura"
+                        placeholder="Ejemplo: 250000">
+
+                <button
+                        type="button"
+                        class="btn-solar"
+                        onclick="calcularSolar()">
+
+                    ⚡ Calcular ahorro
+
+                </button>
+
+            </div>
+
+
+            <!-- SLIDER -->
+
+            <div class="solar-image">
+
+                <div class="solar-slider">
+
+                    <img src="/images/solar1.jpg"
+                         class="slide active"
+                         alt="Panel Solar 1">
+
+                    <img src="/images/solar2.jpg"
+                         class="slide"
+                         alt="Panel Solar 2">
+
+                    <img src="/images/solar3.jpg"
+                         class="slide"
+                         alt="Panel Solar 3">
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- RESULTADO -->
+
+        <div id="resultadoSolar"
+             class="resultado-solar">
+
+
+            <div class="solar-info-default">
+
+                <h4>
+                    ☀️ Energía Solar Inteligente
+                </h4>
+
+                <p>
+
+                    Calcula un ahorro estimado basado en
+                    tu consumo energético y descubre cómo
+                    la energía solar puede ayudarte a
+                    reducir costos.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+    <script src="/js/simulador.js"></script>
+
+
+
+    <script th:inline="javascript">
+
+    let ventasSemana =
+        [[${ventasSemana}]];
+
+    new Chart(
+        document.getElementById("ventasChart"),
+        {
+            type:"line",
+
+            data:{
+                labels:[
+                    "Lun",
+                    "Mar",
+                    "Mié",
+                    "Jue",
+                    "Vie",
+                    "Sáb",
+                    "Dom"
+                ],
+
+                datasets:[{
+                    label:"Ventas",
+                    data:ventasSemana,
+                    borderWidth:3,
+                    tension:0.4,
+                    fill:false
+                }]
+            }
+        });
+
+</script>
+</body>
+<script>
+
+    const buscador =
+        document.getElementById(
+            "buscadorModulo"
+        );
+
+    buscador.addEventListener(
+        "keyup",
+        function(){
+
+            let filtro =
+                this.value.toLowerCase();
+
+            let enlaces =
+                document.querySelectorAll(
+                    ".menu a"
+                );
+
+            enlaces.forEach(link => {
+
+                let texto =
+                    link.textContent.toLowerCase();
+
+                if(texto.includes(filtro)){
+
+                    link.style.display =
+                        "flex";
+
+                }else{
+
+                    link.style.display =
+                        "none";
+
+                }
+
+            });
+
+        });
+
+</script>
+</html>
+

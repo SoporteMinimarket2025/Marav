@@ -1,0 +1,1550 @@
+
+/* =========================================================
+   PAGINA
+========================================================= */
+
+.devoluciones-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.devoluciones-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+
+}
+
+
+.devoluciones-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+}
+
+
+.devoluciones-title h1 i {
+
+    font-size: 27px;
+
+}
+
+
+.devoluciones-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+
+}
+
+
+/* =========================================================
+   MODO CONSULTA
+========================================================= */
+
+.devoluciones-page .alert-info {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+
+}
+
+
+.devoluciones-page .alert-info > i {
+
+    margin-top: 2px;
+
+    font-size: 18px;
+
+}
+
+
+.devoluciones-page .alert-info strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+
+}
+
+
+.devoluciones-page .alert-info span {
+
+    display: block;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   ESTADISTICAS
+========================================================= */
+
+.devoluciones-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.devolucion-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.devolucion-stat-card:hover {
+
+    transform:
+            translateY(-2px);
+
+    box-shadow:
+            0 6px 18px rgba(0, 0, 0, .08);
+
+}
+
+
+/* =========================================================
+   ICONOS KPI
+========================================================= */
+
+.devolucion-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+
+}
+
+
+.devoluciones-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+
+}
+
+
+.monto-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+
+}
+
+
+.productos-icon {
+
+    background: #eaf8ef;
+
+    color: #16a34a;
+
+}
+
+
+/* =========================================================
+   INFORMACION KPI
+========================================================= */
+
+.devolucion-stat-info h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+
+.devolucion-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.devoluciones-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* =========================================================
+   BOTONES
+========================================================= */
+
+.devolucion-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.devolucion-btn:hover {
+
+    transform:
+            translateY(-1px);
+
+}
+
+
+.devolucion-btn:active {
+
+    transform:
+            translateY(0);
+
+}
+
+
+.devolucion-btn:disabled {
+
+    opacity: .7;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* =========================================================
+   BOTON GUARDAR
+========================================================= */
+
+.devolucion-btn-save {
+
+    background: #2563eb;
+
+    color: #fff;
+
+}
+
+
+.devolucion-btn-save:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+/* =========================================================
+   BOTON ACTUALIZAR
+========================================================= */
+
+.devolucion-btn-update {
+
+    background: #f59e0b;
+
+    color: #fff;
+
+}
+
+
+.devolucion-btn-update:hover {
+
+    background: #d97706;
+
+}
+
+
+/* =========================================================
+   BOTON CANCELAR
+========================================================= */
+
+.devolucion-btn-cancel {
+
+    background: #e5e7eb;
+
+    color: #374151;
+
+}
+
+
+.devolucion-btn-cancel:hover {
+
+    background: #d1d5db;
+
+}
+
+
+/* =========================================================
+   CARD PRINCIPAL
+========================================================= */
+
+.devoluciones-card {
+
+    width: 100%;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   HEADER CARD
+========================================================= */
+
+.devoluciones-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.devoluciones-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+
+}
+
+
+.devoluciones-card-header h2 i {
+
+    color: #2563eb;
+
+}
+
+
+.devoluciones-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   BADGE ROL
+========================================================= */
+
+.devoluciones-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+}
+
+
+.devoluciones-role-badge.role-admin {
+
+    color: #1d4ed8;
+
+    background: #eff6ff;
+
+}
+
+
+.devoluciones-role-badge.role-empleado {
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+
+}
+
+
+/* =========================================================
+   TABLA
+========================================================= */
+
+.devoluciones-table-container {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+}
+
+
+.devoluciones-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 900px;
+
+}
+
+
+.devoluciones-table thead {
+
+    background: #f8fafc;
+
+}
+
+
+.devoluciones-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.devoluciones-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+
+}
+
+
+.devoluciones-table tbody tr {
+
+    transition:
+            background .2s ease;
+
+}
+
+
+.devoluciones-table tbody tr:hover {
+
+    background: #f8fafc;
+
+}
+
+
+.devoluciones-table tbody tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+/* =========================================================
+   FACTURA
+========================================================= */
+
+.factura-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.factura-badge i {
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   CLIENTE
+========================================================= */
+
+.cliente-cell {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-weight: 600;
+
+    color: #111827;
+
+}
+
+
+.cliente-cell i {
+
+    width: 32px;
+
+    height: 32px;
+
+    min-width: 32px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   PRODUCTO
+========================================================= */
+
+.producto-cell {
+
+    display: block;
+
+    max-width: 200px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #374151;
+
+    font-weight: 500;
+
+}
+
+
+/* =========================================================
+   CANTIDAD
+========================================================= */
+
+.cantidad-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 30px;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    background: #fff4e5;
+
+    color: #c2410c;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   MONTO
+========================================================= */
+
+.monto-cell {
+
+    color: #16a34a;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   MOTIVO
+========================================================= */
+
+.motivo-cell {
+
+    display: block;
+
+    max-width: 220px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    color: #64748b;
+
+}
+
+
+/* =========================================================
+   FECHA
+========================================================= */
+
+.fecha-cell {
+
+    color: #475569;
+
+    white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   ESTADOS
+========================================================= */
+
+.estado-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.estado-activa {
+
+    background: #dcfce7;
+
+    color: #15803d;
+
+}
+
+
+.estado-anulada {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+}
+
+
+/* =========================================================
+   ACCIONES TABLA
+========================================================= */
+
+.devolucion-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+}
+
+
+.btn-action {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.btn-action:hover {
+
+    transform:
+            translateY(-1px);
+
+}
+
+
+.btn-edit {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+}
+
+
+.btn-edit:hover {
+
+    background: #dbeafe;
+
+}
+
+
+.btn-delete {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+
+}
+
+
+.btn-delete:hover {
+
+    background: #fee2e2;
+
+}
+
+
+/* =========================================================
+   ESTADO VACIO
+========================================================= */
+
+.devoluciones-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+
+}
+
+
+.empty-content {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+}
+
+
+.empty-content i {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 32px;
+
+}
+
+
+.empty-content strong {
+
+    color: #64748b;
+
+    font-size: 14px;
+
+}
+
+
+.empty-content span {
+
+    font-size: 13px;
+
+    color: #94a3b8;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.devolucion-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+            rgba(15, 23, 42, .58);
+
+    backdrop-filter:
+            blur(3px);
+
+}
+
+
+.devolucion-modal.active {
+
+    display: flex;
+
+}
+
+
+/* =========================================================
+   BLOQUEAR SCROLL
+========================================================= */
+
+body.modal-open {
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   CONTENIDO MODAL
+========================================================= */
+
+.devolucion-modal-content {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, .22);
+
+    animation:
+            devolucionModalEntrada .2s ease;
+
+}
+
+
+@keyframes devolucionModalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+                translateY(-15px)
+                scale(.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+                translateY(0)
+                scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   HEADER MODAL
+========================================================= */
+
+.devolucion-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+
+.devolucion-modal-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 20px;
+
+}
+
+
+.devolucion-modal-header h2 i {
+
+    color: #2563eb;
+
+}
+
+
+.devolucion-modal-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   CERRAR MODAL
+========================================================= */
+
+.devolucion-modal-cerrar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.devolucion-modal-cerrar:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+
+}
+
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
+
+#formDevolucion {
+
+    padding: 24px;
+
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.devoluciones-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+}
+
+
+/* =========================================================
+   CAMPOS
+========================================================= */
+
+.devolucion-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+.devolucion-form-full {
+
+    grid-column: 1 / -1;
+
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.devolucion-form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+.devolucion-form-group label i {
+
+    color: #2563eb;
+
+    width: 15px;
+
+}
+
+
+/* =========================================================
+   INPUTS / SELECT / TEXTAREA
+========================================================= */
+
+.devolucion-form-group input,
+.devolucion-form-group select,
+.devolucion-form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    transition:
+            all .2s ease;
+
+}
+
+
+.devolucion-form-group input,
+.devolucion-form-group select {
+
+    min-height: 43px;
+
+    padding: 10px 12px;
+
+}
+
+
+.devolucion-form-group textarea {
+
+    min-height: 100px;
+
+    padding: 10px 12px;
+
+    resize: vertical;
+
+    font-family: inherit;
+
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.devolucion-form-group input:focus,
+.devolucion-form-group select:focus,
+.devolucion-form-group textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, .10);
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.devolucion-form-group input::placeholder,
+.devolucion-form-group textarea::placeholder {
+
+    color: #9ca3af;
+
+}
+
+
+/* =========================================================
+   READONLY
+========================================================= */
+
+.devolucion-form-group input[readonly] {
+
+    background: #f8fafc;
+
+    color: #475569;
+
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.devolucion-form-group input:disabled,
+.devolucion-form-group select:disabled {
+
+    background: #f3f4f6;
+
+    color: #9ca3af;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================================================
+   INFORMACION CANTIDAD
+========================================================= */
+
+.devolucion-cantidad-info {
+
+    margin-top: 6px;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   INFORMACION MOTIVO
+========================================================= */
+
+.devolucion-field-info {
+
+    margin-top: 6px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   BOTONES FORMULARIO
+========================================================= */
+
+.devoluciones-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 900
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .devoluciones-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 700
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .devoluciones-page {
+
+        padding:
+                18px 15px 30px;
+
+    }
+
+
+    .devoluciones-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .devoluciones-form-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .devolucion-form-full {
+
+        grid-column: auto;
+
+    }
+
+
+    .devoluciones-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .devoluciones-buttons
+    .devolucion-btn {
+
+        width: 100%;
+
+    }
+
+
+    .devolucion-modal {
+
+        padding: 10px;
+
+    }
+
+
+    .devolucion-modal-content {
+
+        max-height: 94vh;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 500
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .devoluciones-title h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .devolucion-stat-card {
+
+        min-height: 85px;
+
+    }
+
+
+    .devolucion-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+
+    }
+
+
+    .devolucion-stat-info h3 {
+
+        font-size: 20px;
+
+    }
+
+
+    .devolucion-modal-header {
+
+        padding:
+                18px;
+
+    }
+
+
+    #formDevolucion {
+
+        padding:
+                18px;
+
+    }
+
+}

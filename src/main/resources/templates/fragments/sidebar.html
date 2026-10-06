@@ -1,0 +1,318 @@
+<div th:fragment="sidebar">
+
+
+    <!-- ========================================================= -->
+    <!-- SIDEBAR PRINCIPAL -->
+    <!-- ========================================================= -->
+
+    <div class="sidebar">
+
+
+        <!-- ===================================================== -->
+        <!-- LOGO -->
+        <!-- ===================================================== -->
+
+        <div class="logo">
+
+
+            <img src="/images/logo.png"
+                 alt="Marav">
+
+
+            <div>
+
+                <h2></h2>
+
+                <p>
+                    Sistema de ventas
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ===================================================== -->
+        <!-- MENÚ PRINCIPAL -->
+        <!-- ===================================================== -->
+
+        <div class="menu">
+
+
+            <!-- ================================================= -->
+            <!-- PRINCIPAL -->
+            <!-- ================================================= -->
+
+            <div class="menu-title">
+
+                Principal
+
+            </div>
+
+
+            <!-- DASHBOARD -->
+
+            <a th:href="@{/dashboard}"
+               th:classappend="${menuActivo == 'dashboard'} ? ' active' : ''">
+
+                📊 Dashboard
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- OPERACIONES -->
+            <!-- ================================================= -->
+
+            <div class="menu-title">
+
+                Operaciones
+
+            </div>
+
+
+            <!-- VENTAS -->
+
+            <a th:href="@{/ventas}"
+               th:classappend="${menuActivo == 'ventas'} ? ' active' : ''">
+
+                🛒 Ventas
+
+            </a>
+
+
+
+            <!-- FACTURACIÓN -->
+
+            <a th:href="@{/facturas}"
+               th:classappend="${menuActivo == 'facturas'} ? ' active' : ''">
+
+                🧾 Facturación
+
+            </a>
+
+
+
+            <!-- DEVOLUCIONES -->
+
+            <a th:href="@{/devoluciones}"
+               th:classappend="${menuActivo == 'devoluciones'} ? ' active' : ''">
+
+                ↩️ Devoluciones
+
+            </a>
+
+
+
+            <!-- ABONOS -->
+
+            <a th:href="@{/abonos}"
+               th:classappend="${menuActivo == 'abonos'} ? ' active' : ''">
+
+                💰 Abonos
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- INVENTARIO -->
+            <!-- ================================================= -->
+
+            <div class="menu-title">
+
+                Inventario
+
+            </div>
+
+
+
+            <!-- PRODUCTOS -->
+
+            <a th:href="@{/productos}"
+               th:classappend="${menuActivo == 'productos'} ? ' active' : ''">
+
+                📦 Productos
+
+            </a>
+
+
+
+            <!-- INVENTARIO -->
+
+            <a th:href="@{/inventario}"
+               th:classappend="${menuActivo == 'inventario'} ? ' active' : ''">
+
+                📋 Inventario
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- PROVEEDORES -->
+            <!-- ================================================= -->
+            <!--
+                 IMPORTANTE:
+
+                 Proveedores ahora puede ser consultado tanto
+                 por ADMIN como por EMPLEADO.
+
+                 Por eso NO colocamos:
+
+                 th:if="${rolUsuario == 'ADMIN'}"
+
+                 Los permisos reales de modificación están
+                 protegidos en SecurityConfig.
+            -->
+            <!-- ================================================= -->
+
+            <a th:href="@{/proveedores}"
+               th:classappend="${menuActivo == 'proveedores'} ? ' active' : ''">
+
+                🚚 Proveedores
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- CLIENTES -->
+            <!-- ================================================= -->
+
+            <div class="menu-title">
+
+                Clientes
+
+            </div>
+
+
+
+            <!-- CLIENTES -->
+
+            <a th:href="@{/clientes}"
+               th:classappend="${menuActivo == 'clientes'} ? ' active' : ''">
+
+                👥 Clientes
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- FINANZAS -->
+            <!-- ================================================= -->
+            <!--
+                 Solo ADMIN.
+            -->
+            <!-- ================================================= -->
+
+            <div class="menu-title"
+                 th:if="${rolUsuario == 'ADMIN'}">
+
+                Finanzas
+
+            </div>
+
+
+
+            <!-- CAJA -->
+
+            <a th:href="@{/caja}"
+               th:if="${rolUsuario == 'ADMIN'}"
+               th:classappend="${menuActivo == 'caja'} ? ' active' : ''">
+
+                💵 Caja
+
+            </a>
+
+
+
+            <!-- ================================================= -->
+            <!-- ANÁLISIS -->
+            <!-- ================================================= -->
+            <!--
+                 Solo ADMIN.
+            -->
+            <!-- ================================================= -->
+
+            <div class="menu-title"
+                 th:if="${rolUsuario == 'ADMIN'}">
+
+                Análisis
+
+            </div>
+
+
+
+
+
+            <!-- ================================================= -->
+            <!-- ADMINISTRACIÓN -->
+            <!-- ================================================= -->
+            <!--
+                 Solo ADMIN.
+            -->
+            <!-- ================================================= -->
+
+            <div class="menu-title"
+                 th:if="${rolUsuario == 'ADMIN'}">
+
+                Administración
+
+            </div>
+
+
+
+            <!-- USUARIOS -->
+
+            <a th:href="@{/usuarios}"
+               th:if="${rolUsuario == 'ADMIN'}"
+               th:classappend="${menuActivo == 'usuarios'} ? ' active' : ''">
+
+                👤 Usuarios
+
+            </a>
+
+
+
+            <!-- Manual-->
+
+            <a th:href="@{/configuracion}"
+               th:if="${rolUsuario == 'ADMIN'}"
+               th:classappend="${menuActivo == 'configuracion'} ? ' active' : ''">
+
+                📖 Manual
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- ===================================================== -->
+        <!-- CERRAR SESIÓN -->
+        <!-- ===================================================== -->
+
+        <div class="logout">
+
+
+            <a th:href="@{/logout}">
+
+                🚪 Cerrar Sesión
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+

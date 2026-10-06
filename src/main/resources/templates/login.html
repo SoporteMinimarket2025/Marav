@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+    <!-- ========================================= -->
+    <!-- CONFIGURACIÓN GENERAL -->
+    <!-- ========================================= -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EcoMarket PRO</title>
+
+
+    <!-- ========================================= -->
+    <!-- FUENTE GOOGLE -->
+    <!-- ========================================= -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+          rel="stylesheet">
+
+
+    <!-- ========================================= -->
+    <!-- CSS LOGIN -->
+    <!-- ========================================= -->
+
+    <link rel="stylesheet"
+          href="/css/login.css">
+
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!--                  SLIDER IZQUIERDO                 -->
+<!-- ================================================= -->
+
+<div class="slider">
+
+
+    <!-- ========================================= -->
+    <!-- IMAGEN 1 -->
+    <!-- ========================================= -->
+
+    <div class="slide slide1 active">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+
+            Transforma tu tienda en un negocio inteligente
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- IMAGEN 2 -->
+    <!-- ========================================= -->
+
+    <div class="slide slide2">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+
+            Control total de inventario y ventas
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- IMAGEN 3 -->
+    <!-- ========================================= -->
+
+    <div class="slide slide3">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+
+            Crece con tecnología y sostenibilidad
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!--                  PANEL LOGIN                      -->
+<!-- ================================================= -->
+
+<div class="panel">
+
+
+    <div class="box">
+
+
+        <!-- ========================================= -->
+        <!-- LOGO EMPRESA -->
+        <!-- ========================================= -->
+
+        <div class="logo">
+
+            <img src="/images/logo.png"
+                 alt="Logo EcoMarket">
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- FORMULARIO LOGIN -->
+        <!-- ========================================= -->
+
+        <form action="/login"
+              method="post"
+              id="loginForm"
+              class="form active">
+
+
+            <!-- ========================================= -->
+            <!-- CORREO -->
+            <!-- ========================================= -->
+
+            <input
+                    type="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- CONTRASEÑA -->
+            <!-- ========================================= -->
+
+            <input
+                    type="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- BOTÓN INGRESAR -->
+            <!-- ========================================= -->
+
+            <button type="submit">
+
+                Ingresar
+
+            </button>
+
+
+            <!-- ========================================= -->
+            <!-- RECUPERAR CONTRASEÑA -->
+            <!-- ========================================= -->
+
+            <div class="forgot">
+
+                <a href="/recuperar">
+
+                    ¿Olvidaste tu contraseña?
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- IR A REGISTRO -->
+            <!-- ========================================= -->
+
+            <div class="toggle"
+                 onclick="showRegister()">
+
+                Crear negocio
+
+            </div>
+
+
+        </form>
+
+
+        <!-- ========================================= -->
+        <!-- FORMULARIO REGISTRO NEGOCIO -->
+        <!-- ========================================= -->
+
+        <form id="registroForm"
+              class="form">
+
+
+            <!-- ========================================= -->
+            <!-- NOMBRE NEGOCIO -->
+            <!-- ========================================= -->
+
+            <input
+                    type="text"
+                    id="nombreNegocio"
+                    placeholder="Nombre del negocio"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- NOMBRE ADMIN -->
+            <!-- ========================================= -->
+
+            <input
+                    type="text"
+                    id="nombre"
+                    placeholder="Nombre completo"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- EMAIL -->
+            <!-- ========================================= -->
+
+            <input
+                    type="email"
+                    id="emailRegistro"
+                    placeholder="Correo electrónico"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- PASSWORD -->
+            <!-- ========================================= -->
+
+            <input
+                    type="password"
+                    id="passwordRegistro"
+                    placeholder="Contraseña"
+                    required>
+
+
+            <!-- ========================================= -->
+            <!-- MENSAJE DEL REGISTRO -->
+            <!-- ========================================= -->
+
+            <div id="mensajeRegistro"
+                 style="
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    text-align: center;
+                    font-size: 14px;
+                    min-height: 20px;
+                 ">
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- BOTÓN CREAR CUENTA -->
+            <!-- ========================================= -->
+
+            <button
+                    type="button"
+                    id="btnRegistrar"
+                    onclick="registrar()">
+
+                Crear cuenta
+
+            </button>
+
+
+            <!-- ========================================= -->
+            <!-- VOLVER LOGIN -->
+            <!-- ========================================= -->
+
+            <div class="toggle"
+                 onclick="showLogin()">
+
+                Ya tengo cuenta
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ================================================= -->
+<!--                  JAVASCRIPT                       -->
+<!-- ================================================= -->
+
+<script>
+
+
+    /* ================================================= */
+    /*                 SLIDER AUTOMÁTICO                 */
+    /* ================================================= */
+
+    let slides = document.querySelectorAll(".slide");
+
+    let i = 0;
+
+
+    setInterval(() => {
+
+        // Quitar imagen actual
+        slides[i].classList.remove("active");
+
+
+        // Pasar a la siguiente imagen
+        i = (i + 1) % slides.length;
+
+
+        // Activar nueva imagen
+        slides[i].classList.add("active");
+
+    }, 5000);
+
+
+
+    /* ================================================= */
+    /*             CAMBIO ENTRE FORMULARIOS              */
+    /* ================================================= */
+
+    function showRegister() {
+
+        document
+            .getElementById("loginForm")
+            .classList.remove("active");
+
+
+        document
+            .getElementById("registroForm")
+            .classList.add("active");
+
+
+        // Limpiar mensaje anterior
+        document
+            .getElementById("mensajeRegistro")
+            .innerHTML = "";
+
+    }
+
+
+
+    function showLogin() {
+
+        document
+            .getElementById("registroForm")
+            .classList.remove("active");
+
+
+        document
+            .getElementById("loginForm")
+            .classList.add("active");
+
+    }
+
+
+
+    /* ================================================= */
+    /*                REGISTRO NEGOCIO                   */
+    /* ================================================= */
+
+    async function registrar() {
+
+
+        /* ========================================= */
+        /* ELEMENTOS DEL FORMULARIO */
+        /* ========================================= */
+
+        const nombreNegocio =
+            document
+                .getElementById("nombreNegocio")
+                .value
+                .trim();
+
+
+        const nombre =
+            document
+                .getElementById("nombre")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("emailRegistro")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            document
+                .getElementById("passwordRegistro")
+                .value;
+
+
+        const mensaje =
+            document
+                .getElementById("mensajeRegistro");
+
+
+        const boton =
+            document
+                .getElementById("btnRegistrar");
+
+
+
+        /* ========================================= */
+        /* VALIDACIONES */
+        /* ========================================= */
+
+        if (!nombreNegocio ||
+            !nombre ||
+            !email ||
+            !password) {
+
+            mensaje.style.color = "#dc2626";
+
+            mensaje.innerHTML =
+                "❌ Completa todos los campos.";
+
+            return;
+        }
+
+
+
+        /* ========================================= */
+        /* DESACTIVAR BOTÓN */
+        /* ========================================= */
+
+        boton.disabled = true;
+
+        boton.innerText = "Creando cuenta...";
+
+        mensaje.style.color = "#64748b";
+
+        mensaje.innerHTML =
+            "Procesando registro...";
+
+
+
+        /* ========================================= */
+        /* DATOS PARA SPRING BOOT */
+        /* ========================================= */
+
+        const data = {
+
+            nombreNegocio: nombreNegocio,
+
+            nombre: nombre,
+
+            email: email,
+
+            password: password
+
+        };
+
+
+
+        try {
+
+
+            /* ========================================= */
+            /* PETICIÓN AL BACKEND */
+            /* ========================================= */
+
+            const respuesta = await fetch("/registro", {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify(data)
+
+            });
+
+
+
+            /* ========================================= */
+            /* LEER RESPUESTA */
+            /* ========================================= */
+
+            const resultado =
+                (await respuesta.text()).trim();
+
+
+            console.log(
+                "Respuesta del servidor:",
+                resultado
+            );
+
+
+
+            /* ========================================= */
+            /* REGISTRO CORRECTO */
+            /* ========================================= */
+
+            if (resultado === "REGISTRO_OK") {
+
+
+                mensaje.style.color = "#16a34a";
+
+
+                mensaje.innerHTML = `
+                    <strong>✓ ¡Registro exitoso!</strong><br>
+                    Tu negocio fue creado correctamente.<br>
+                    Ahora puedes iniciar sesión.
+                `;
+
+
+                boton.disabled = true;
+
+                boton.innerText =
+                    "Cuenta creada";
+
+
+                /*
+                 * IMPORTANTE:
+                 *
+                 * NO enviamos al dashboard.
+                 *
+                 * El usuario debe iniciar sesión
+                 * manualmente.
+                 */
+
+
+                setTimeout(() => {
+
+                    window.location.href =
+                        "/login?registro=ok";
+
+                }, 2000);
+
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* CORREO EXISTENTE */
+            /* ========================================= */
+
+            if (resultado === "EMAIL_EXISTE") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ El correo electrónico ya está registrado.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* NEGOCIO REQUERIDO */
+            /* ========================================= */
+
+            if (resultado === "NEGOCIO_REQUERIDO") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ Debes ingresar el nombre del negocio.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* NOMBRE REQUERIDO */
+            /* ========================================= */
+
+            if (resultado === "NOMBRE_REQUERIDO") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ Debes ingresar tu nombre.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* EMAIL REQUERIDO */
+            /* ========================================= */
+
+            if (resultado === "EMAIL_REQUERIDO") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ Debes ingresar un correo electrónico.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* PASSWORD REQUERIDO */
+            /* ========================================= */
+
+            if (resultado === "PASSWORD_REQUERIDO") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ Debes ingresar una contraseña.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* DATOS INVÁLIDOS */
+            /* ========================================= */
+
+            if (resultado === "DATOS_INVALIDOS") {
+
+                mensaje.style.color = "#dc2626";
+
+                mensaje.innerHTML =
+                    "❌ Los datos enviados no son válidos.";
+
+                boton.disabled = false;
+
+                boton.innerText =
+                    "Crear cuenta";
+
+                return;
+
+            }
+
+
+
+            /* ========================================= */
+            /* ERROR DEL SERVIDOR */
+            /* ========================================= */
+
+            mensaje.style.color = "#dc2626";
+
+            mensaje.innerHTML = `
+                ❌ Ocurrió un error al crear la cuenta.<br>
+                Revisa la consola y el servidor.
+            `;
+
+
+            boton.disabled = false;
+
+            boton.innerText =
+                "Crear cuenta";
+
+
+        } catch (error) {
+
+
+            /* ========================================= */
+            /* ERROR DE CONEXIÓN */
+            /* ========================================= */
+
+            console.error(
+                "Error al registrar:",
+                error
+            );
+
+
+            mensaje.style.color = "#dc2626";
+
+
+            mensaje.innerHTML =
+                "❌ No se pudo conectar con el servidor.";
+
+
+            boton.disabled = false;
+
+
+            boton.innerText =
+                "Crear cuenta";
+
+        }
+
+    }
+
+
+
+    /* ================================================= */
+    /*          MENSAJE DESPUÉS DEL REGISTRO             */
+    /* ================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            const parametros =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const registro =
+                parametros.get("registro");
+
+
+            if (registro === "ok") {
+
+
+                /*
+                 * Sweet mensaje visual sencillo
+                 * al regresar al login.
+                 */
+
+                const mensajeLogin =
+                    document.createElement("div");
+
+
+                mensajeLogin.innerHTML = `
+                    ✓ ¡Cuenta creada correctamente!
+                    <br>
+                    Ahora puedes iniciar sesión.
+                `;
+
+
+                mensajeLogin.style.color =
+                    "#16a34a";
+
+
+                mensajeLogin.style.fontSize =
+                    "14px";
+
+
+                mensajeLogin.style.textAlign =
+                    "center";
+
+
+                mensajeLogin.style.marginBottom =
+                    "15px";
+
+
+                const form =
+                    document.getElementById(
+                        "loginForm"
+                    );
+
+
+                form.insertBefore(
+                    mensajeLogin,
+                    form.firstChild
+                );
+
+            }
+
+        });
+
+
+</script>
+
+
+</body>
+
+</html>

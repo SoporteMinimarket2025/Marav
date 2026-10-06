@@ -1,0 +1,992 @@
+
+/* ==========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================== */
+
+.factura-detalle-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* ==========================================================
+   ENCABEZADO
+   ========================================================== */
+
+.factura-detalle-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+.factura-detalle-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.factura-detalle-title h1 i {
+
+    font-size: 27px;
+
+    color: #2563eb;
+}
+
+
+.factura-detalle-title h1 span {
+
+    color: #2563eb;
+}
+
+
+.factura-detalle-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   GRID INFORMACIÓN
+   ========================================================== */
+
+.factura-info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ==========================================================
+   TARJETA INFORMACIÓN
+   ========================================================== */
+
+.factura-info-card {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   CABECERA TARJETA
+   ========================================================== */
+
+.factura-info-card-header {
+
+    padding: 18px 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.factura-info-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #111827;
+
+    font-size: 16px;
+}
+
+
+.factura-info-card-header h2 i {
+
+    color: #2563eb;
+}
+
+
+/* ==========================================================
+   CUERPO TARJETA
+   ========================================================== */
+
+.factura-info-body {
+
+    padding: 18px 20px;
+}
+
+
+/* ==========================================================
+   DATOS
+   ========================================================== */
+
+.factura-dato {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f1f5f9;
+}
+
+
+.factura-dato:last-child {
+
+    border-bottom: none;
+
+    padding-bottom: 0;
+}
+
+
+.dato-label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+.dato-label i {
+
+    width: 15px;
+
+    color: #2563eb;
+
+    text-align: center;
+}
+
+
+.factura-dato strong {
+
+    color: #111827;
+
+    font-size: 13px;
+
+    text-align: right;
+
+    word-break: break-word;
+}
+
+
+/* ==========================================================
+   ESTADO
+   ========================================================== */
+
+.detalle-estado {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.detalle-estado i {
+
+    font-size: 6px;
+}
+
+
+.estado-completada {
+
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+.estado-pendiente {
+
+    background: #fef3c7;
+
+    color: #b45309;
+}
+
+
+/* ==========================================================
+   CLIENTE DE CONTADO
+   ========================================================== */
+
+.cliente-contado {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.cliente-contado-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    min-width: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.cliente-contado div:last-child {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.cliente-contado strong {
+
+    color: #111827;
+
+    font-size: 13px;
+}
+
+
+.cliente-contado span {
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+
+/* ==========================================================
+   ACCIONES
+   ========================================================== */
+
+.factura-acciones {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    padding: 18px 20px;
+}
+
+
+.factura-btn {
+
+    min-height: 42px;
+
+    padding: 10px 14px;
+
+    border-radius: 9px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    transition: all .2s ease;
+}
+
+
+.factura-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.factura-btn-pdf {
+
+    background: #2563eb;
+
+    color: #fff;
+}
+
+
+.factura-btn-pdf:hover {
+
+    background: #1d4ed8;
+}
+
+
+.factura-btn-tirilla {
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    border: 1px solid #e5e7eb;
+}
+
+
+.factura-btn-tirilla:hover {
+
+    background: #e5e7eb;
+}
+
+
+/* ==========================================================
+   TARJETA PRODUCTOS
+   ========================================================== */
+
+.factura-productos-card {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+
+    margin-bottom: 22px;
+}
+
+
+/* ==========================================================
+   CABECERA PRODUCTOS
+   ========================================================== */
+
+.factura-productos-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.factura-productos-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+
+.factura-productos-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.factura-productos-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================================
+   CONTADOR PRODUCTOS
+   ========================================================== */
+
+.factura-productos-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================================
+   TABLA
+   ========================================================== */
+
+.factura-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.factura-detalle-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 700px;
+}
+
+
+.factura-detalle-table thead {
+
+    background: #f8fafc;
+}
+
+
+.factura-detalle-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.factura-detalle-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+
+.factura-detalle-table tbody tr {
+
+    transition: background .2s ease;
+}
+
+
+.factura-detalle-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.factura-detalle-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* ==========================================================
+   PRODUCTO
+   ========================================================== */
+
+.detalle-producto {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+.detalle-producto-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   CANTIDAD
+   ========================================================== */
+
+.detalle-cantidad {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 32px;
+
+    padding: 5px 8px;
+
+    border-radius: 7px;
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    font-weight: 600;
+}
+
+
+/* ==========================================================
+   PRECIO
+   ========================================================== */
+
+.detalle-precio {
+
+    color: #475569;
+
+    font-weight: 500;
+}
+
+
+/* ==========================================================
+   SUBTOTAL
+   ========================================================== */
+
+.detalle-subtotal {
+
+    color: #111827;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================================
+   ESTADO VACÍO
+   ========================================================== */
+
+.factura-detalle-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+}
+
+
+.factura-detalle-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.factura-detalle-empty span {
+
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   RESUMEN
+   ========================================================== */
+
+.factura-resumen-card {
+
+    width: 100%;
+
+    max-width: 520px;
+
+    margin-left: auto;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+}
+
+
+.factura-resumen-header {
+
+    padding: 18px 22px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.factura-resumen-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 18px;
+}
+
+
+.factura-resumen-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.factura-resumen-body {
+
+    padding: 20px 22px;
+}
+
+
+/* ==========================================================
+   LINEAS RESUMEN
+   ========================================================== */
+
+.resumen-linea {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 8px 0;
+
+    color: #64748b;
+
+    font-size: 14px;
+}
+
+
+.resumen-linea strong {
+
+    color: #374151;
+
+    font-weight: 700;
+}
+
+
+.resumen-separador {
+
+    height: 1px;
+
+    background: #e5e7eb;
+
+    margin: 12px 0;
+}
+
+
+/* ==========================================================
+   TOTAL
+   ========================================================== */
+
+.resumen-total {
+
+    font-size: 16px;
+
+    color: #111827;
+}
+
+
+.resumen-total strong {
+
+    color: #2563eb;
+
+    font-size: 18px;
+}
+
+
+/* ==========================================================
+   TOTAL DEVUELTO
+   ========================================================== */
+
+.resumen-devuelto {
+
+    color: #dc2626;
+}
+
+
+.resumen-devuelto strong {
+
+    color: #dc2626;
+}
+
+
+/* ==========================================================
+   TOTAL NETO
+   ========================================================== */
+
+.resumen-neto {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px;
+
+    margin-top: 5px;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+
+    color: #111827;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+.resumen-neto strong {
+
+    color: #2563eb;
+
+    font-size: 20px;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 1000px) {
+
+    .factura-info-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .factura-acciones-card {
+
+        grid-column: 1 / -1;
+    }
+
+    .factura-acciones {
+
+        flex-direction: row;
+    }
+
+    .factura-btn {
+
+        flex: 1;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .factura-detalle-page {
+
+        padding: 18px 15px 30px;
+    }
+
+    .factura-detalle-title h1 {
+
+        font-size: 23px;
+
+        flex-wrap: wrap;
+    }
+
+    .factura-info-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .factura-acciones-card {
+
+        grid-column: auto;
+    }
+
+    .factura-acciones {
+
+        flex-direction: column;
+    }
+
+    .factura-btn {
+
+        width: 100%;
+    }
+
+    .factura-productos-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .factura-resumen-card {
+
+        max-width: none;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .factura-dato {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .factura-dato strong {
+
+        text-align: left;
+    }
+
+    .detalle-producto {
+
+        min-width: 180px;
+    }
+
+    .resumen-linea {
+
+        font-size: 13px;
+    }
+
+    .resumen-neto {
+
+        font-size: 14px;
+    }
+
+    .resumen-neto strong {
+
+        font-size: 17px;
+    }
+}

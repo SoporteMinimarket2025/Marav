@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =========================================================
+         CONFIGURACIÓN GENERAL
+    ========================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manual | </title>
+
+
+    <!-- =========================================================
+         CSS GLOBAL DE ECOMARKET
+    ========================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/configuracion.css}">
+
+
+    <!-- =========================================================
+         FONT AWESOME
+    ========================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =========================================================
+         SWEETALERT
+    ========================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =============================================================
+     SIDEBAR
+
+     Se utiliza el fragmento global de EcoMarket PRO.
+============================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+
+<!-- =============================================================
+     CONTENIDO PRINCIPAL
+
+     IMPORTANTE:
+     Se utiliza la clase "main" porque dashboard.css ya tiene
+     configurado:
+
+         margin-left: 300px;
+         width: calc(100% - 300px);
+
+     Esto evita que el sidebar cubra el manual.
+============================================================= -->
+
+<div class="main">
+
+
+    <!-- =========================================================
+         TOPBAR
+    ========================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+
+    <!-- =========================================================
+         MANUAL DE USUARIO
+    ========================================================== -->
+
+    <main class="manual-page">
+
+
+        <!-- =====================================================
+             ENCABEZADO
+        ====================================================== -->
+
+        <section class="manual-header">
+
+            <div class="manual-header-content">
+
+                <span class="manual-kicker">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                    DOCUMENTACIÓN
+
+                </span>
+
+
+                <h1>
+                    Manual
+                </h1>
+
+
+                <p>
+                    Aprende paso a paso cómo utilizar los módulos
+                    principales de la app
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BIENVENIDA
+        ====================================================== -->
+
+        <section class="manual-welcome">
+
+            <div class="manual-welcome-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Bienvenido
+                </h2>
+
+                <p>
+                    Este manual interactivo te permite consultar cada
+                    módulo, seguir los pasos de uso, marcar tu progreso
+                    y acceder a los tutoriales en video.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             BARRA DE PROGRESO GENERAL
+        ====================================================== -->
+
+        <section class="progress-card">
+
+            <div class="progress-top">
+
+                <div>
+
+                    <span class="progress-label">
+                        PROGRESO DEL MANUAL
+                    </span>
+
+                    <h2 id="progresoTexto">
+                        0% completado
+                    </h2>
+
+                </div>
+
+
+                <div class="progress-circle">
+
+                    <span id="progresoPorcentaje">
+                        0%
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div id="barraProgreso"
+                     class="progress-bar-fill">
+                </div>
+
+            </div>
+
+
+            <div class="progress-info">
+
+                <span id="pasosCompletados">
+                    0 pasos completados
+                </span>
+
+                <span id="totalPasos">
+                    0 pasos
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RUTA RECOMENDADA
+        ====================================================== -->
+
+        <section class="ruta-card">
+
+            <div class="ruta-icon">
+
+                <i class="fa-solid fa-route"></i>
+
+            </div>
+
+
+            <div class="ruta-content">
+
+                <span class="ruta-label">
+                    RUTA RECOMENDADA
+                </span>
+
+                <h2>
+                    ¿Por dónde empezar?
+                </h2>
+
+                <p>
+                    Para evitar inconvenientes al utilizar el sistema,
+                    se recomienda seguir este orden:
+                </p>
+
+
+                <div class="ruta-list">
+
+                    <span>1. Primeros pasos</span>
+
+                    <span>2. Proveedores</span>
+
+                    <span>3. Productos</span>
+
+                    <span>4. Inventario</span>
+
+                    <span>5. Clientes</span>
+
+                    <span>6. Usuarios</span>
+
+                    <span>7. Ventas</span>
+
+                    <span>8. Facturas</span>
+
+                    <span>9. Devoluciones</span>
+
+                    <span>10. Caja</span>
+
+                    <span>11. Abonos</span>
+
+                    <span>12. Dashboard</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             HERRAMIENTAS DEL MANUAL
+        ====================================================== -->
+
+        <section class="manual-tools">
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                        type="text"
+                        id="buscarManual"
+                        placeholder="Buscar un módulo del manual...">
+
+            </div>
+
+
+            <button
+                    type="button"
+                    id="btnReiniciarProgreso"
+                    class="btn-reset">
+
+                <i class="fa-solid fa-rotate-left"></i>
+
+                Reiniciar progreso
+
+            </button>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             MÓDULOS
+        ====================================================== -->
+
+        <section class="manual-section">
+
+            <div class="section-title">
+
+                <div class="section-title-icon">
+
+                    <i class="fa-solid fa-grip"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Módulos de la app
+                    </h2>
+
+                    <p>
+                        Selecciona un módulo para consultar su guía.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CONTENEDOR DINÁMICO
+
+                 configuracion.js cargará aquí los módulos.
+            ================================================== -->
+
+            <div id="manualGrid"
+                 class="manual-grid">
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SIN RESULTADOS
+            ================================================== -->
+
+            <div id="sinResultados"
+                 class="sin-resultados">
+
+                <i class="fa-solid fa-folder-open"></i>
+
+                <h3>
+                    No encontramos ese módulo
+                </h3>
+
+                <p>
+                    Intenta realizar otra búsqueda.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             DETALLE DEL MÓDULO
+
+             configuracion.js cargará aquí:
+             - descripción
+             - pasos
+             - checkbox
+             - tutorial
+             - información del módulo
+        ====================================================== -->
+
+        <section id="manualDetalle"
+                 class="manual-detalle">
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ROLES
+        ====================================================== -->
+
+        <section class="manual-section roles-section">
+
+            <div class="section-title">
+
+                <div class="section-title-icon">
+
+                    <i class="fa-solid fa-users-gear"></i>
+
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Roles de usuario
+                    </h2>
+
+                    <p>
+                        Los permisos dependen del rol asignado.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="roles-grid">
+
+
+                <!-- =================================================
+                     ADMINISTRADOR
+                ================================================== -->
+
+                <article class="role-card admin-role">
+
+                    <div class="role-icon">
+
+                        <i class="fa-solid fa-user-shield"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="role-badge">
+                            ADMIN
+                        </span>
+
+
+                        <h3>
+                            Administrador
+                        </h3>
+
+
+                        <p>
+                            Tiene acceso administrativo al negocio
+                            y puede gestionar la información principal.
+                        </p>
+
+
+                        <ul>
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Gestionar productos
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Gestionar clientes y proveedores
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Crear empleados
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Registrar ventas
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Gestionar caja y devoluciones
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     EMPLEADO
+                ================================================== -->
+
+                <article class="role-card employee-role">
+
+                    <div class="role-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="role-badge">
+                            EMPLEADO
+                        </span>
+
+
+                        <h3>
+                            Empleado
+                        </h3>
+
+
+                        <p>
+                            Puede consultar información y realizar
+                            las operaciones permitidas por el negocio.
+                        </p>
+
+
+                        <ul>
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Consultar productos
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Consultar clientes
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Consultar proveedores
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Realizar operaciones permitidas
+
+                            </li>
+
+
+                            <li>
+
+                                <i class="fa-solid fa-check"></i>
+
+                                Consultar información del negocio
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             RECOMENDACIONES
+        ====================================================== -->
+
+        <section class="manual-tips">
+
+            <div class="manual-tips-icon">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Recomendaciones
+                </h2>
+
+
+                <ul>
+
+                    <li>
+
+                        Registra primero la información básica
+                        antes de realizar ventas.
+
+                    </li>
+
+
+                    <li>
+
+                        Mantén actualizado el inventario.
+
+                    </li>
+
+
+                    <li>
+
+                        Verifica los datos del cliente antes de
+                        registrar una venta a crédito.
+
+                    </li>
+
+
+                    <li>
+
+                        Revisa las facturas después de cada venta.
+
+                    </li>
+
+
+                    <li>
+
+                        Utiliza el buscador de cada módulo para
+                        encontrar información rápidamente.
+
+                    </li>
+
+
+                    <li>
+
+                        Si eres empleado y una opción no aparece,
+                        puede tratarse de una restricción de permisos.
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer class="manual-footer">
+
+            <span>
+                Marav
+            </span>
+
+
+            <span>
+                Manual interactivo de usuario
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =============================================================
+     JAVASCRIPT DEL MANUAL
+============================================================= -->
+
+<script th:src="@{/js/configuracion.js}"></script>
+
+
+</body>
+
+</html>
+
+

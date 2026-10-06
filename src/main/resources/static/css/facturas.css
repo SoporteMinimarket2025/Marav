@@ -1,0 +1,697 @@
+/* ======================================================
+   🧾 FACTURAS | ECOMARKET PRO
+   Diseño basado en Clientes / Inventario / Productos
+====================================================== */
+
+
+/* ======================================================
+   📄 CONTENEDOR PRINCIPAL
+====================================================== */
+
+.facturas-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+
+/* ======================================================
+   🏷️ ENCABEZADO
+====================================================== */
+
+.facturas-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+.facturas-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.facturas-title h1 i {
+
+    font-size: 27px;
+
+    color: #2563eb;
+}
+
+
+.facturas-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+
+/* ======================================================
+   📊 ESTADÍSTICAS
+====================================================== */
+
+.facturas-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+
+/* ======================================================
+   🧱 TARJETA ESTADÍSTICA
+====================================================== */
+
+.factura-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    transition: all .2s ease;
+}
+
+
+.factura-stat-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 6px 18px rgba(0, 0, 0, .08);
+}
+
+
+
+/* ======================================================
+   🔵 ICONOS ESTADÍSTICAS
+====================================================== */
+
+.factura-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+
+.facturas-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+}
+
+
+.completadas-icon {
+
+    background: #eaf8ef;
+
+    color: #16a34a;
+}
+
+
+.facturado-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+}
+
+
+
+/* ======================================================
+   🔢 INFORMACIÓN ESTADÍSTICA
+====================================================== */
+
+.factura-stat-info h3 {
+
+    margin: 0;
+
+    color: #111827;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+.factura-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+
+/* ======================================================
+   🧾 TARJETA HISTORIAL
+====================================================== */
+
+.facturas-card {
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+}
+
+
+
+/* ======================================================
+   🏷️ ENCABEZADO TARJETA
+====================================================== */
+
+.facturas-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.facturas-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+
+.facturas-card-header h2 i {
+
+    color: #2563eb;
+}
+
+
+.facturas-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+
+/* ======================================================
+   👁️ BADGE CONSULTA
+====================================================== */
+
+.facturas-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+
+/* ======================================================
+   📋 CONTENEDOR TABLA
+====================================================== */
+
+.facturas-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+
+/* ======================================================
+   📋 TABLA
+====================================================== */
+
+.facturas-table {
+
+    width: 100%;
+
+    min-width: 760px;
+
+    border-collapse: collapse;
+}
+
+
+.facturas-table thead {
+
+    background: #f8fafc;
+}
+
+
+.facturas-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+.facturas-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+
+.facturas-table tbody tr {
+
+    transition: background .2s ease;
+}
+
+
+.facturas-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.facturas-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+
+/* ======================================================
+   🧾 NÚMERO DE FACTURA
+====================================================== */
+
+.factura-numero {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.factura-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+.factura-numero strong {
+
+    display: block;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.factura-numero span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #94a3b8;
+
+    font-size: 11px;
+}
+
+
+
+/* ======================================================
+   💰 TOTAL FACTURA
+====================================================== */
+
+.factura-total {
+
+    color: #111827;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+
+/* ======================================================
+   📅 FECHA
+====================================================== */
+
+.factura-fecha {
+
+    color: #64748b;
+
+    white-space: nowrap;
+}
+
+
+
+/* ======================================================
+   🟢 ESTADOS
+====================================================== */
+
+.estado-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.estado-completada {
+
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+
+.estado-pendiente {
+
+    background: #fef3c7;
+
+    color: #b45309;
+}
+
+
+
+/* ======================================================
+   👁️ ACCIONES
+====================================================== */
+
+.factura-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+.factura-action-btn {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+.factura-action-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.factura-action-view {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.factura-action-view:hover {
+
+    background: #dbeafe;
+}
+
+
+
+/* ======================================================
+   🚫 ESTADO VACÍO
+====================================================== */
+
+.facturas-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+}
+
+
+.facturas-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+.facturas-empty span {
+
+    font-size: 14px;
+}
+
+
+
+/* ======================================================
+   📱 RESPONSIVE
+====================================================== */
+
+@media (max-width: 900px) {
+
+    .facturas-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+
+@media (max-width: 700px) {
+
+    .facturas-page {
+
+        padding: 18px 15px 30px;
+
+    }
+
+
+    .facturas-title h1 {
+
+        font-size: 23px;
+
+    }
+
+
+    .facturas-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+    .facturas-stats {
+
+        gap: 14px;
+
+    }
+
+
+    .factura-stat-card {
+
+        min-height: 85px;
+
+    }
+
+
+    .factura-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+
+        font-size: 19px;
+
+    }
+
+
+    .factura-stat-info h3 {
+
+        font-size: 20px;
+
+    }
+
+}
+

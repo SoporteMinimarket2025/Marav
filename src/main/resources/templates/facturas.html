@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         📄 CONFIGURACIÓN
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         🏷️ TÍTULO
+    ====================================================== -->
+
+    <title>Facturas | </title>
+
+
+    <!-- =====================================================
+         🎨 CSS GLOBAL
+         Contiene sidebar, topbar y estructura general.
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         🎨 CSS PROPIO DE FACTURAS
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/facturas.css}">
+
+
+    <!-- =====================================================
+         ⭐ FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         🔔 SWEETALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     📌 SIDEBAR GLOBAL
+====================================================== -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+
+<!-- =====================================================
+     📌 CONTENEDOR PRINCIPAL
+====================================================== -->
+
+<div class="main">
+
+
+    <!-- =================================================
+         🔝 TOPBAR GLOBAL
+    ================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}"></div>
+
+
+    <!-- =================================================
+         🧾 CONTENIDO DE FACTURAS
+    ================================================== -->
+
+    <main class="facturas-page">
+
+
+        <!-- =================================================
+             🏷️ ENCABEZADO
+        ================================================== -->
+
+        <header class="facturas-header">
+
+            <div class="facturas-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                    Facturas
+
+                </h1>
+
+                <p>
+                    Historial completo de facturación
+                </p>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             📊 TARJETAS INFORMATIVAS
+        ================================================== -->
+
+        <section class="facturas-stats">
+
+
+            <!-- =============================================
+                 TOTAL FACTURAS
+            ============================================== -->
+
+            <div class="factura-stat-card">
+
+                <div class="factura-stat-icon facturas-icon">
+
+                    <i class="fa-solid fa-file-invoice"></i>
+
+                </div>
+
+                <div class="factura-stat-info">
+
+                    <h3 id="totalFacturas">
+
+                        <span th:text="${#lists.size(facturas)}">
+                            0
+                        </span>
+
+                    </h3>
+
+                    <p>
+                        Total Facturas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 FACTURAS COMPLETADAS
+            ============================================== -->
+
+            <div class="factura-stat-card">
+
+                <div class="factura-stat-icon completadas-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <div class="factura-stat-info">
+
+                    <h3 id="facturasCompletadas">
+
+                        0
+
+                    </h3>
+
+                    <p>
+                        Facturas Completadas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 TOTAL FACTURADO
+            ============================================== -->
+
+            <div class="factura-stat-card">
+
+                <div class="factura-stat-icon facturado-icon">
+
+                    <i class="fa-solid fa-dollar-sign"></i>
+
+                </div>
+
+                <div class="factura-stat-info">
+
+                    <h3 id="totalFacturado">
+
+                        $0
+
+                    </h3>
+
+                    <p>
+                        Total Facturado
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             🧾 TARJETA HISTORIAL
+        ================================================== -->
+
+        <section class="facturas-card">
+
+
+            <!-- =============================================
+                 ENCABEZADO DE LA TARJETA
+            ============================================== -->
+
+            <div class="facturas-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        Historial de Facturas
+
+                    </h2>
+
+                    <p>
+                        Consulta las facturas generadas
+                    </p>
+
+                </div>
+
+
+                <!-- =========================================
+                     BADGE
+                ========================================== -->
+
+                <span class="facturas-role-badge">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                    Consulta
+
+                </span>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 TABLA
+            ============================================== -->
+
+            <div class="facturas-table-container">
+
+                <table class="facturas-table">
+
+
+                    <!-- =====================================
+                         ENCABEZADOS
+                    ====================================== -->
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Factura
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Fecha
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th>
+                            Acción
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+
+                    <!-- =====================================
+                         CUERPO
+                    ====================================== -->
+
+                    <tbody id="tablaFacturas">
+
+
+                    <!-- =====================================
+                         FACTURAS DESDE THYMELEAF
+                    ====================================== -->
+
+                    <tr th:each="f : ${facturas}"
+                        class="factura-row">
+
+
+                        <!-- =================================
+                             NÚMERO FACTURA
+                        ================================== -->
+
+                        <td>
+
+                            <div class="factura-numero">
+
+                                <div class="factura-avatar">
+
+                                    <i class="fa-solid fa-file-invoice"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <strong
+                                            th:text="${f.numeroFactura}">
+                                        FAC-0001
+                                    </strong>
+
+                                    <span>
+                                        Documento de venta
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- =================================
+                             TOTAL
+                        ================================== -->
+
+                        <td>
+
+                            <span class="factura-total"
+                                  th:text="${'$' + #numbers.formatDecimal(f.total, 0, 0)}">
+
+                                $0
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =================================
+                             FECHA
+                        ================================== -->
+
+                        <td>
+
+                            <span class="factura-fecha"
+                                  th:text="${f.fecha}">
+
+                                2026-08-21
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =================================
+                             ESTADO
+                        ================================== -->
+
+                        <td>
+
+
+                            <!-- COMPLETADA -->
+
+                            <span class="estado-badge estado-completada"
+                                  th:if="${f.estado == 'COMPLETADA'}">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+                                COMPLETADA
+
+                            </span>
+
+
+                            <!-- OTROS ESTADOS -->
+
+                            <span class="estado-badge estado-pendiente"
+                                  th:if="${f.estado != 'COMPLETADA'}">
+
+                                <i class="fa-solid fa-clock"></i>
+
+                                <span th:text="${f.estado}">
+                                    PENDIENTE
+                                </span>
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =================================
+                             ACCIÓN
+                        ================================== -->
+
+                        <td>
+
+                            <div class="factura-actions">
+
+                                <a class="factura-action-btn factura-action-view"
+                                   th:href="@{/facturas/{id}(id=${f.id})}"
+                                   title="Ver factura">
+
+                                    <i class="fa-solid fa-eye"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+
+                    <!-- =====================================
+                         SIN FACTURAS
+                    ====================================== -->
+
+                    <tr th:if="${#lists.isEmpty(facturas)}">
+
+                        <td colspan="5"
+                            class="facturas-empty">
+
+                            <i class="fa-solid fa-file-circle-xmark"></i>
+
+                            <span>
+                                No hay facturas registradas.
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- =====================================================
+     📜 JAVASCRIPT
+====================================================== -->
+
+<script th:src="@{/js/facturas.js}"></script>
+
+
+</body>
+
+</html>
+
+

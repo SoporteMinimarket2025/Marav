@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- =====================================================
+         META
+    ====================================================== -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+
+    <!-- =====================================================
+         TITULO
+    ====================================================== -->
+
+    <title>Proveedores | EcoMarket PRO</title>
+
+
+    <!-- =====================================================
+         CSS GLOBAL
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/dashboard.css}">
+
+
+    <!-- =====================================================
+         CSS DEL MODULO
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/proveedores.css}">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         SWEET ALERT
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<div th:replace="~{fragments/sidebar :: sidebar}">
+</div>
+
+
+
+<!-- =========================================================
+     CONTENIDO PRINCIPAL
+========================================================= -->
+
+<div class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <div th:replace="~{fragments/topbar :: topbar}">
+    </div>
+
+
+
+    <!-- =====================================================
+         PAGINA PROVEEDORES
+    ====================================================== -->
+
+    <main class="proveedores-page">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <section class="proveedores-header">
+
+            <div class="proveedores-title">
+
+                <h1>
+
+                    <i class="fa-solid fa-truck"></i>
+
+                    Gestión de Proveedores
+
+                </h1>
+
+                <p>
+                    Administración y consulta de proveedores registrados
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MODO CONSULTA EMPLEADO
+        ================================================== -->
+
+        <div id="modoConsulta"
+             class="alert-info"
+             th:if="${rolUsuario == 'EMPLEADO'}">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            <div>
+
+                <strong>
+                    Modo consulta
+                </strong>
+
+                <span>
+                    Puedes consultar y buscar proveedores,
+                    pero no tienes permisos para modificarlos.
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             KPIs
+        ================================================== -->
+
+        <section class="proveedores-stats">
+
+
+            <!-- TOTAL -->
+
+            <div class="proveedor-stat-card">
+
+                <div class="proveedor-stat-icon proveedores-icon">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                </div>
+
+                <div class="proveedor-stat-info">
+
+                    <h3 id="totalProveedores">
+                        0
+                    </h3>
+
+                    <p>
+                        Total Proveedores
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ACTIVOS -->
+
+            <div class="proveedor-stat-card">
+
+                <div class="proveedor-stat-icon activos-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <div class="proveedor-stat-info">
+
+                    <h3 id="proveedoresActivos">
+                        0
+                    </h3>
+
+                    <p>
+                        Proveedores Activos
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EMPRESAS -->
+
+            <div class="proveedor-stat-card">
+
+                <div class="proveedor-stat-icon empresas-icon">
+
+                    <i class="fa-solid fa-building"></i>
+
+                </div>
+
+                <div class="proveedor-stat-info">
+
+                    <h3 id="totalEmpresas">
+                        0
+                    </h3>
+
+                    <p>
+                        Empresas Registradas
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ACCIONES ADMIN
+        ================================================== -->
+
+        <div class="proveedores-actions"
+             th:if="${rolUsuario == 'ADMIN'}">
+
+            <button type="button"
+                    id="btnNuevoProveedor"
+                    class="proveedor-btn proveedor-btn-save"
+                    onclick="abrirModalProveedor()">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Nuevo Proveedor
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             TARJETA PRINCIPAL
+        ================================================== -->
+
+        <section class="proveedores-card">
+
+
+            <!-- =================================================
+                 HEADER TARJETA
+            ================================================== -->
+
+            <div class="proveedores-card-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="fa-solid fa-address-book"></i>
+
+                        Proveedores Registrados
+
+                    </h2>
+
+                    <p>
+                        Lista de proveedores disponibles en EcoMarket PRO
+                    </p>
+
+                </div>
+
+
+                <!-- BADGE ROL -->
+
+                <div class="proveedores-role-badge"
+                     th:classappend="${rolUsuario == 'ADMIN'}
+                         ? ' role-admin'
+                         : ' role-empleado'">
+
+                    <i class="fa-solid"
+                       th:classappend="${rolUsuario == 'ADMIN'}
+                           ? ' fa-user-shield'
+                           : ' fa-eye'">
+                    </i>
+
+                    <span th:text="${rolUsuario == 'ADMIN'
+                                    ? 'Administrador'
+                                    : 'Solo consulta'}">
+
+                        Solo consulta
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLA
+            ================================================== -->
+
+            <div class="proveedores-table-container">
+
+                <table class="proveedores-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Proveedor
+                        </th>
+
+                        <th>
+                            NIT
+                        </th>
+
+                        <th>
+                            Teléfono
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Contacto
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
+                        <th th:if="${rolUsuario == 'ADMIN'}">
+                            Acciones
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="tablaProveedores">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ESTADO VACIO
+            ================================================== -->
+
+            <div id="proveedoresVacio"
+                 class="proveedores-empty"
+                 style="display:none;">
+
+                <i class="fa-solid fa-truck-ramp-box"></i>
+
+                <span>
+                    No se encontraron proveedores
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     MODAL
+     SOLO ADMIN
+========================================================= -->
+
+<div id="modalProveedor"
+     class="proveedor-modal"
+     th:if="${rolUsuario == 'ADMIN'}">
+
+
+    <div class="proveedor-modal-content">
+
+
+        <!-- HEADER -->
+
+        <div class="proveedor-modal-header">
+
+            <div>
+
+                <h2 id="tituloFormulario">
+
+                    <i class="fa-solid fa-circle-plus"></i>
+
+                    Nuevo Proveedor
+
+                </h2>
+
+                <p id="subtituloFormulario">
+                    Registra la información del proveedor
+                </p>
+
+            </div>
+
+
+            <button type="button"
+                    class="proveedor-modal-cerrar"
+                    onclick="cerrarModalProveedor()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+
+        <!-- FORMULARIO -->
+
+        <form id="formProveedor">
+
+            <input type="hidden"
+                   id="id">
+
+
+            <div class="proveedores-form-grid">
+
+
+                <!-- NOMBRE -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="nombre">
+
+                        <i class="fa-solid fa-building"></i>
+
+                        Nombre del proveedor
+
+                    </label>
+
+                    <input type="text"
+                           id="nombre"
+                           placeholder="Ingrese el nombre"
+                           maxlength="150"
+                           required>
+
+                </div>
+
+
+
+                <!-- NIT -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="nit">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        NIT
+
+                    </label>
+
+                    <input type="text"
+                           id="nit"
+                           placeholder="Ingrese el NIT"
+                           maxlength="50">
+
+                </div>
+
+
+
+                <!-- TELEFONO -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="telefono">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        Teléfono
+
+                    </label>
+
+                    <input type="text"
+                           id="telefono"
+                           placeholder="Ingrese el teléfono"
+                           maxlength="30">
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="email">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        Correo electrónico
+
+                    </label>
+
+                    <input type="email"
+                           id="email"
+                           placeholder="correo@ejemplo.com"
+                           maxlength="150">
+
+                </div>
+
+
+
+                <!-- DIRECCION -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="direccion">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        Dirección
+
+                    </label>
+
+                    <input type="text"
+                           id="direccion"
+                           placeholder="Ingrese la dirección"
+                           maxlength="200">
+
+                </div>
+
+
+
+                <!-- CONTACTO -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="contacto">
+
+                        <i class="fa-solid fa-user"></i>
+
+                        Persona de contacto
+
+                    </label>
+
+                    <input type="text"
+                           id="contacto"
+                           placeholder="Nombre del contacto"
+                           maxlength="150">
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="proveedor-form-group">
+
+                    <label for="estado">
+
+                        <i class="fa-solid fa-toggle-on"></i>
+
+                        Estado
+
+                    </label>
+
+                    <select id="estado">
+
+                        <option value="ACTIVO">
+                            ACTIVO
+                        </option>
+
+                        <option value="INACTIVO">
+                            INACTIVO
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BOTONES -->
+
+            <div class="proveedores-buttons">
+
+                <button type="button"
+                        id="btnGuardar"
+                        class="proveedor-btn proveedor-btn-save"
+                        onclick="guardarProveedor()">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Guardar
+
+                </button>
+
+
+                <button type="button"
+                        id="btnActualizar"
+                        class="proveedor-btn proveedor-btn-update"
+                        style="display:none;"
+                        onclick="actualizarProveedor()">
+
+                    <i class="fa-solid fa-pen"></i>
+
+                    Actualizar
+
+                </button>
+
+
+                <button type="button"
+                        id="btnCancelar"
+                        class="proveedor-btn proveedor-btn-cancel"
+                        onclick="cancelarEdicion()">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                    Cancelar
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     ROL
+========================================================= -->
+
+<script th:inline="javascript">
+
+    const ROL_USUARIO =
+        /*[[${rolUsuario}]]*/ "EMPLEADO";
+
+</script>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script th:src="@{/js/proveedores.js}">
+</script>
+
+
+</body>
+
+</html>

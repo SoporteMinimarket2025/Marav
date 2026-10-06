@@ -1,0 +1,1293 @@
+/* ============================================================
+   PRODUCTOS | ECOMARKET PRO
+   ============================================================
+
+   Diseño basado directamente en el patrón visual de CLIENTES.
+
+   IMPORTANTE:
+   - No modificar .main aquí.
+   - dashboard.css controla la estructura general.
+   - Este archivo solamente controla el modulo Productos.
+   ============================================================ */
+
+
+/* ============================================================
+   PAGINA PRINCIPAL
+   ============================================================ */
+
+.productos-page {
+
+    padding: 24px 30px 40px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+
+.productos-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 22px;
+}
+
+
+/* ============================================================
+   TITULO
+   ============================================================ */
+
+.productos-title h1 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   ICONO DEL TITULO
+   ============================================================ */
+
+.productos-title h1 i {
+
+    font-size: 27px;
+}
+
+
+/* ============================================================
+   DESCRIPCION DEL TITULO
+   ============================================================ */
+
+.productos-title p {
+
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   ALERTA MODO CONSULTA
+   ============================================================ */
+
+.productos-page .alert-info {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding: 15px 18px;
+
+    margin-bottom: 22px;
+
+    border-radius: 12px;
+
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #1e40af;
+}
+
+
+/* ============================================================
+   ICONO DE LA ALERTA
+   ============================================================ */
+
+.productos-page .alert-info > i {
+
+    margin-top: 2px;
+
+    font-size: 18px;
+}
+
+
+/* ============================================================
+   TITULO DE LA ALERTA
+   ============================================================ */
+
+.productos-page .alert-info strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   TEXTO DE LA ALERTA
+   ============================================================ */
+
+.productos-page .alert-info span {
+
+    display: block;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   ESTADISTICAS
+   ============================================================ */
+
+.productos-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ============================================================
+   TARJETA KPI
+   ============================================================ */
+
+.producto-stat-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 100px;
+
+    padding: 18px;
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    transition: all .2s ease;
+}
+
+
+/* ============================================================
+   EFECTO HOVER KPI
+   ============================================================ */
+
+.producto-stat-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 6px 18px rgba(0, 0, 0, .08);
+}
+
+
+/* ============================================================
+   ICONO KPI
+   ============================================================ */
+
+.producto-stat-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+
+/* ============================================================
+   COLORES DE LOS KPI
+
+   Se conserva el estilo de Clientes.
+   ============================================================ */
+
+.productos-icon {
+
+    background: #e8f1ff;
+
+    color: #2563eb;
+}
+
+
+.proveedores-icon {
+
+    background: #eaf8ef;
+
+    color: #16a34a;
+}
+
+
+.precio-icon {
+
+    background: #fff4e5;
+
+    color: #ea580c;
+}
+
+
+/* ============================================================
+   INFORMACION KPI
+   ============================================================ */
+
+.producto-stat-info h3 {
+
+    margin: 0;
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #111827;
+}
+
+
+.producto-stat-info p {
+
+    margin: 5px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   ACCIONES PRINCIPALES
+   ============================================================ */
+
+.productos-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-bottom: 18px;
+}
+
+
+/* ============================================================
+   BOTON BASE
+   ============================================================ */
+
+.producto-btn {
+
+    border: none;
+
+    border-radius: 9px;
+
+    padding: 11px 17px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+/* ============================================================
+   HOVER BOTONES
+   ============================================================ */
+
+.producto-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+.producto-btn:active {
+
+    transform: translateY(0);
+}
+
+
+/* ============================================================
+   BOTON GUARDAR / NUEVO
+   ============================================================ */
+
+.producto-btn-save {
+
+    background: #2563eb;
+
+    color: #fff;
+}
+
+
+.producto-btn-save:hover {
+
+    background: #1d4ed8;
+}
+
+
+/* ============================================================
+   BOTON ACTUALIZAR
+   ============================================================ */
+
+.producto-btn-update {
+
+    background: #f59e0b;
+
+    color: #fff;
+}
+
+
+.producto-btn-update:hover {
+
+    background: #d97706;
+}
+
+
+/* ============================================================
+   BOTON CANCELAR
+   ============================================================ */
+
+.producto-btn-cancel {
+
+    background: #e5e7eb;
+
+    color: #374151;
+}
+
+
+.producto-btn-cancel:hover {
+
+    background: #d1d5db;
+}
+
+
+/* ============================================================
+   TARJETA PRINCIPAL
+   ============================================================ */
+
+.productos-card {
+
+    background: #fff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+            0 3px 12px rgba(0, 0, 0, .05);
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   ENCABEZADO DE LA TARJETA
+   ============================================================ */
+
+.productos-card-header {
+
+    padding: 20px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   TITULO DE LA TARJETA
+   ============================================================ */
+
+.productos-card-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+
+/* ============================================================
+   ICONO DEL TITULO DE TARJETA
+   ============================================================ */
+
+.productos-card-header h2 i {
+
+    color: #2563eb;
+}
+
+
+/* ============================================================
+   DESCRIPCION DE LA TARJETA
+   ============================================================ */
+
+.productos-card-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   BADGE DEL ROL
+   ============================================================ */
+
+.productos-role-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   BADGE ADMIN
+   ============================================================ */
+
+.productos-role-badge.role-admin {
+
+    color: #1d4ed8;
+
+    background: #eff6ff;
+}
+
+
+/* ============================================================
+   BADGE EMPLEADO
+   ============================================================ */
+
+.productos-role-badge.role-empleado {
+
+    color: #6b7280;
+
+    background: #f3f4f6;
+}
+
+
+/* ============================================================
+   CONTENEDOR TABLA
+   ============================================================ */
+
+.productos-table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* ============================================================
+   TABLA
+   ============================================================ */
+
+.productos-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 850px;
+}
+
+
+/* ============================================================
+   CABECERA TABLA
+   ============================================================ */
+
+.productos-table thead {
+
+    background: #f8fafc;
+}
+
+
+/* ============================================================
+   CELDAS TH
+   ============================================================ */
+
+.productos-table th {
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .3px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   CELDAS TD
+   ============================================================ */
+
+.productos-table td {
+
+    padding: 14px 16px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    border-bottom: 1px solid #f1f5f9;
+
+    vertical-align: middle;
+}
+
+
+/* ============================================================
+   FILAS
+   ============================================================ */
+
+.productos-table tbody tr {
+
+    transition: background .2s ease;
+}
+
+
+.productos-table tbody tr:hover {
+
+    background: #f8fafc;
+}
+
+
+.productos-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* ============================================================
+   NOMBRE DEL PRODUCTO
+   ============================================================ */
+
+.producto-nombre {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: 600;
+
+    color: #111827;
+}
+
+
+/* ============================================================
+   AVATAR DEL PRODUCTO
+   ============================================================ */
+
+.producto-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   DESCRIPCION
+   ============================================================ */
+
+.producto-descripcion {
+
+    max-width: 260px;
+
+    color: #64748b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   PRECIO
+   ============================================================ */
+
+.producto-precio {
+
+    font-weight: 700;
+
+    color: #16a34a;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   PROVEEDOR
+   ============================================================ */
+
+.producto-proveedor {
+
+    color: #475569;
+
+    font-weight: 500;
+}
+
+
+/* ============================================================
+   ACCIONES DE TABLA
+   ============================================================ */
+
+.producto-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+
+/* ============================================================
+   BOTON DE ACCION
+   ============================================================ */
+
+.producto-action-btn {
+
+    width: 34px;
+
+    height: 34px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 8px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+/* ============================================================
+   HOVER ACCIONES
+   ============================================================ */
+
+.producto-action-btn:hover {
+
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   EDITAR
+   ============================================================ */
+
+.producto-btn-edit {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+.producto-btn-edit:hover {
+
+    background: #dbeafe;
+}
+
+
+/* ============================================================
+   ELIMINAR
+   ============================================================ */
+
+.producto-btn-delete {
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+
+.producto-btn-delete:hover {
+
+    background: #fee2e2;
+}
+
+
+/* ============================================================
+   ESTADO VACIO
+   ============================================================ */
+
+.productos-empty {
+
+    padding: 45px 20px !important;
+
+    text-align: center;
+
+    color: #94a3b8 !important;
+}
+
+
+/* ============================================================
+   ICONO ESTADO VACIO
+   ============================================================ */
+
+.productos-empty i {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 32px;
+}
+
+
+/* ============================================================
+   TEXTO ESTADO VACIO
+   ============================================================ */
+
+.productos-empty span {
+
+    font-size: 14px;
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+.producto-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(15, 23, 42, .58);
+
+    backdrop-filter: blur(3px);
+}
+
+
+/* ============================================================
+   MODAL ACTIVO
+
+   IMPORTANTE:
+   productos.js utiliza .active.
+   ============================================================ */
+
+.producto-modal.active {
+
+    display: flex;
+}
+
+
+/* ============================================================
+   CONTENIDO DEL MODAL
+   ============================================================ */
+
+.producto-modal-content {
+
+    width: 100%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #fff;
+
+    border-radius: 16px;
+
+    box-shadow:
+            0 20px 50px rgba(0, 0, 0, .22);
+
+    animation: productoModalEntrada .2s ease;
+}
+
+
+/* ============================================================
+   ANIMACION DEL MODAL
+   ============================================================ */
+
+@keyframes productoModalEntrada {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+                translateY(-15px)
+                scale(.98);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+                translateY(0)
+                scale(1);
+    }
+}
+
+
+/* ============================================================
+   HEADER MODAL
+   ============================================================ */
+
+.producto-modal-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 24px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   TITULO MODAL
+   ============================================================ */
+
+.producto-modal-header h2 {
+
+    margin: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #111827;
+
+    font-size: 20px;
+}
+
+
+/* ============================================================
+   ICONO MODAL
+   ============================================================ */
+
+.producto-modal-header h2 i {
+
+    color: #2563eb;
+}
+
+
+/* ============================================================
+   SUBTITULO MODAL
+   ============================================================ */
+
+.producto-modal-header p {
+
+    margin: 6px 0 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* ============================================================
+   BOTON CERRAR MODAL
+   ============================================================ */
+
+.producto-modal-cerrar {
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 17px;
+
+    transition: all .2s ease;
+}
+
+
+.producto-modal-cerrar:hover {
+
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+
+/* ============================================================
+   FORMULARIO
+   ============================================================ */
+
+#formProducto {
+
+    padding: 24px;
+}
+
+
+/* ============================================================
+   GRID FORMULARIO
+   ============================================================ */
+
+.productos-form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* ============================================================
+   GRUPO DEL FORMULARIO
+   ============================================================ */
+
+.producto-form-group {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* ============================================================
+   LABEL
+   ============================================================ */
+
+.producto-form-group label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* ============================================================
+   ICONO LABEL
+   ============================================================ */
+
+.producto-form-group label i {
+
+    color: #2563eb;
+
+    width: 15px;
+}
+
+
+/* ============================================================
+   INPUT Y SELECT
+   ============================================================ */
+
+.producto-form-group input,
+.producto-form-group select {
+
+    width: 100%;
+
+    min-height: 43px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    transition: all .2s ease;
+}
+
+
+/* ============================================================
+   FOCUS INPUT
+   ============================================================ */
+
+.producto-form-group input:focus,
+.producto-form-group select:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, .10);
+}
+
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+
+.producto-form-group input::placeholder {
+
+    color: #9ca3af;
+}
+
+
+/* ============================================================
+   BOTONES DEL FORMULARIO
+   ============================================================ */
+
+.productos-buttons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* ============================================================
+   RESPONSIVE - TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    .productos-stats {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE - MOVILES
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .productos-page {
+
+        padding: 18px 15px 30px;
+    }
+
+
+    .productos-card-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+
+    .productos-form-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .productos-buttons {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .productos-buttons .producto-btn {
+
+        width: 100%;
+    }
+
+
+    .producto-modal {
+
+        padding: 10px;
+    }
+
+
+    .producto-modal-content {
+
+        max-height: 94vh;
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE - MOVILES PEQUEÑOS
+   ============================================================ */
+
+@media (max-width: 500px) {
+
+    .productos-title h1 {
+
+        font-size: 23px;
+    }
+
+
+    .producto-stat-card {
+
+        min-height: 85px;
+    }
+
+
+    .producto-stat-icon {
+
+        width: 45px;
+
+        height: 45px;
+
+        min-width: 45px;
+    }
+
+
+    .producto-stat-info h3 {
+
+        font-size: 20px;
+    }
+}
+
