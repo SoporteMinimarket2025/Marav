@@ -1,31 +1,57 @@
+
 <!DOCTYPE html>
 <html lang="es"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard |MARAV </title>
+    <title>Dashboard | MARAV</title>
+
+    <!-- ======================================================
+         CSS DEL DASHBOARD
+    ======================================================= -->
 
     <link rel="stylesheet"
           th:href="@{/css/dashboard.css}">
 
+
+    <!-- ======================================================
+         FONT AWESOME
+    ======================================================= -->
+
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+
+    <!-- ======================================================
+         CHART.JS
+    ======================================================= -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================== -->
+
 <div th:fragment="sidebar">
 
     <div class="sidebar">
 
-        <!-- ========================================= -->
-        <!-- LOGO -->
-        <!-- ========================================= -->
+
+        <!-- =================================================
+             LOGO
+        ================================================== -->
 
         <div class="logo">
 
@@ -33,35 +59,54 @@
                  alt="Logo">
 
             <div>
+
                 <h2></h2>
-                <p>Sistema de Ventas</p>
+
+                <p>
+                    Sistema de Ventas
+                </p>
+
             </div>
 
         </div>
 
-        <!-- ========================================= -->
-        <!-- MENÚ -->
-        <!-- ========================================= -->
+
+        <!-- =================================================
+             MENÚ
+        ================================================== -->
 
         <div class="menu">
 
-            <!-- DASHBOARD -->
+
+            <!-- =================================================
+                 PRINCIPAL
+            ================================================== -->
 
             <div class="menu-title">
                 Principal
             </div>
 
+
+            <!-- DASHBOARD -->
+
             <a th:href="@{/dashboard}"
                th:classappend="${menuActivo == 'dashboard'} ? ' active' : ''">
 
                 📊 Dashboard
+
             </a>
 
-            <!-- OPERACIONES -->
+
+            <!-- =================================================
+                 OPERACIONES
+            ================================================== -->
 
             <div class="menu-title">
                 Operaciones
             </div>
+
+
+            <!-- VENTAS -->
 
             <a th:href="@{/ventas}"
                th:classappend="${menuActivo == 'ventas'} ? ' active' : ''">
@@ -70,12 +115,18 @@
 
             </a>
 
+
+            <!-- FACTURACIÓN -->
+
             <a th:href="@{/facturas}"
                th:classappend="${menuActivo == 'facturas'} ? ' active' : ''">
 
                 🧾 Facturación
 
             </a>
+
+
+            <!-- DEVOLUCIONES -->
 
             <a th:href="@{/devoluciones}"
                th:classappend="${menuActivo == 'devoluciones'} ? ' active' : ''">
@@ -84,6 +135,9 @@
 
             </a>
 
+
+            <!-- ABONOS -->
+
             <a th:href="@{/abonos}"
                th:classappend="${menuActivo == 'abonos'} ? ' active' : ''">
 
@@ -91,11 +145,17 @@
 
             </a>
 
-            <!-- INVENTARIO -->
+
+            <!-- =================================================
+                 INVENTARIO
+            ================================================== -->
 
             <div class="menu-title">
                 Inventario
             </div>
+
+
+            <!-- INVENTARIO -->
 
             <a th:href="@{/inventario}"
                th:classappend="${menuActivo == 'inventario'} ? ' active' : ''">
@@ -104,12 +164,18 @@
 
             </a>
 
+
+            <!-- PRODUCTOS -->
+
             <a th:href="@{/productos}"
                th:classappend="${menuActivo == 'productos'} ? ' active' : ''">
 
                 📦 Productos
 
             </a>
+
+
+            <!-- PROVEEDORES -->
 
             <a th:href="@{/proveedores}"
                th:classappend="${menuActivo == 'proveedores'} ? ' active' : ''">
@@ -118,11 +184,17 @@
 
             </a>
 
-            <!-- CLIENTES -->
+
+            <!-- =================================================
+                 CLIENTES
+            ================================================== -->
 
             <div class="menu-title">
                 Clientes
             </div>
+
+
+            <!-- CLIENTES -->
 
             <a th:href="@{/clientes}"
                th:classappend="${menuActivo == 'clientes'} ? ' active' : ''">
@@ -131,11 +203,17 @@
 
             </a>
 
-            <!-- FINANZAS -->
+
+            <!-- =================================================
+                 FINANZAS
+            ================================================== -->
 
             <div class="menu-title">
                 Finanzas
             </div>
+
+
+            <!-- CAJA -->
 
             <a th:href="@{/caja}"
                th:classappend="${menuActivo == 'caja'} ? ' active' : ''">
@@ -145,11 +223,16 @@
             </a>
 
 
-            <!-- ADMINISTRACIÓN -->
+            <!-- =================================================
+                 ADMINISTRACIÓN
+            ================================================== -->
 
             <div class="menu-title">
                 Administración
             </div>
+
+
+            <!-- USUARIOS -->
 
             <a th:href="@{/usuarios}"
                th:classappend="${menuActivo == 'usuarios'} ? ' active' : ''">
@@ -158,6 +241,9 @@
 
             </a>
 
+
+            <!-- MANUAL -->
+
             <a th:href="@{/configuracion}"
                th:classappend="${menuActivo == 'configuracion'} ? ' active' : ''">
 
@@ -165,37 +251,55 @@
 
             </a>
 
+
         </div>
 
 
-        <!-- LOGOUT -->
+        <!-- =================================================
+             CERRAR SESIÓN
+        ================================================== -->
 
         <div class="logout">
 
             <a th:href="@{/logout}">
+
                 🚪 Cerrar Sesión
+
             </a>
 
         </div>
+
 
     </div>
 
 </div>
 
-<!-- ======================================================
+
+<!-- =========================================================
      MAIN
-====================================================== -->
+========================================================== -->
 
 <div class="main">
 
 
     <!-- ======================================================
-         TOPBAR FRAGMENT
-    ====================================================== -->
+         TOPBAR
+
+         Se utiliza el fragmento global de topbar.
+
+         IMPORTANTE:
+         El buscador del topbar utiliza:
+
+         id="buscarTopbar"
+    ======================================================= -->
 
     <div th:replace="~{fragments/topbar :: topbar}"></div>
 
-    <!-- BIENVENIDA -->
+
+    <!-- ======================================================
+         BIENVENIDA
+    ======================================================= -->
+
     <div class="welcome">
 
         <h1>
@@ -210,133 +314,229 @@
 
         </h1>
 
+
         <p>
             Panel Administrativo
         </p>
 
     </div>
 
-    <!-- KPI -->
+
+    <!-- ======================================================
+         KPIs
+    ======================================================= -->
+
     <div class="kpis">
+
+
+        <!-- =================================================
+             VENTAS HOY
+        ================================================== -->
 
         <div class="card green">
 
-            <h3>💰 Ventas Hoy</h3>
+            <h3>
+                💰 Ventas Hoy
+            </h3>
 
             <h1 th:text="${ventasHoy}">
                 0
             </h1>
 
-            <p>Total vendido hoy</p>
+            <p>
+                Total vendido hoy
+            </p>
 
         </div>
 
+
+        <!-- =================================================
+             PRODUCTOS
+        ================================================== -->
+
         <div class="card dark">
 
-            <h3>📦 Productos</h3>
+            <h3>
+                📦 Productos
+            </h3>
 
             <h1 th:text="${totalProductos}">
                 0
             </h1>
 
-            <p>Productos registrados</p>
+            <p>
+                Productos registrados
+            </p>
 
         </div>
 
+
+        <!-- =================================================
+             CLIENTES
+        ================================================== -->
+
         <div class="card lime">
 
-            <h3>👥 Clientes</h3>
+            <h3>
+                👥 Clientes
+            </h3>
 
             <h1 th:text="${totalClientes}">
                 0
             </h1>
 
-            <p>Clientes registrados</p>
+            <p>
+                Clientes registrados
+            </p>
 
         </div>
 
+
+        <!-- =================================================
+             GANANCIAS DEL MES
+        ================================================== -->
+
         <div class="card emerald">
 
-            <h3>📈 Ganancias Mes</h3>
+            <h3>
+                📈 Ganancias Mes
+            </h3>
 
             <h1 th:text="${gananciasMes}">
                 0
             </h1>
 
-            <p>Ventas del mes</p>
+            <p>
+                Ventas del mes
+            </p>
 
         </div>
 
+
+        <!-- =================================================
+             CAJA
+        ================================================== -->
+
         <div class="card blue">
 
-            <h3>💵 Caja</h3>
+            <h3>
+                💵 Caja
+            </h3>
 
             <h1 th:text="${saldoCaja}">
                 0
             </h1>
 
-            <p>Disponible hoy</p>
+            <p>
+                Disponible hoy
+            </p>
 
         </div>
 
+
     </div>
 
-    <!-- GRID -->
+
+    <!-- ======================================================
+         GRID PRINCIPAL
+    ======================================================= -->
+
     <div class="grid">
 
-        <!-- IZQUIERDA -->
+
+        <!-- ==================================================
+             COLUMNA IZQUIERDA
+        =================================================== -->
+
         <div>
 
-            <!-- VENTAS -->
+
+            <!-- =================================================
+                 VENTAS RECIENTES
+            ================================================== -->
+
             <div class="box">
 
+
                 <div class="box-title">
-                    <h3>🛒 Ventas Recientes</h3>
+
+                    <h3>
+                        🛒 Ventas Recientes
+                    </h3>
+
                 </div>
+
 
                 <table>
 
                     <thead>
 
                     <tr>
-                        <th>Factura</th>
-                        <th>Método</th>
-                        <th>Total</th>
-                        <th>Estado</th>
+
+                        <th>
+                            Factura
+                        </th>
+
+                        <th>
+                            Método
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                        <th>
+                            Estado
+                        </th>
+
                     </tr>
 
                     </thead>
 
+
                     <tbody>
 
+
                     <tr th:each="venta : ${ventasRecientes}">
+
 
                         <td th:text="${venta.numeroFactura}">
                             FAC-001
                         </td>
 
+
                         <td th:text="${venta.metodoPago}">
                             EFECTIVO
                         </td>
+
 
                         <td th:text="${venta.total}">
                             0
                         </td>
 
+
                         <td th:text="${venta.estado}">
                             COMPLETADA
                         </td>
 
+
                     </tr>
+
 
                     </tbody>
 
                 </table>
 
+
             </div>
 
-            <!-- INVENTARIO -->
+
+            <!-- =================================================
+                 INVENTARIO CON STOCK BAJO
+            ================================================== -->
+
             <div class="box">
+
 
                 <div class="box-title">
 
@@ -346,23 +546,28 @@
 
                 </div>
 
+
                 <div th:each="item : ${inventarioBajo}"
                      class="inventory">
+
 
                     <div>
 
                         <strong>
 
                             Producto ID:
+
                             <span th:text="${item.productoId}">
                                 1
                             </span>
 
                         </strong>
 
+
                         <p>
 
                             Stock:
+
                             <span th:text="${item.stockActual}">
                                 0
                             </span>
@@ -371,40 +576,68 @@
 
                     </div>
 
+
                     <span class="badge low">
+
                         Bajo
+
                     </span>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
-        <!-- DERECHA -->
+
+        <!-- ==================================================
+             COLUMNA DERECHA
+        =================================================== -->
+
         <div>
+
+
+            <!-- =================================================
+                 GRÁFICA DE VENTAS
+            ================================================== -->
 
             <div class="box">
 
+
                 <div class="box-title">
-                    <h3>📈 Ventas Semanales</h3>
+
+                    <h3>
+                        📈 Ventas Semanales
+                    </h3>
+
                 </div>
+
 
                 <canvas id="ventasChart"></canvas>
 
+
             </div>
+
 
         </div>
 
+
     </div>
-    <!-- ========================================= -->
 
-    <!-- SIMULADOR SOLAR -->
 
-    <!-- ========================================= -->
+    <!-- ======================================================
+         SIMULADOR SOLAR
+    ======================================================= -->
 
     <div class="box solar-box">
 
+
+        <!-- =================================================
+             TÍTULO
+        ================================================== -->
 
         <div class="box-title">
 
@@ -414,48 +647,100 @@
 
         </div>
 
+
         <div class="simulator">
 
-            <!-- FORMULARIO -->
+
+            <!-- =================================================
+                 FORMULARIO SOLAR
+            ================================================== -->
 
             <div class="solar-form">
+
+
+                <!-- CIUDAD -->
 
                 <label>
                     📍 Ciudad
                 </label>
 
+
                 <select id="ciudad">
 
-                    <option value="5.5">Medellín</option>
-                    <option value="5.0">Bogotá</option>
-                    <option value="5.8">Cali</option>
-                    <option value="6.0">Barranquilla</option>
-                    <option value="5.4">Pereira</option>
-                    <option value="5.3">Manizales</option>
-                    <option value="5.7">Bucaramanga</option>
-                    <option value="6.2">Cartagena</option>
-                    <option value="6.1">Santa Marta</option>
-                    <option value="5.9">Valledupar</option>
+                    <option value="5.5">
+                        Medellín
+                    </option>
+
+                    <option value="5.0">
+                        Bogotá
+                    </option>
+
+                    <option value="5.8">
+                        Cali
+                    </option>
+
+                    <option value="6.0">
+                        Barranquilla
+                    </option>
+
+                    <option value="5.4">
+                        Pereira
+                    </option>
+
+                    <option value="5.3">
+                        Manizales
+                    </option>
+
+                    <option value="5.7">
+                        Bucaramanga
+                    </option>
+
+                    <option value="6.2">
+                        Cartagena
+                    </option>
+
+                    <option value="6.1">
+                        Santa Marta
+                    </option>
+
+                    <option value="5.9">
+                        Valledupar
+                    </option>
 
                 </select>
 
+
+                <!-- CONSUMO -->
+
                 <label>
+
                     ⚡ Consumo mensual (kWh)
+
                 </label>
+
 
                 <input
                         type="number"
                         id="consumo"
                         placeholder="Ejemplo: 350">
 
+
+                <!-- FACTURA -->
+
                 <label>
+
                     💰 Valor factura actual
+
                 </label>
+
 
                 <input
                         type="number"
                         id="factura"
                         placeholder="Ejemplo: 250000">
+
+
+                <!-- BOTÓN -->
 
                 <button
                         type="button"
@@ -466,33 +751,50 @@
 
                 </button>
 
+
             </div>
 
 
-            <!-- SLIDER -->
+            <!-- =================================================
+                 IMÁGENES SOLARES
+            ================================================== -->
 
             <div class="solar-image">
 
+
                 <div class="solar-slider">
 
-                    <img src="/images/solar1.jpg"
-                         class="slide active"
-                         alt="Panel Solar 1">
 
-                    <img src="/images/solar2.jpg"
-                         class="slide"
-                         alt="Panel Solar 2">
+                    <img
+                            src="/images/solar1.jpg"
+                            class="slide active"
+                            alt="Panel Solar 1">
 
-                    <img src="/images/solar3.jpg"
-                         class="slide"
-                         alt="Panel Solar 3">
+
+                    <img
+                            src="/images/solar2.jpg"
+                            class="slide"
+                            alt="Panel Solar 2">
+
+
+                    <img
+                            src="/images/solar3.jpg"
+                            class="slide"
+                            alt="Panel Solar 3">
+
 
                 </div>
 
+
             </div>
 
+
         </div>
-        <!-- RESULTADO -->
+
+
+        <!-- =================================================
+             RESULTADO DEL SIMULADOR
+        ================================================== -->
 
         <div id="resultadoSolar"
              class="resultado-solar">
@@ -500,9 +802,13 @@
 
             <div class="solar-info-default">
 
+
                 <h4>
+
                     ☀️ Energía Solar Inteligente
+
                 </h4>
+
 
                 <p>
 
@@ -513,92 +819,208 @@
 
                 </p>
 
+
             </div>
 
 
         </div>
 
 
-
     </div>
+
+
+    <!-- ======================================================
+         JAVASCRIPT DEL SIMULADOR SOLAR
+    ======================================================= -->
 
     <script src="/js/simulador.js"></script>
 
 
+    <!-- ======================================================
+         GRÁFICA DE VENTAS
+    ======================================================= -->
 
     <script th:inline="javascript">
 
-    let ventasSemana =
-        [[${ventasSemana}]];
+        // ==================================================
+        // DATOS DE VENTAS SEMANALES
+        // ==================================================
 
-    new Chart(
-        document.getElementById("ventasChart"),
-        {
-            type:"line",
+        let ventasSemana =
+            [[${ventasSemana}]];
 
-            data:{
-                labels:[
-                    "Lun",
-                    "Mar",
-                    "Mié",
-                    "Jue",
-                    "Vie",
-                    "Sáb",
-                    "Dom"
-                ],
 
-                datasets:[{
-                    label:"Ventas",
-                    data:ventasSemana,
-                    borderWidth:3,
-                    tension:0.4,
-                    fill:false
-                }]
-            }
-        });
+        // ==================================================
+        // CREAR GRÁFICA
+        // ==================================================
 
-</script>
-</body>
-<script>
+        new Chart(
+            document.getElementById("ventasChart"),
+            {
 
-    const buscador =
-        document.getElementById(
-            "buscadorModulo"
-        );
+                type: "line",
 
-    buscador.addEventListener(
-        "keyup",
-        function(){
+                data: {
 
-            let filtro =
-                this.value.toLowerCase();
+                    labels: [
+                        "Lun",
+                        "Mar",
+                        "Mié",
+                        "Jue",
+                        "Vie",
+                        "Sáb",
+                        "Dom"
+                    ],
 
-            let enlaces =
-                document.querySelectorAll(
-                    ".menu a"
-                );
+                    datasets: [
 
-            enlaces.forEach(link => {
+                        {
 
-                let texto =
-                    link.textContent.toLowerCase();
+                            label: "Ventas",
 
-                if(texto.includes(filtro)){
+                            data: ventasSemana,
 
-                    link.style.display =
-                        "flex";
+                            borderWidth: 3,
 
-                }else{
+                            tension: 0.4,
 
-                    link.style.display =
-                        "none";
+                            fill: false
+
+                        }
+
+                    ]
 
                 }
 
-            });
+            }
+        );
 
-        });
+    </script>
 
-</script>
+
+    <!-- ======================================================
+         BUSCADOR GLOBAL
+
+         IMPORTANTE:
+         El topbar utiliza:
+
+         id="buscarTopbar"
+
+         Antes el Dashboard buscaba:
+
+         id="buscadorModulo"
+
+         Ese elemento no existe en el topbar.
+    ======================================================= -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                // ==================================================
+                // OBTENER BUSCADOR DEL TOPBAR
+                // ==================================================
+
+                const buscador =
+                    document.getElementById(
+                        "buscarTopbar"
+                    );
+
+
+                // ==================================================
+                // SI NO EXISTE, NO GENERAR ERROR
+                // ==================================================
+
+                if (!buscador) {
+
+                    return;
+
+                }
+
+
+                // ==================================================
+                // EVENTO DE BÚSQUEDA
+                // ==================================================
+
+                buscador.addEventListener(
+                    "keyup",
+                    function () {
+
+
+                        // ==========================================
+                        // TEXTO ESCRITO
+                        // ==========================================
+
+                        const filtro =
+                            this.value
+                                .trim()
+                                .toLowerCase();
+
+
+                        // ==========================================
+                        // ENLACES DEL MENÚ
+                        // ==========================================
+
+                        const enlaces =
+                            document.querySelectorAll(
+                                ".menu a"
+                            );
+
+
+                        // ==========================================
+                        // FILTRAR MENÚ
+                        // ==========================================
+
+                        enlaces.forEach(
+                            function (link) {
+
+
+                                const texto =
+                                    link.textContent
+                                        .trim()
+                                        .toLowerCase();
+
+
+                                // ==================================
+                                // MOSTRAR / OCULTAR
+                                // ==================================
+
+                                if (
+                                    texto.includes(
+                                        filtro
+                                    )
+                                ) {
+
+                                    link.style.display =
+                                        "flex";
+
+                                } else {
+
+                                    link.style.display =
+                                        "none";
+
+                                }
+
+                            }
+                        );
+
+
+                    }
+                );
+
+
+            }
+        );
+
+    </script>
+
+
+</div>
+
+
+</body>
+
 </html>
-
