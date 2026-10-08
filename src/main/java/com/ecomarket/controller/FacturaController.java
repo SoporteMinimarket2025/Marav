@@ -33,7 +33,13 @@ import com.ecomarket.security.CustomUserDetails;
 // ======================================================
 // 📚 IMPORTS - iTEXT PDF
 // ======================================================
-import com.itextpdf.text.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -54,10 +60,11 @@ import org.springframework.web.bind.annotation.*;
 // 📚 IMPORTS - JAVA
 // ======================================================
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 // ======================================================
-// 🚀 CONTROLADOR FACTURAS - ECO MARKET PRO
+// 🚀 CONTROLADOR FACTURAS - MARAV
 // ======================================================
 
 /**
@@ -74,30 +81,14 @@ import java.util.List;
  * ✔ Descargar tirilla PDF
  * ✔ Mostrar cliente
  * ✔ Mostrar productos
- * ✔ Mostrar datos del usuario
- * ✔ Mantener rol ADMIN / EMPLEADO
+ * ✔ Mantener roles ADMIN / EMPLEADO
  * ✔ Aislamiento por negocio
  *
  * ======================================================
  *
- * 🔐 REGLA MULTI-NEGOCIO
+ * 🔐 SEGURIDAD MULTI-NEGOCIO
  *
- * Una factura pertenece a una venta.
- *
- * La venta pertenece a un negocio mediante:
- *
- * Factura
- *    ↓
- * ventaId
- *    ↓
- * Venta
- *    ↓
- * negocioId
- *
- * Por eso NO confiamos en ningún negocioId enviado
- * desde el navegador.
- *
- * El negocio se obtiene exclusivamente desde:
+ * El negocio SIEMPRE se obtiene desde:
  *
  * Authentication
  *       ↓
@@ -105,12 +96,13 @@ import java.util.List;
  *       ↓
  * getNegocioId()
  *
+ * Nunca se recibe negocioId desde el navegador.
+ *
  * ======================================================
  */
 @Controller
 @RequestMapping("/facturas")
 public class FacturaController {
-
 
     // =========================================================
     // 🔗 REPOSITORIOS
@@ -126,7 +118,6 @@ public class FacturaController {
 
     private final VentaService ventaService;
 
-
     // =========================================================
     // 🏗 CONSTRUCTOR
     // =========================================================
@@ -139,45 +130,21 @@ public class FacturaController {
             VentaService ventaService
     ) {
 
-        this.facturaRepo =
-                facturaRepo;
-
-        this.detalleRepo =
-                detalleRepo;
-
-        this.clienteRepo =
-                clienteRepo;
-
-        this.ventaRepo =
-                ventaRepo;
-
-        this.ventaService =
-                ventaService;
+        this.facturaRepo = facturaRepo;
+        this.detalleRepo = detalleRepo;
+        this.clienteRepo = clienteRepo;
+        this.ventaRepo = ventaRepo;
+        this.ventaService = ventaService;
     }
-
 
     // =========================================================
     // 👤 CARGAR DATOS DEL USUARIO
     // =========================================================
 
-    /**
-     * Carga en el Model:
-     *
-     * ✔ nombre del usuario
-     * ✔ rol
-     * ✔ negocioId
-     *
-     * Estos datos son utilizados principalmente por
-     * el TOPBAR y el menú de la aplicación.
-     */
     private void cargarDatosUsuario(
             Model model,
             Authentication authentication
     ) {
-
-        // -----------------------------------------------------
-        // ❌ NO AUTENTICADO
-        // -----------------------------------------------------
 
         if (
                 authentication == null ||
@@ -197,14 +164,8 @@ public class FacturaController {
             return;
         }
 
-
-        // -----------------------------------------------------
-        // 🔐 OBTENER PRINCIPAL
-        // -----------------------------------------------------
-
         Object principal =
                 authentication.getPrincipal();
-
 
         // =====================================================
         // 👤 CUSTOM USER DETAILS
@@ -214,19 +175,10 @@ public class FacturaController {
                 principal instanceof CustomUserDetails user
         ) {
 
-            // -------------------------------------------------
-            // 👤 NOMBRE
-            // -------------------------------------------------
-
             model.addAttribute(
                     "usuario",
                     user.getNombre()
             );
-
-
-            // -------------------------------------------------
-            // 🔐 ROL
-            // -------------------------------------------------
 
             String rol =
                     authentication
@@ -238,11 +190,6 @@ public class FacturaController {
                             .findFirst()
                             .orElse("USUARIO");
 
-
-            // -------------------------------------------------
-            // 🔄 QUITAR ROLE_
-            // -------------------------------------------------
-
             if (
                     rol.startsWith("ROLE_")
             ) {
@@ -251,26 +198,18 @@ public class FacturaController {
                         rol.substring(5);
             }
 
-
             model.addAttribute(
                     "rolUsuario",
                     rol
             );
-
-
-            // -------------------------------------------------
-            // 🏪 NEGOCIO
-            // -------------------------------------------------
 
             model.addAttribute(
                     "negocioId",
                     user.getNegocioId()
             );
 
-
             return;
         }
-
 
         // =====================================================
         // 🔄 RESPALDO
@@ -280,7 +219,6 @@ public class FacturaController {
                 "usuario",
                 authentication.getName()
         );
-
 
         String rol =
                 authentication
@@ -292,7 +230,6 @@ public class FacturaController {
                         .findFirst()
                         .orElse("USUARIO");
 
-
         if (
                 rol.startsWith("ROLE_")
         ) {
@@ -301,49 +238,24 @@ public class FacturaController {
                     rol.substring(5);
         }
 
-
         model.addAttribute(
                 "rolUsuario",
                 rol
         );
     }
 
-
     // =========================================================
     // 📋 LISTAR FACTURAS
     // =========================================================
 
-    /**
-     * ======================================================
-     * GET /facturas
-     * ======================================================
-     *
-     * Muestra únicamente las facturas del negocio
-     * autenticado.
-     *
-     * ❌ Ya NO se utiliza:
-     *
-     * facturaRepo.findAll()
-     *
-     * ======================================================
-     */
     @GetMapping
     public String listarFacturas(
             Model model,
             Authentication authentication
     ) {
 
-        // -----------------------------------------------------
-        // 🔐 OBTENER NEGOCIO
-        // -----------------------------------------------------
-
         Integer negocioId =
                 obtenerNegocioId(authentication);
-
-
-        // -----------------------------------------------------
-        // 📋 CONSULTAR FACTURAS DEL NEGOCIO
-        // -----------------------------------------------------
 
         List<Factura> facturas =
                 facturaRepo
@@ -351,55 +263,28 @@ public class FacturaController {
                                 negocioId
                         );
 
-
-        // -----------------------------------------------------
-        // 📦 ENVIAR AL HTML
-        // -----------------------------------------------------
-
         model.addAttribute(
                 "facturas",
                 facturas
         );
-
 
         model.addAttribute(
                 "menuActivo",
                 "facturas"
         );
 
-
-        // -----------------------------------------------------
-        // 👤 USUARIO
-        // -----------------------------------------------------
-
         cargarDatosUsuario(
                 model,
                 authentication
         );
 
-
         return "facturas";
     }
-
 
     // =========================================================
     // 🔍 BUSCAR FACTURAS
     // =========================================================
 
-    /**
-     * ======================================================
-     * GET /facturas/buscar
-     * ======================================================
-     *
-     * Busca por número de factura pero únicamente dentro
-     * del negocio autenticado.
-     *
-     * Ejemplo:
-     *
-     * /facturas/buscar?numeroFactura=FAC-001
-     *
-     * ======================================================
-     */
     @GetMapping("/buscar")
     public String buscarFacturas(
             @RequestParam(
@@ -412,27 +297,13 @@ public class FacturaController {
             Authentication authentication
     ) {
 
-        // -----------------------------------------------------
-        // 🔐 OBTENER NEGOCIO
-        // -----------------------------------------------------
-
         Integer negocioId =
                 obtenerNegocioId(authentication);
-
-
-        // -----------------------------------------------------
-        // 🧹 LIMPIAR BÚSQUEDA
-        // -----------------------------------------------------
 
         String numeroBusqueda =
                 numeroFactura == null
                         ? ""
                         : numeroFactura.trim();
-
-
-        // -----------------------------------------------------
-        // 🔍 BUSCAR
-        // -----------------------------------------------------
 
         List<Factura> facturas =
                 facturaRepo
@@ -441,64 +312,41 @@ public class FacturaController {
                                 negocioId
                         );
 
-
-        // -----------------------------------------------------
-        // 📦 ENVIAR RESULTADO
-        // -----------------------------------------------------
-
         model.addAttribute(
                 "facturas",
                 facturas
         );
-
 
         model.addAttribute(
                 "menuActivo",
                 "facturas"
         );
 
-
-        // -----------------------------------------------------
-        // 👤 USUARIO
-        // -----------------------------------------------------
-
         cargarDatosUsuario(
                 model,
                 authentication
         );
 
-
         return "facturas";
     }
-
 
     // =========================================================
     // 🔎 OBTENER VENTA SEGURA
     // =========================================================
 
-    /**
-     * Busca una venta únicamente si pertenece al negocio
-     * autenticado.
-     *
-     * Este método es importante porque:
-     *
-     * Factura → Venta → negocioId
-     *
-     * De esta manera podemos validar la pertenencia de una
-     * factura antes de mostrarla o generar un PDF.
-     */
     private Venta obtenerVentaDelNegocio(
             Integer ventaId,
             Integer negocioId
     ) {
 
-        if (ventaId == null) {
+        if (
+                ventaId == null
+        ) {
 
-            throw new RuntimeException(
+            throw new IllegalStateException(
                     "La factura no tiene una venta asociada."
             );
         }
-
 
         return ventaRepo
                 .findByIdAndNegocioId(
@@ -506,70 +354,42 @@ public class FacturaController {
                         negocioId
                 )
                 .orElseThrow(() ->
-                        new RuntimeException(
-                                "Factura no encontrada."
+                        new IllegalStateException(
+                                "La venta no pertenece al negocio autenticado."
                         )
                 );
     }
-
 
     // =========================================================
     // 🧾 OBTENER FACTURA SEGURA
     // =========================================================
 
-    /**
-     * Busca una factura por ID validando primero que la venta
-     * asociada pertenezca al negocio autenticado.
-     *
-     * Esto evita que un usuario pueda acceder manualmente
-     * a una factura de otro negocio modificando la URL.
-     */
     private Factura obtenerFacturaDelNegocio(
             Integer facturaId,
             Integer negocioId
     ) {
 
-        // -----------------------------------------------------
-        // 🔍 BUSCAR FACTURA
-        // -----------------------------------------------------
-
         Factura factura =
                 facturaRepo
                         .findById(facturaId)
                         .orElseThrow(() ->
-                                new RuntimeException(
+                                new IllegalStateException(
                                         "Factura no encontrada."
                                 )
                         );
-
-
-        // -----------------------------------------------------
-        // 🔐 VALIDAR VENTA
-        // -----------------------------------------------------
 
         obtenerVentaDelNegocio(
                 factura.getVentaId(),
                 negocioId
         );
 
-
         return factura;
     }
-
 
     // =========================================================
     // 📄 VER DETALLE DE FACTURA
     // =========================================================
 
-    /**
-     * ======================================================
-     * GET /facturas/{id}
-     * ======================================================
-     *
-     * Muestra el detalle de una factura.
-     *
-     * 🔐 La factura debe pertenecer al negocio autenticado.
-     */
     @GetMapping("/{id}")
     public String verFactura(
             @PathVariable Integer id,
@@ -577,17 +397,8 @@ public class FacturaController {
             Authentication authentication
     ) {
 
-        // -----------------------------------------------------
-        // 🔐 NEGOCIO AUTENTICADO
-        // -----------------------------------------------------
-
         Integer negocioId =
                 obtenerNegocioId(authentication);
-
-
-        // -----------------------------------------------------
-        // 🧾 FACTURA SEGURA
-        // -----------------------------------------------------
 
         Factura facturaEntity =
                 obtenerFacturaDelNegocio(
@@ -595,46 +406,21 @@ public class FacturaController {
                         negocioId
                 );
 
-
-        // -----------------------------------------------------
-        // 🔐 OBTENER FACTURA COMPLETA
-        // -----------------------------------------------------
-        //
-        // IMPORTANTE:
-        // Se utiliza la versión del servicio que recibe
-        // negocioId.
-        //
-
         FacturaDTO factura =
                 ventaService.obtenerFactura(
                         facturaEntity.getVentaId(),
                         negocioId
                 );
 
-
-        // -----------------------------------------------------
-        // 🆔 ID FACTURA
-        // -----------------------------------------------------
-
         factura.setId(
                 facturaEntity.getId()
         );
-
-
-        // -----------------------------------------------------
-        // 🔍 OBTENER VENTA
-        // -----------------------------------------------------
 
         Venta venta =
                 obtenerVentaDelNegocio(
                         facturaEntity.getVentaId(),
                         negocioId
                 );
-
-
-        // =====================================================
-        // 👤 CLIENTE
-        // =====================================================
 
         if (
                 venta.getIdCliente() != null
@@ -653,20 +439,10 @@ public class FacturaController {
                     );
         }
 
-
-        // -----------------------------------------------------
-        // 📦 DATOS FACTURA
-        // -----------------------------------------------------
-
         model.addAttribute(
                 "factura",
                 factura
         );
-
-
-        // -----------------------------------------------------
-        // 📦 DETALLES SEGUROS
-        // -----------------------------------------------------
 
         model.addAttribute(
                 "detalles",
@@ -676,43 +452,23 @@ public class FacturaController {
                 )
         );
 
-
-        // -----------------------------------------------------
-        // 📌 MENÚ
-        // -----------------------------------------------------
-
         model.addAttribute(
                 "menuActivo",
                 "facturas"
         );
-
-
-        // -----------------------------------------------------
-        // 👤 USUARIO
-        // -----------------------------------------------------
 
         cargarDatosUsuario(
                 model,
                 authentication
         );
 
-
         return "factura-detalle";
     }
-
 
     // =========================================================
     // 📥 DESCARGAR FACTURA PDF
     // =========================================================
 
-    /**
-     * ======================================================
-     * GET /facturas/pdf/{id}
-     * ======================================================
-     *
-     * Genera el PDF únicamente si la factura pertenece al
-     * negocio del usuario autenticado.
-     */
     @GetMapping("/pdf/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> descargarPdf(
@@ -720,7 +476,14 @@ public class FacturaController {
             Authentication authentication
     ) {
 
+        Document document = null;
+
         try {
+
+            System.out.println(
+                    "[MARAV PDF] Iniciando generación. Factura ID: "
+                            + id
+            );
 
             // -------------------------------------------------
             // 🔐 NEGOCIO
@@ -729,6 +492,10 @@ public class FacturaController {
             Integer negocioId =
                     obtenerNegocioId(authentication);
 
+            System.out.println(
+                    "[MARAV PDF] Negocio autenticado: "
+                            + negocioId
+            );
 
             // -------------------------------------------------
             // 🧾 FACTURA SEGURA
@@ -740,9 +507,13 @@ public class FacturaController {
                             negocioId
                     );
 
+            System.out.println(
+                    "[MARAV PDF] Factura encontrada: "
+                            + factura.getNumeroFactura()
+            );
 
             // -------------------------------------------------
-            // 📦 DETALLES DEL NEGOCIO
+            // 📦 DETALLES
             // -------------------------------------------------
 
             List<DetalleVenta> detalles =
@@ -751,9 +522,23 @@ public class FacturaController {
                             negocioId
                     );
 
+            System.out.println(
+                    "[MARAV PDF] Detalles encontrados: "
+                            + detalles.size()
+            );
 
             // -------------------------------------------------
-            // 👤 DATOS CLIENTE
+            // 🧾 VENTA
+            // -------------------------------------------------
+
+            Venta venta =
+                    obtenerVentaDelNegocio(
+                            factura.getVentaId(),
+                            negocioId
+                    );
+
+            // -------------------------------------------------
+            // 👤 CLIENTE
             // -------------------------------------------------
 
             String clienteNombre =
@@ -769,36 +554,9 @@ public class FacturaController {
                     "";
 
             String metodoPago =
-                    "";
-
-
-            // -------------------------------------------------
-            // 🧾 VENTA SEGURA
-            // -------------------------------------------------
-
-            Venta venta =
-                    obtenerVentaDelNegocio(
-                            factura.getVentaId(),
-                            negocioId
-                    );
-
-
-            // -------------------------------------------------
-            // 💳 MÉTODO DE PAGO
-            // -------------------------------------------------
-
-            if (
-                    venta.getMetodoPago() != null
-            ) {
-
-                metodoPago =
-                        venta.getMetodoPago();
-            }
-
-
-            // -------------------------------------------------
-            // 👤 CLIENTE
-            // -------------------------------------------------
+                    venta.getMetodoPago() == null
+                            ? ""
+                            : venta.getMetodoPago();
 
             if (
                     venta.getIdCliente() != null
@@ -812,87 +570,58 @@ public class FacturaController {
                                 )
                                 .orElse(null);
 
-
                 if (
                         cliente != null
                 ) {
 
                     clienteNombre =
-                            cliente.getNombre();
+                            valorSeguro(
+                                    cliente.getNombre()
+                            );
 
                     documentoCliente =
-                            cliente.getNumeroIdentificacion();
+                            valorSeguro(
+                                    cliente.getNumeroIdentificacion()
+                            );
 
                     telefonoCliente =
-                            cliente.getTelefono();
+                            valorSeguro(
+                                    cliente.getTelefono()
+                            );
 
                     direccionCliente =
-                            cliente.getDireccion();
+                            valorSeguro(
+                                    cliente.getDireccion()
+                            );
                 }
             }
 
-
             // =================================================
-            // 📄 CREAR PDF
+            // 📄 CREAR PDF EN MEMORIA
             // =================================================
 
             ByteArrayOutputStream baos =
                     new ByteArrayOutputStream();
 
-
-            Document document =
+            document =
                     new Document();
-
 
             PdfWriter.getInstance(
                     document,
                     baos
             );
 
-
             document.open();
 
-
             // =================================================
-            // 🖼 LOGO
+            // 🖼 LOGO SEGURO
             // =================================================
 
-            try {
-
-                ClassPathResource resource =
-                        new ClassPathResource(
-                                "static/images/logo.png"
-                        );
-
-
-                Image logo =
-                        Image.getInstance(
-                                resource.getURL()
-                        );
-
-
-                logo.scaleToFit(
-                        120,
-                        120
-                );
-
-
-                logo.setAlignment(
-                        Image.ALIGN_CENTER
-                );
-
-
-                document.add(
-                        logo
-                );
-
-            } catch (Exception e) {
-
-                System.out.println(
-                        "No se pudo cargar el logo."
-                );
-            }
-
+            agregarLogo(
+                    document,
+                    120,
+                    120
+            );
 
             // =================================================
             // 🔤 FUENTES
@@ -904,13 +633,11 @@ public class FacturaController {
                             18
                     );
 
-
             Font subtitulo =
                     FontFactory.getFont(
                             FontFactory.HELVETICA_BOLD,
                             12
                     );
-
 
             // =================================================
             // 🏪 EMPRESA
@@ -922,49 +649,51 @@ public class FacturaController {
                             titulo
                     );
 
-
             empresa.setAlignment(
                     Element.ALIGN_CENTER
             );
-
 
             document.add(
                     empresa
             );
 
-
             // =================================================
-            // 🧾 INFORMACIÓN FACTURA
+            // 🧾 FACTURA
             // =================================================
 
             document.add(
                     new Paragraph(
                             "Factura: "
-                                    + factura.getNumeroFactura()
+                                    + valorSeguro(
+                                    factura.getNumeroFactura()
+                            )
                     )
             );
-
 
             document.add(
                     new Paragraph(
                             "Fecha: "
-                                    + factura.getFecha()
+                                    + valorSeguro(
+                                    factura.getFecha()
+                                            == null
+                                            ? ""
+                                            : factura.getFecha().toString()
+                            )
                     )
             );
-
 
             document.add(
                     new Paragraph(
                             "Estado: "
-                                    + factura.getEstado()
+                                    + valorSeguro(
+                                    factura.getEstado()
+                            )
                     )
             );
-
 
             document.add(
                     new Paragraph(" ")
             );
-
 
             // =================================================
             // 👤 CLIENTE
@@ -977,14 +706,12 @@ public class FacturaController {
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "Documento: "
                                     + documentoCliente
                     )
             );
-
 
             document.add(
                     new Paragraph(
@@ -993,7 +720,6 @@ public class FacturaController {
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "Direccion: "
@@ -1001,19 +727,15 @@ public class FacturaController {
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "Metodo de Pago: "
                                     + metodoPago
-                    )
-            );
-
+                    );
 
             document.add(
                     new Paragraph(" ")
             );
-
 
             // =================================================
             // 📦 TABLA PRODUCTOS
@@ -1022,41 +744,39 @@ public class FacturaController {
             PdfPTable tabla =
                     new PdfPTable(4);
 
-
             tabla.setWidthPercentage(
                     100
             );
-
 
             tabla.addCell(
                     "Producto"
             );
 
-
             tabla.addCell(
                     "Cantidad"
             );
-
 
             tabla.addCell(
                     "Precio"
             );
 
-
             tabla.addCell(
                     "Subtotal"
             );
-
 
             for (
                     DetalleVenta d :
                     detalles
             ) {
 
-                tabla.addCell(
-                        d.getNombreProducto()
-                );
+                String nombreProducto =
+                        valorSeguro(
+                                d.getNombreProducto()
+                        );
 
+                tabla.addCell(
+                        nombreProducto
+                );
 
                 tabla.addCell(
                         String.valueOf(
@@ -1064,35 +784,28 @@ public class FacturaController {
                         )
                 );
 
-
                 tabla.addCell(
                         "$ "
-                                + String.format(
-                                "%,.0f",
+                                + formatearNumero(
                                 d.getPrecio()
                         )
                 );
 
-
                 tabla.addCell(
                         "$ "
-                                + String.format(
-                                "%,.0f",
+                                + formatearNumero(
                                 d.getSubtotal()
                         )
                 );
             }
 
-
             document.add(
                     tabla
             );
 
-
             document.add(
                     new Paragraph(" ")
             );
-
 
             // =================================================
             // 💰 TOTALES
@@ -1101,103 +814,95 @@ public class FacturaController {
             document.add(
                     new Paragraph(
                             "Subtotal: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getSubtotal()
                             ),
                             subtitulo
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "IVA: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getIva()
                             ),
                             subtitulo
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "TOTAL: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getTotal()
                             ),
                             titulo
                     )
             );
 
-
             document.add(
                     new Paragraph(
-                            "\nGracias por comprar en EcoMarket PRO",
+                            "\nGracias por comprar en MARAV",
                             subtitulo
                     )
             );
 
+            System.out.println(
+                    "[MARAV PDF] Cerrando documento..."
+            );
 
-            // =================================================
-            // 🔒 CERRAR PDF
-            // =================================================
-
-            document.close();
-
-
-            // =================================================
-            // 📤 RESPUESTA
-            // =================================================
-
-            HttpHeaders headers =
-                    new HttpHeaders();
-
-
-            headers.add(
-                    "Content-Disposition",
-                    "attachment; filename=Factura_"
-                            + factura.getNumeroFactura()
+            return construirRespuestaPdf(
+                    document,
+                    baos,
+                    "Factura_"
+                            + limpiarNombreArchivo(
+                            factura.getNumeroFactura()
+                    )
                             + ".pdf"
             );
 
-
-            return ResponseEntity
-                    .ok()
-                    .headers(headers)
-                    .contentType(
-                            MediaType.APPLICATION_PDF
-                    )
-                    .body(
-                            baos.toByteArray()
-                    );
-
         } catch (Exception e) {
 
+            System.err.println(
+                    "[MARAV PDF ERROR] Factura ID: "
+                            + id
+            );
+
+            e.printStackTrace();
+
             throw new RuntimeException(
-                    "Error generando PDF",
+                    "Error generando PDF de factura.",
                     e
             );
+
+        } finally {
+
+            if (
+                    document != null &&
+                            document.isOpen()
+            ) {
+
+                try {
+
+                    document.close();
+
+                } catch (Exception e) {
+
+                    System.err.println(
+                            "[MARAV PDF] Error cerrando documento."
+                    );
+
+                    e.printStackTrace();
+                }
+            }
         }
     }
-
 
     // =========================================================
     // 🧾 DESCARGAR TIRILLA
     // =========================================================
 
-    /**
-     * ======================================================
-     * GET /facturas/pdf-tirilla/{id}
-     * ======================================================
-     *
-     * Genera una tirilla térmica en PDF.
-     *
-     * También está protegida por negocio.
-     */
     @GetMapping("/pdf-tirilla/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> descargarTirilla(
@@ -1205,19 +910,17 @@ public class FacturaController {
             Authentication authentication
     ) {
 
+        Document document = null;
+
         try {
 
-            // -------------------------------------------------
-            // 🔐 NEGOCIO
-            // -------------------------------------------------
+            System.out.println(
+                    "[MARAV TIRILLA] Iniciando generación. Factura ID: "
+                            + id
+            );
 
             Integer negocioId =
                     obtenerNegocioId(authentication);
-
-
-            // -------------------------------------------------
-            // 🧾 FACTURA SEGURA
-            // -------------------------------------------------
 
             Factura factura =
                     obtenerFacturaDelNegocio(
@@ -1225,33 +928,11 @@ public class FacturaController {
                             negocioId
                     );
 
-
-            // -------------------------------------------------
-            // 📦 DETALLES SEGUROS
-            // -------------------------------------------------
-
             List<DetalleVenta> detalles =
                     detalleRepo.findByIdVentaAndNegocioId(
                             factura.getVentaId(),
                             negocioId
                     );
-
-
-            // -------------------------------------------------
-            // 👤 CLIENTE
-            // -------------------------------------------------
-
-            String clienteNombre =
-                    "Cliente de Contado";
-
-
-            String metodoPago =
-                    "";
-
-
-            // -------------------------------------------------
-            // 🧾 VENTA SEGURA
-            // -------------------------------------------------
 
             Venta venta =
                     obtenerVentaDelNegocio(
@@ -1259,23 +940,13 @@ public class FacturaController {
                             negocioId
                     );
 
+            String clienteNombre =
+                    "Cliente de Contado";
 
-            // -------------------------------------------------
-            // 💳 MÉTODO DE PAGO
-            // -------------------------------------------------
-
-            if (
-                    venta.getMetodoPago() != null
-            ) {
-
-                metodoPago =
-                        venta.getMetodoPago();
-            }
-
-
-            // -------------------------------------------------
-            // 👤 CLIENTE
-            // -------------------------------------------------
+            String metodoPago =
+                    venta.getMetodoPago() == null
+                            ? ""
+                            : venta.getMetodoPago();
 
             if (
                     venta.getIdCliente() != null
@@ -1289,24 +960,23 @@ public class FacturaController {
                                 )
                                 .orElse(null);
 
-
                 if (
                         cliente != null
                 ) {
 
                     clienteNombre =
-                            cliente.getNombre();
+                            valorSeguro(
+                                    cliente.getNombre()
+                            );
                 }
             }
 
-
             // =================================================
-            // 📄 CREAR TIRILLA
+            // 📄 TAMAÑO TIRILLA
             // =================================================
 
             ByteArrayOutputStream baos =
                     new ByteArrayOutputStream();
-
 
             Rectangle ticket =
                     new Rectangle(
@@ -1314,8 +984,7 @@ public class FacturaController {
                             1200f
                     );
 
-
-            Document document =
+            document =
                     new Document(
                             ticket,
                             10,
@@ -1324,56 +993,22 @@ public class FacturaController {
                             10
                     );
 
-
             PdfWriter.getInstance(
                     document,
                     baos
             );
 
-
             document.open();
-
 
             // =================================================
             // 🖼 LOGO
             // =================================================
 
-            try {
-
-                ClassPathResource resource =
-                        new ClassPathResource(
-                                "static/images/logo.png"
-                        );
-
-
-                Image logo =
-                        Image.getInstance(
-                                resource.getURL()
-                        );
-
-
-                logo.scaleToFit(
-                        70,
-                        70
-                );
-
-
-                logo.setAlignment(
-                        Element.ALIGN_CENTER
-                );
-
-
-                document.add(
-                        logo
-                );
-
-            } catch (Exception e) {
-
-                System.out.println(
-                        "Logo no encontrado"
-                );
-            }
-
+            agregarLogo(
+                    document,
+                    70,
+                    70
+            );
 
             // =================================================
             // 🔤 FUENTES
@@ -1385,13 +1020,11 @@ public class FacturaController {
                             12
                     );
 
-
             Font normal =
                     FontFactory.getFont(
                             FontFactory.HELVETICA,
                             9
                     );
-
 
             // =================================================
             // 🏪 EMPRESA
@@ -1403,16 +1036,13 @@ public class FacturaController {
                             titulo
                     );
 
-
             empresa.setAlignment(
                     Element.ALIGN_CENTER
             );
 
-
             document.add(
                     empresa
             );
-
 
             // =================================================
             // 🧾 DATOS FACTURA
@@ -1421,11 +1051,12 @@ public class FacturaController {
             document.add(
                     new Paragraph(
                             "Factura: "
-                                    + factura.getNumeroFactura(),
+                                    + valorSeguro(
+                                    factura.getNumeroFactura()
+                            ),
                             normal
                     )
             );
-
 
             document.add(
                     new Paragraph(
@@ -1435,7 +1066,6 @@ public class FacturaController {
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "Pago: "
@@ -1444,13 +1074,12 @@ public class FacturaController {
                     )
             );
 
-
             document.add(
                     new Paragraph(
-                            "--------------------------------"
+                            "--------------------------------",
+                            normal
                     )
             );
-
 
             // =================================================
             // 📦 PRODUCTOS
@@ -1463,44 +1092,41 @@ public class FacturaController {
 
                 document.add(
                         new Paragraph(
-                                d.getNombreProducto(),
+                                valorSeguro(
+                                        d.getNombreProducto()
+                                ),
                                 normal
                         )
                 );
-
 
                 document.add(
                         new Paragraph(
                                 d.getCantidad()
                                         + " x $ "
-                                        + String.format(
-                                        "%,.0f",
+                                        + formatearNumero(
                                         d.getPrecio()
                                 ),
                                 normal
                         )
                 );
 
-
                 document.add(
                         new Paragraph(
                                 "$ "
-                                        + String.format(
-                                        "%,.0f",
+                                        + formatearNumero(
                                         d.getSubtotal()
                                 ),
                                 normal
                         )
                 );
 
-
                 document.add(
                         new Paragraph(
-                                "--------------------------------"
+                                "--------------------------------",
+                                normal
                         )
                 );
             }
-
 
             // =================================================
             // 💰 TOTALES
@@ -1509,47 +1135,39 @@ public class FacturaController {
             document.add(
                     new Paragraph(
                             "Subtotal: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getSubtotal()
                             ),
                             normal
                     )
             );
 
-
             document.add(
                     new Paragraph(
                             "IVA: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getIva()
                             ),
                             normal
                     )
             );
 
-
             Paragraph total =
                     new Paragraph(
                             "\nTOTAL: $ "
-                                    + String.format(
-                                    "%,.0f",
+                                    + formatearNumero(
                                     factura.getTotal()
                             ),
                             titulo
                     );
 
-
             total.setAlignment(
                     Element.ALIGN_CENTER
             );
 
-
             document.add(
                     total
             );
-
 
             document.add(
                     new Paragraph(
@@ -1558,77 +1176,256 @@ public class FacturaController {
                     )
             );
 
-
-            // =================================================
-            // 🔒 CERRAR DOCUMENTO
-            // =================================================
-
-            document.close();
-
-
-            // =================================================
-            // 📤 RESPUESTA
-            // =================================================
-
-            HttpHeaders headers =
-                    new HttpHeaders();
-
-
-            headers.add(
-                    "Content-Disposition",
-                    "attachment; filename=Tirilla_"
-                            + factura.getNumeroFactura()
+            return construirRespuestaPdf(
+                    document,
+                    baos,
+                    "Tirilla_"
+                            + limpiarNombreArchivo(
+                            factura.getNumeroFactura()
+                    )
                             + ".pdf"
             );
 
-
-            return ResponseEntity
-                    .ok()
-                    .headers(headers)
-                    .contentType(
-                            MediaType.APPLICATION_PDF
-                    )
-                    .body(
-                            baos.toByteArray()
-                    );
-
         } catch (Exception e) {
 
+            System.err.println(
+                    "[MARAV TIRILLA ERROR] Factura ID: "
+                            + id
+            );
+
+            e.printStackTrace();
+
             throw new RuntimeException(
-                    "Error generando tirilla",
+                    "Error generando tirilla.",
                     e
             );
+
+        } finally {
+
+            if (
+                    document != null &&
+                            document.isOpen()
+            ) {
+
+                try {
+
+                    document.close();
+
+                } catch (Exception e) {
+
+                    System.err.println(
+                            "[MARAV TIRILLA] Error cerrando documento."
+                    );
+
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
+    // =========================================================
+    // 🖼 CARGAR LOGO DE FORMA SEGURA
+    // =========================================================
+
+    private void agregarLogo(
+            Document document,
+            float ancho,
+            float alto
+    ) {
+
+        try {
+
+            ClassPathResource resource =
+                    new ClassPathResource(
+                            "static/images/logo.png"
+                    );
+
+            if (
+                    !resource.exists()
+            ) {
+
+                System.err.println(
+                        "[MARAV PDF] Logo no encontrado en classpath."
+                );
+
+                return;
+            }
+
+            try (
+                    InputStream inputStream =
+                            resource.getInputStream()
+            ) {
+
+                byte[] logoBytes =
+                        inputStream.readAllBytes();
+
+                Image logo =
+                        Image.getInstance(
+                                logoBytes
+                        );
+
+                logo.scaleToFit(
+                        ancho,
+                        alto
+                );
+
+                logo.setAlignment(
+                        Element.ALIGN_CENTER
+                );
+
+                document.add(
+                        logo
+                );
+            }
+
+        } catch (Exception e) {
+
+            // =================================================
+            // ⚠️ EL LOGO NUNCA DEBE IMPEDIR EL PDF
+            // =================================================
+
+            System.err.println(
+                    "[MARAV PDF] No se pudo cargar el logo. "
+                            + "El PDF continuará sin logo."
+            );
+
+            e.printStackTrace();
+        }
+    }
+
+    // =========================================================
+    // 📤 CONSTRUIR RESPUESTA PDF
+    // =========================================================
+
+    private ResponseEntity<byte[]> construirRespuestaPdf(
+            Document document,
+            ByteArrayOutputStream baos,
+            String nombreArchivo
+    ) {
+
+        // -----------------------------------------------------
+        // 🔒 CERRAR PDF ANTES DE DEVOLVER BYTES
+        // -----------------------------------------------------
+
+        if (
+                document != null &&
+                        document.isOpen()
+        ) {
+
+            document.close();
+        }
+
+        byte[] pdf =
+                baos.toByteArray();
+
+        System.out.println(
+                "[MARAV PDF] PDF generado correctamente. "
+                        + "Tamaño: "
+                        + pdf.length
+                        + " bytes"
+        );
+
+        HttpHeaders headers =
+                new HttpHeaders();
+
+        headers.add(
+                "Content-Disposition",
+                "attachment; filename=\""
+                        + nombreArchivo
+                        + "\""
+        );
+
+        headers.setContentLength(
+                pdf.length
+        );
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(
+                        MediaType.APPLICATION_PDF
+                )
+                .body(
+                        pdf
+                );
+    }
+
+    // =========================================================
+    // 🔤 VALOR SEGURO
+    // =========================================================
+
+    private String valorSeguro(
+            Object valor
+    ) {
+
+        if (
+                valor == null
+        ) {
+
+            return "";
+        }
+
+        return String.valueOf(
+                valor
+        );
+    }
+
+    // =========================================================
+    // 💰 FORMATEAR NÚMEROS
+    // =========================================================
+
+    private String formatearNumero(
+            Number numero
+    ) {
+
+        if (
+                numero == null
+        ) {
+
+            return "0";
+        }
+
+        return String.format(
+                "%,.0f",
+                numero.doubleValue()
+        );
+    }
+
+    // =========================================================
+    // 🧹 LIMPIAR NOMBRE ARCHIVO
+    // =========================================================
+
+    private String limpiarNombreArchivo(
+            Object nombre
+    ) {
+
+        String texto =
+                valorSeguro(
+                        nombre
+                );
+
+        if (
+                texto.isBlank()
+        ) {
+
+            return "Factura";
+        }
+
+        return texto
+                .replaceAll(
+                        "[\\\\/:*?\"<>|]",
+                        "_"
+                )
+                .trim();
+    }
 
     // =========================================================
     // 🔐 OBTENER NEGOCIO DEL USUARIO
     // =========================================================
 
-    /**
-     * Obtiene el negocio directamente desde el usuario
-     * autenticado.
-     *
-     * 🚨 IMPORTANTE:
-     *
-     * Nunca se recibe negocioId desde:
-     *
-     * - URL
-     * - RequestParam
-     * - RequestBody
-     * - JavaScript
-     *
-     * El negocio se obtiene exclusivamente desde
-     * CustomUserDetails.
-     */
     private Integer obtenerNegocioId(
             Authentication authentication
     ) {
-
-        // -----------------------------------------------------
-        // ❌ VALIDAR AUTENTICACIÓN
-        // -----------------------------------------------------
 
         if (
                 authentication == null ||
@@ -1640,14 +1437,8 @@ public class FacturaController {
             );
         }
 
-
-        // -----------------------------------------------------
-        // 🔐 VALIDAR PRINCIPAL
-        // -----------------------------------------------------
-
         Object principal =
                 authentication.getPrincipal();
-
 
         if (
                 !(principal instanceof CustomUserDetails user)
@@ -1658,18 +1449,8 @@ public class FacturaController {
             );
         }
 
-
-        // -----------------------------------------------------
-        // 🏪 NEGOCIO
-        // -----------------------------------------------------
-
         Integer negocioId =
                 user.getNegocioId();
-
-
-        // -----------------------------------------------------
-        // ❌ SIN NEGOCIO
-        // -----------------------------------------------------
 
         if (
                 negocioId == null
@@ -1680,8 +1461,6 @@ public class FacturaController {
             );
         }
 
-
         return negocioId;
     }
 }
-
