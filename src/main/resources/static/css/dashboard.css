@@ -1,43 +1,28 @@
 
-
-/* ==========================================================
-   🌍 RESET GLOBAL
-   ========================================================== */
+    /* ==========================================================
+       🌍 RESET GLOBAL
+       ========================================================== */
 
 * {
-
     margin: 0;
-
     padding: 0;
-
     box-sizing: border-box;
-
     font-family: 'Poppins', sans-serif;
 }
 
-
 html {
-
     scroll-behavior: smooth;
 }
 
-
 body {
-
     background: #edf4ef;
-
     display: flex;
-
     min-height: 100vh;
-
     overflow-x: hidden;
-
     color: #111827;
 }
 
-
 a {
-
     text-decoration: none;
 }
 
@@ -47,15 +32,10 @@ a {
    ========================================================== */
 
 .sidebar {
-
     width: 300px;
-
     height: 100vh;
-
     position: fixed;
-
     top: 0;
-
     left: 0;
 
     background:
@@ -73,7 +53,9 @@ a {
     box-shadow:
             8px 0 30px rgba(0, 0, 0, 0.12);
 
-    z-index: 100;
+    z-index: 1000;
+
+    transition: transform 0.3s ease;
 }
 
 
@@ -82,47 +64,29 @@ a {
    ========================================================== */
 
 .logo {
-
     display: flex;
-
     align-items: center;
-
     gap: 15px;
-
     margin-bottom: 40px;
 }
 
-
 .logo img {
-
     width: 70px;
-
     height: 70px;
-
     border-radius: 18px;
-
     object-fit: cover;
-
     border: 3px solid rgba(255, 255, 255, 0.15);
-
     background: #fff;
 }
 
-
 .logo h2 {
-
     color: #fff;
-
     font-size: 28px;
-
     font-weight: 700;
 }
 
-
 .logo p {
-
     color: #bbf7d0;
-
     font-size: 15px;
 }
 
@@ -132,68 +96,38 @@ a {
    ========================================================== */
 
 .menu {
-
     width: 100%;
 }
 
-
 .menu-title {
-
     color: #86efac;
-
     margin-top: 25px;
-
     margin-bottom: 15px;
-
     font-size: 12px;
-
     text-transform: uppercase;
-
     letter-spacing: 1px;
-
     font-weight: 600;
 }
 
-
 .menu a {
-
     display: flex;
-
     align-items: center;
-
     gap: 14px;
-
     width: 100%;
-
     padding: 15px;
-
     margin-bottom: 10px;
-
     border-radius: 18px;
-
     color: #fff;
-
     transition: all 0.3s ease;
-
     font-weight: 500;
 }
 
-
 .menu a:hover {
-
-    background:
-            rgba(255, 255, 255, 0.08);
-
+    background: rgba(255, 255, 255, 0.08);
     transform: translateX(5px);
 }
 
-
-/* ==========================================================
-   🟢 ELEMENTO ACTIVO
-   ========================================================== */
-
 .menu a.active {
-
     background:
             linear-gradient(
                     135deg,
@@ -211,42 +145,29 @@ a {
    ========================================================== */
 
 .submenu {
-
     margin-left: 20px;
-
     margin-bottom: 15px;
 }
 
-
 .submenu a {
-
-    background:
-            rgba(255, 255, 255, 0.04);
-
+    background: rgba(255, 255, 255, 0.04);
     padding: 12px;
-
     font-size: 14px;
 }
 
 
 /* ==========================================================
-   ☀️ BOTÓN SIMULADOR DEL SIDEBAR
+   ☀️ BOTÓN SIMULADOR SIDEBAR
    ========================================================== */
 
 .simulador-bottom {
-
     margin-top: 35px;
 }
 
-
 .simulador-bottom a {
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     gap: 10px;
 
     background:
@@ -267,9 +188,7 @@ a {
     transition: all 0.3s ease;
 }
 
-
 .simulador-bottom a:hover {
-
     transform: translateY(-3px);
 
     box-shadow:
@@ -282,19 +201,13 @@ a {
    ========================================================== */
 
 .logout {
-
     margin-top: 18px;
 }
 
-
 .logout a {
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     gap: 10px;
 
     padding: 16px;
@@ -315,9 +228,7 @@ a {
     transition: all 0.3s ease;
 }
 
-
 .logout a:hover {
-
     transform: translateY(-2px);
 
     background:
@@ -333,11 +244,79 @@ a {
 
 
 /* ==========================================================
+   📱 BOTÓN MENÚ MÓVIL
+   ========================================================== */
+
+.mobile-menu-btn {
+    display: none;
+
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+
+    width: 46px;
+    height: 46px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #16a34a,
+                    #22c55e
+            );
+
+    color: #fff;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    z-index: 2001;
+
+    box-shadow:
+            0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ==========================================================
+   🌑 FONDO OSCURO DEL MENÚ MÓVIL
+   ========================================================== */
+
+.sidebar-overlay {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.50);
+
+    z-index: 1998;
+}
+
+.sidebar-overlay.show {
+    display: block;
+}
+
+
+/* ==========================================================
+   📱 ESTADO SIDEBAR ABIERTO
+   ========================================================== */
+
+.sidebar.mobile-open {
+    transform: translateX(0);
+}
+
+
+/* ==========================================================
    📊 CONTENIDO PRINCIPAL
    ========================================================== */
 
 .main {
-
     margin-left: 300px;
 
     width: calc(100% - 300px);
@@ -347,6 +326,8 @@ a {
     padding: 35px;
 
     box-sizing: border-box;
+
+    min-width: 0;
 }
 
 
@@ -355,7 +336,6 @@ a {
    ========================================================== */
 
 .topbar {
-
     display: flex;
 
     justify-content: space-between;
@@ -369,21 +349,12 @@ a {
     width: 100%;
 }
 
-
-/* ==========================================================
-   🔎 BUSCADOR
-   ========================================================== */
-
 .search {
-
     flex: 1;
-
     min-width: 0;
 }
 
-
 .search input {
-
     width: 100%;
 
     max-width: 420px;
@@ -408,15 +379,11 @@ a {
     transition: all 0.2s ease;
 }
 
-
 .search input::placeholder {
-
     color: #9ca3af;
 }
 
-
 .search input:focus {
-
     border-color: #22c55e;
 
     box-shadow:
@@ -430,7 +397,6 @@ a {
    ========================================================== */
 
 .user-box {
-
     position: relative;
 
     background: #fff;
@@ -451,21 +417,20 @@ a {
     cursor: pointer;
 
     transition: all 0.2s ease;
+
+    min-width: 0;
 }
 
-
 .user-box:hover {
-
     box-shadow:
             0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
-
 .user-box img {
-
     width: 42px;
-
     height: 42px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -476,41 +441,31 @@ a {
     background: #fff;
 }
 
-
 .user-info {
-
     display: flex;
-
     flex-direction: column;
 
     min-width: 0;
 }
 
-
 .user-info strong {
-
     font-size: 14px;
-
     font-weight: 600;
-
     color: #111827;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
 .user-info p {
-
     margin: 0;
-
     font-size: 12px;
-
     color: #6b7280;
 }
 
-
 .dropdown-arrow {
-
     font-size: 10px;
-
     color: #6b7280;
 }
 
@@ -520,14 +475,14 @@ a {
    ========================================================== */
 
 .user-dropdown {
-
     position: absolute;
 
     top: 65px;
-
     right: 0;
 
     width: 260px;
+
+    max-width: calc(100vw - 30px);
 
     background: #fff;
 
@@ -543,19 +498,11 @@ a {
     z-index: 9999;
 }
 
-
 .user-dropdown.show {
-
     display: block;
 }
 
-
-/* ==========================================================
-   👤 CABECERA DROPDOWN
-   ========================================================== */
-
 .dropdown-header {
-
     display: flex;
 
     align-items: center;
@@ -567,21 +514,18 @@ a {
     background: #f8fafc;
 }
 
-
 .dropdown-header img {
-
     width: 50px;
-
     height: 50px;
 
     border-radius: 50%;
 
     object-fit: cover;
+
+    flex-shrink: 0;
 }
 
-
 .dropdown-header strong {
-
     display: block;
 
     font-size: 14px;
@@ -589,21 +533,13 @@ a {
     color: #111827;
 }
 
-
 .dropdown-header span {
-
     color: #6b7280;
 
     font-size: 12px;
 }
 
-
-/* ==========================================================
-   ENLACES DROPDOWN
-   ========================================================== */
-
 .user-dropdown a {
-
     display: block;
 
     padding: 14px 18px;
@@ -615,31 +551,23 @@ a {
     transition: background 0.2s ease;
 }
 
-
 .user-dropdown a:hover {
-
     background: #f3f4f6;
 }
 
-
 .dropdown-divider {
-
     height: 1px;
 
     background: #e5e7eb;
 }
 
-
 .logout-link {
-
     color: #dc2626 !important;
 
     font-weight: 600;
 }
 
-
 .logout-link:hover {
-
     background: #fef2f2 !important;
 }
 
@@ -649,13 +577,10 @@ a {
    ========================================================== */
 
 .welcome {
-
     margin-bottom: 30px;
 }
 
-
 .welcome h1 {
-
     font-size: 42px;
 
     line-height: 1.2;
@@ -663,11 +588,11 @@ a {
     color: #052e16;
 
     font-weight: 700;
+
+    overflow-wrap: anywhere;
 }
 
-
 .welcome p {
-
     color: #64748b;
 
     margin-top: 6px;
@@ -677,11 +602,10 @@ a {
 
 
 /* ==========================================================
-   📈 KPI DASHBOARD
+   📈 KPI
    ========================================================== */
 
 .kpis {
-
     display: grid;
 
     grid-template-columns:
@@ -690,11 +614,11 @@ a {
     gap: 22px;
 
     margin-bottom: 30px;
+
+    min-width: 0;
 }
 
-
 .card {
-
     position: relative;
 
     overflow: hidden;
@@ -702,6 +626,8 @@ a {
     padding: 28px;
 
     min-height: 150px;
+
+    min-width: 0;
 
     border-radius: 30px;
 
@@ -713,32 +639,22 @@ a {
             0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-
 .card:hover {
-
     transform: translateY(-5px);
 
     box-shadow:
             0 16px 35px rgba(0, 0, 0, 0.12);
 }
 
-
-/* ==========================================================
-   CÍRCULO DECORATIVO KPI
-   ========================================================== */
-
 .card::before {
-
     content: "";
 
     position: absolute;
 
     top: -30px;
-
     right: -30px;
 
     width: 120px;
-
     height: 120px;
 
     border-radius: 50%;
@@ -753,7 +669,6 @@ a {
    ========================================================== */
 
 .green {
-
     background:
             linear-gradient(
                     135deg,
@@ -762,9 +677,7 @@ a {
             );
 }
 
-
 .dark {
-
     background:
             linear-gradient(
                     135deg,
@@ -773,9 +686,7 @@ a {
             );
 }
 
-
 .lime {
-
     background:
             linear-gradient(
                     135deg,
@@ -784,9 +695,7 @@ a {
             );
 }
 
-
 .emerald {
-
     background:
             linear-gradient(
                     135deg,
@@ -795,9 +704,7 @@ a {
             );
 }
 
-
 .blue {
-
     background:
             linear-gradient(
                     135deg,
@@ -806,13 +713,7 @@ a {
             );
 }
 
-
-/* ==========================================================
-   TEXTO KPI
-   ========================================================== */
-
 .card h3 {
-
     margin-bottom: 10px;
 
     font-size: 15px;
@@ -824,9 +725,7 @@ a {
     z-index: 1;
 }
 
-
 .card h1 {
-
     font-size: 32px;
 
     line-height: 1.2;
@@ -836,11 +735,11 @@ a {
     position: relative;
 
     z-index: 1;
+
+    overflow-wrap: anywhere;
 }
 
-
 .card p {
-
     margin-top: 10px;
 
     font-size: 13px;
@@ -858,7 +757,6 @@ a {
    ========================================================== */
 
 .grid {
-
     display: grid;
 
     grid-template-columns:
@@ -868,15 +766,20 @@ a {
     gap: 25px;
 
     align-items: start;
+
+    min-width: 0;
+}
+
+.grid > div {
+    min-width: 0;
 }
 
 
 /* ==========================================================
-   📋 BOX GENERAL
+   📋 BOX
    ========================================================== */
 
 .box {
-
     background: #fff;
 
     border-radius: 30px;
@@ -889,21 +792,17 @@ a {
             0 10px 30px rgba(0, 0, 0, 0.05);
 
     border: 1px solid #edf0f2;
+
+    min-width: 0;
+
+    overflow: hidden;
 }
 
-
-/* ==========================================================
-   TITULO BOX
-   ========================================================== */
-
 .box-title {
-
     margin-bottom: 22px;
 }
 
-
 .box-title h3 {
-
     color: #052e16;
 
     font-size: 20px;
@@ -913,19 +812,22 @@ a {
 
 
 /* ==========================================================
-   📋 TABLAS GENERALES DEL DASHBOARD
+   📋 TABLAS RESPONSIVAS
    ========================================================== */
 
-.box table {
+.box {
+    overflow-x: auto;
+}
 
+.box table {
     width: 100%;
 
     border-collapse: collapse;
+
+    min-width: 550px;
 }
 
-
 .box table th {
-
     background: #dcfce7;
 
     padding: 15px;
@@ -941,9 +843,7 @@ a {
     white-space: nowrap;
 }
 
-
 .box table td {
-
     padding: 16px;
 
     border-bottom:
@@ -952,34 +852,28 @@ a {
     color: #374151;
 
     font-size: 13px;
-}
 
+    white-space: nowrap;
+}
 
 .box table tbody tr {
-
-    transition:
-            background 0.2s ease;
+    transition: background 0.2s ease;
 }
 
-
 .box table tbody tr:hover {
-
     background: #f0fdf4;
 }
 
-
 .box table tbody tr:last-child td {
-
     border-bottom: none;
 }
 
 
 /* ==========================================================
-   📦 INVENTARIO STOCK BAJO
+   📦 INVENTARIO
    ========================================================== */
 
 .inventory {
-
     display: flex;
 
     justify-content: space-between;
@@ -1001,25 +895,19 @@ a {
     transition: all 0.2s ease;
 }
 
-
 .inventory:hover {
-
     background: #f0fdf4;
 
     transform: translateY(-1px);
 }
 
-
 .inventory strong {
-
     color: #111827;
 
     font-size: 14px;
 }
 
-
 .inventory p {
-
     margin-top: 5px;
 
     color: #64748b;
@@ -1033,7 +921,6 @@ a {
    ========================================================== */
 
 .badge {
-
     display: inline-flex;
 
     align-items: center;
@@ -1051,17 +938,13 @@ a {
     white-space: nowrap;
 }
 
-
 .badge.ok {
-
     background: #dcfce7;
 
     color: #166534;
 }
 
-
 .badge.low {
-
     background: #fee2e2;
 
     color: #991b1b;
@@ -1069,14 +952,15 @@ a {
 
 
 /* ==========================================================
-   📈 CANVAS GRÁFICA
+   📈 GRÁFICA
    ========================================================== */
 
 #ventasChart {
-
     width: 100% !important;
 
-    max-height: 350px;
+    max-width: 100%;
+
+    height: auto !important;
 }
 
 
@@ -1085,13 +969,10 @@ a {
    ========================================================== */
 
 .solar-box {
-
     margin-top: 25px;
 }
 
-
 .simulator {
-
     display: grid;
 
     grid-template-columns:
@@ -1101,25 +982,21 @@ a {
     gap: 30px;
 
     align-items: center;
+
+    min-width: 0;
 }
 
-
-/* ==========================================================
-   FORMULARIO SOLAR
-   ========================================================== */
-
 .solar-form {
-
     display: flex;
 
     flex-direction: column;
 
     gap: 12px;
+
+    min-width: 0;
 }
 
-
 .solar-form label {
-
     font-weight: 600;
 
     color: #334155;
@@ -1127,10 +1004,8 @@ a {
     font-size: 13px;
 }
 
-
 .solar-form input,
 .solar-form select {
-
     width: 100%;
 
     min-height: 44px;
@@ -1152,29 +1027,19 @@ a {
     transition: all 0.2s ease;
 }
 
-
 .solar-form input:focus,
 .solar-form select:focus {
-
     border-color: #16a34a;
 
     box-shadow:
             0 0 0 3px rgba(22, 163, 74, 0.10);
 }
 
-
 .solar-form input::placeholder {
-
     color: #9ca3af;
 }
 
-
-/* ==========================================================
-   ⚡ BOTÓN CALCULAR
-   ========================================================== */
-
 .btn-solar {
-
     width: 100%;
 
     border: none;
@@ -1201,38 +1066,24 @@ a {
     transition: all 0.3s ease;
 }
 
-
 .btn-solar:hover {
-
     transform: translateY(-2px);
 
     box-shadow:
             0 8px 18px rgba(245, 158, 11, 0.25);
 }
 
-
 .btn-solar:active {
-
     transform: translateY(0);
 }
 
-
-/* ==========================================================
-   🖼️ CONTENEDOR IMAGEN SOLAR
-   ========================================================== */
-
 .solar-image {
-
     width: 100%;
+
+    min-width: 0;
 }
 
-
-/* ==========================================================
-   🎞️ SLIDER SOLAR
-   ========================================================== */
-
 .solar-slider {
-
     position: relative;
 
     width: 100%;
@@ -1246,9 +1097,7 @@ a {
     background: #e5e7eb;
 }
 
-
 .slide {
-
     position: absolute;
 
     inset: 0;
@@ -1265,29 +1114,15 @@ a {
             opacity 1s ease-in-out;
 }
 
-
 .slide.active {
-
     opacity: 1;
 }
 
-
-/* ==========================================================
-   ☀️ RESULTADO SOLAR
-   ========================================================== */
-
 .resultado-solar {
-
     margin-top: 25px;
 }
 
-
-/* ==========================================================
-   INFORMACIÓN INICIAL
-   ========================================================== */
-
 .solar-info-default {
-
     padding: 20px;
 
     border-radius: 15px;
@@ -1301,9 +1136,7 @@ a {
     line-height: 1.6;
 }
 
-
 .solar-info-default h4 {
-
     margin-bottom: 8px;
 
     color: #166534;
@@ -1311,9 +1144,7 @@ a {
     font-size: 16px;
 }
 
-
 .solar-info-default p {
-
     color: #475569;
 
     font-size: 13px;
@@ -1321,11 +1152,10 @@ a {
 
 
 /* ==========================================================
-   📊 TARJETA RESULTADO
+   📊 RESULTADO SOLAR
    ========================================================== */
 
 .card-solar {
-
     background: #f8fafc;
 
     padding: 20px;
@@ -1339,30 +1169,20 @@ a {
     color: #334155;
 }
 
-
 .card-solar h3,
 .card-solar h4 {
-
     color: #166534;
 
     margin-bottom: 10px;
 }
 
-
 .card-solar p {
-
     margin: 10px 0;
 
     line-height: 1.6;
 }
 
-
-/* ==========================================================
-   🌱 INFORMACIÓN SOLAR
-   ========================================================== */
-
 .solar-info {
-
     margin-top: 15px;
 
     padding: 12px;
@@ -1378,13 +1198,7 @@ a {
     font-size: 13px;
 }
 
-
-/* ==========================================================
-   ⚠️ ALERTA SOLAR
-   ========================================================== */
-
 .alerta-solar {
-
     padding: 15px;
 
     background: #fef2f2;
@@ -1398,13 +1212,7 @@ a {
     font-size: 13px;
 }
 
-
-/* ==========================================================
-   💚 BOTÓN COTIZAR
-   ========================================================== */
-
 .btn-cotizar {
-
     display: block;
 
     width: 100%;
@@ -1419,8 +1227,6 @@ a {
 
     text-align: center;
 
-    text-decoration: none;
-
     border: none;
 
     border-radius: 12px;
@@ -1432,9 +1238,7 @@ a {
     transition: all 0.3s ease;
 }
 
-
 .btn-cotizar:hover {
-
     background: #15803d;
 
     transform: translateY(-2px);
@@ -1449,7 +1253,6 @@ a {
    ========================================================== */
 
 .system-info {
-
     display: flex;
 
     align-items: center;
@@ -1459,9 +1262,7 @@ a {
     font-size: 14px;
 }
 
-
 .status-online {
-
     font-weight: 600;
 
     color: #16a34a;
@@ -1473,7 +1274,6 @@ a {
    ========================================================== */
 
 .notification {
-
     position: relative;
 
     font-size: 20px;
@@ -1481,9 +1281,7 @@ a {
     cursor: pointer;
 }
 
-
 .notification span {
-
     background: #ef4444;
 
     color: #fff;
@@ -1511,7 +1309,6 @@ a {
    ========================================================== */
 
 .quick-sale {
-
     display: inline-flex;
 
     align-items: center;
@@ -1526,16 +1323,12 @@ a {
 
     border-radius: 12px;
 
-    text-decoration: none;
-
     font-weight: 700;
 
     transition: all 0.3s ease;
 }
 
-
 .quick-sale:hover {
-
     transform: translateY(-2px);
 
     background: #15803d;
@@ -1546,260 +1339,373 @@ a {
 
 
 /* ==========================================================
-   📱 RESPONSIVE | 1400 PX
+   💻 PANTALLAS GRANDES
    ========================================================== */
 
 @media (max-width: 1400px) {
 
     .kpis {
-
         grid-template-columns:
             repeat(3, minmax(0, 1fr));
     }
-
 }
 
 
 /* ==========================================================
-   📱 RESPONSIVE | 1200 PX
+   💻 TABLET GRANDE
    ========================================================== */
 
 @media (max-width: 1200px) {
 
-    .kpis {
+    .main {
+        padding: 28px;
+    }
 
+    .kpis {
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
     }
 
-
     .grid {
-
         grid-template-columns: 1fr;
     }
-
 
     .simulator {
-
         grid-template-columns: 1fr;
     }
-
 }
 
 
 /* ==========================================================
-   📱 RESPONSIVE | 900 PX
+   📱 TABLET
    ========================================================== */
 
 @media (max-width: 900px) {
 
-    .sidebar {
-
-        display: none;
+    body {
+        display: block;
     }
 
+    /* ------------------------------------------
+       BOTÓN HAMBURGUESA
+    ------------------------------------------ */
+
+    .mobile-menu-btn {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ------------------------------------------
+       SIDEBAR OCULTO
+    ------------------------------------------ */
+
+    .sidebar {
+        transform: translateX(-100%);
+
+        display: block;
+
+        width: 280px;
+
+        max-width: 85vw;
+
+        z-index: 2000;
+    }
+
+    /* ------------------------------------------
+       SIDEBAR ABIERTO
+    ------------------------------------------ */
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* ------------------------------------------
+       CONTENIDO
+    ------------------------------------------ */
 
     .main {
-
         margin-left: 0;
 
         width: 100%;
 
-        padding: 20px;
+        padding:
+                75px 25px 25px;
     }
 
+    /* ------------------------------------------
+       TOPBAR
+    ------------------------------------------ */
 
     .topbar {
-
         flex-direction: column;
 
         align-items: stretch;
+
+        margin-bottom: 25px;
     }
 
+    .search {
+        width: 100%;
+    }
 
     .search input {
-
         max-width: 100%;
     }
 
-
     .user-box {
-
         width: 100%;
 
         justify-content: center;
     }
 
+    /* ------------------------------------------
+       KPI
+    ------------------------------------------ */
 
     .kpis {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
 
+        gap: 18px;
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    /* ------------------------------------------
+       GRID
+    ------------------------------------------ */
+
+    .grid {
         grid-template-columns: 1fr;
     }
 
+    /* ------------------------------------------
+       SIMULADOR
+    ------------------------------------------ */
 
-    .welcome h1 {
-
-        font-size: 32px;
-    }
-
-
-    .factura-grid {
-
+    .simulator {
         grid-template-columns: 1fr;
     }
 
+    .solar-slider {
+        height: 300px;
+    }
 }
 
 
 /* ==========================================================
-   📱 RESPONSIVE | 768 PX
+   📱 TABLET PEQUEÑA / CELULAR GRANDE
    ========================================================== */
 
 @media (max-width: 768px) {
 
-    .simulator {
+    .main {
+        padding:
+                70px 20px 20px;
+    }
 
+    .welcome h1 {
+        font-size: 32px;
+    }
+
+    .kpis {
         grid-template-columns: 1fr;
     }
 
+    .card {
+        min-height: 135px;
 
-    .solar-slider {
+        padding: 22px;
 
-        height: 280px;
+        border-radius: 22px;
     }
 
+    .card h1 {
+        font-size: 28px;
+    }
 
     .box {
-
         padding: 20px;
 
         border-radius: 20px;
     }
 
-
     .box-title h3 {
-
         font-size: 18px;
     }
 
+    .solar-slider {
+        height: 280px;
+    }
 
     .system-info {
-
         flex-wrap: wrap;
 
         gap: 10px;
     }
-
 }
 
 
 /* ==========================================================
-   📱 RESPONSIVE | 500 PX
+   📱 CELULAR
    ========================================================== */
 
 @media (max-width: 500px) {
 
-    .main {
+    .mobile-menu-btn {
+        top: 12px;
+        left: 12px;
 
-        padding: 15px;
+        width: 42px;
+        height: 42px;
+
+        border-radius: 11px;
+
+        font-size: 20px;
     }
 
+    .main {
+        padding:
+                65px 15px 15px;
+    }
 
     .welcome {
-
         margin-bottom: 22px;
     }
 
-
     .welcome h1 {
-
         font-size: 27px;
     }
 
-
     .welcome p {
-
         font-size: 13px;
     }
 
+    .kpis {
+        gap: 14px;
+    }
 
     .card {
+        padding: 20px;
 
-        padding: 22px;
+        border-radius: 20px;
 
-        border-radius: 22px;
-
-        min-height: 130px;
+        min-height: 125px;
     }
-
-
-    .card h1 {
-
-        font-size: 27px;
-    }
-
 
     .card h3 {
-
         font-size: 14px;
     }
 
+    .card h1 {
+        font-size: 25px;
+    }
+
+    .card p {
+        font-size: 12px;
+    }
 
     .box {
-
         padding: 16px;
 
         border-radius: 18px;
     }
 
-
-    .box table {
-
-        min-width: 600px;
+    .box-title {
+        margin-bottom: 16px;
     }
 
+    .box-title h3 {
+        font-size: 17px;
+    }
+
+    /* ------------------------------------------
+       TABLAS
+    ------------------------------------------ */
+
+    .box {
+        overflow-x: auto;
+    }
+
+    .box table {
+        min-width: 550px;
+    }
+
+    /* ------------------------------------------
+       INVENTARIO
+    ------------------------------------------ */
 
     .inventory {
-
         align-items: flex-start;
 
         flex-direction: column;
     }
 
+    /* ------------------------------------------
+       SIMULADOR
+    ------------------------------------------ */
 
     .solar-slider {
-
         height: 230px;
     }
 
-
-    .solar-form input,
-    .solar-form select {
-
-        min-height: 42px;
+    .solar-info-default {
+        padding: 16px;
     }
 
+    /* ------------------------------------------
+       USUARIO
+    ------------------------------------------ */
 
     .user-box {
-
         padding: 9px 12px;
     }
 
-
     .user-box img {
-
         width: 38px;
-
         height: 38px;
     }
 
-
     .user-dropdown {
-
         width: 100%;
 
         right: 0;
     }
-
 }
 
+
+/* ==========================================================
+   📱 CELULARES MUY PEQUEÑOS
+   ========================================================== */
+
+@media (max-width: 360px) {
+
+    .main {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .welcome h1 {
+        font-size: 24px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .card h1 {
+        font-size: 23px;
+    }
+
+    .box {
+        padding: 14px;
+    }
+
+    .solar-slider {
+        height: 200px;
+    }
+}

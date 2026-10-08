@@ -1,13 +1,17 @@
 /* ============================================================
-   ABONOS | ECOMARKET PRO
+   MARAV | ABONOS
    ============================================================
 
-   Diseño basado directamente en el patrón visual de PRODUCTOS.
+   Diseño responsive del módulo de Abonos.
 
    IMPORTANTE:
    - No modificar .main aquí.
    - dashboard.css controla la estructura general.
-   - Este archivo solamente controla el módulo Abonos.
+   - No modifica abonos.js.
+   - No modifica IDs.
+   - No modifica Thymeleaf.
+   - Mantiene las funciones de registrar, editar y consultar.
+   - La tabla se adapta a PC, tablet y celular.
    ============================================================ */
 
 
@@ -16,11 +20,8 @@
    ============================================================ */
 
 .abonos-page {
-
-    padding: 24px 30px 40px;
-
     width: 100%;
-
+    padding: 24px 30px 40px;
     box-sizing: border-box;
 }
 
@@ -30,11 +31,10 @@
    ============================================================ */
 
 .abonos-header {
+    width: 100%;
 
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 
     margin-bottom: 22px;
@@ -46,32 +46,28 @@
    ============================================================ */
 
 .abonos-title h1 {
-
     margin: 0;
 
     display: flex;
-
     align-items: center;
 
     gap: 12px;
 
     font-size: 28px;
-
     font-weight: 700;
-}
 
+    color: #0f172a;
+}
 
 .abonos-title h1 i {
-
     font-size: 27px;
+    color: #2563eb;
 }
 
-
 .abonos-title p {
-
     margin: 7px 0 0;
 
-    color: #6b7280;
+    color: #64748b;
 
     font-size: 14px;
 }
@@ -82,9 +78,10 @@
    ============================================================ */
 
 .abonos-page .alert-info {
+    width: 100%;
+    box-sizing: border-box;
 
     display: flex;
-
     align-items: flex-start;
 
     gap: 12px;
@@ -102,17 +99,19 @@
     color: #1e40af;
 }
 
-
 .abonos-page .alert-info > i {
-
     margin-top: 2px;
+
+    flex-shrink: 0;
 
     font-size: 18px;
 }
 
+.abonos-page .alert-info > div {
+    min-width: 0;
+}
 
 .abonos-page .alert-info strong {
-
     display: block;
 
     margin-bottom: 3px;
@@ -120,12 +119,12 @@
     font-size: 14px;
 }
 
-
 .abonos-page .alert-info span {
-
     display: block;
 
     font-size: 13px;
+
+    line-height: 1.5;
 }
 
 
@@ -134,6 +133,7 @@
    ============================================================ */
 
 .abonos-stats {
+    width: 100%;
 
     display: grid;
 
@@ -151,9 +151,9 @@
    ============================================================ */
 
 .abono-stat-card {
+    min-width: 0;
 
     display: flex;
-
     align-items: center;
 
     gap: 15px;
@@ -162,25 +162,27 @@
 
     padding: 18px;
 
-    background: #fff;
+    background: #ffffff;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e2e8f0;
 
     border-radius: 14px;
 
     box-shadow:
-            0 3px 12px rgba(0, 0, 0, .05);
+            0 3px 12px rgba(15, 23, 42, 0.05);
 
-    transition: all .2s ease;
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+
+    box-sizing: border-box;
 }
 
-
 .abono-stat-card:hover {
-
     transform: translateY(-2px);
 
     box-shadow:
-            0 6px 18px rgba(0, 0, 0, .08);
+            0 6px 18px rgba(15, 23, 42, 0.08);
 }
 
 
@@ -189,17 +191,13 @@
    ============================================================ */
 
 .abono-stat-icon {
-
     width: 52px;
-
     height: 52px;
 
     min-width: 52px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 13px;
@@ -213,25 +211,17 @@
    ============================================================ */
 
 .abonos-icon {
-
     background: #e8f1ff;
-
     color: #2563eb;
 }
 
-
 .recaudado-icon {
-
     background: #eaf8ef;
-
     color: #16a34a;
 }
 
-
 .deuda-icon {
-
     background: #fff4e5;
-
     color: #ea580c;
 }
 
@@ -240,23 +230,28 @@
    INFORMACION KPI
    ============================================================ */
 
-.abono-stat-info h3 {
+.abono-stat-info {
+    min-width: 0;
+}
 
+.abono-stat-info h3 {
     margin: 0;
 
     font-size: 24px;
-
     font-weight: 700;
 
     color: #111827;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-
 .abono-stat-info p {
-
     margin: 5px 0 0;
 
-    color: #6b7280;
+    color: #64748b;
 
     font-size: 13px;
 }
@@ -267,9 +262,9 @@
    ============================================================ */
 
 .abonos-actions {
+    width: 100%;
 
     display: flex;
-
     justify-content: flex-end;
 
     margin-bottom: 18px;
@@ -281,39 +276,39 @@
    ============================================================ */
 
 .abono-btn {
+    min-height: 42px;
 
     border: none;
 
     border-radius: 9px;
 
-    padding: 11px 17px;
+    padding: 10px 17px;
 
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
     gap: 8px;
 
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
 
-    transition: all .2s ease;
+    box-sizing: border-box;
+
+    transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
 }
 
-
 .abono-btn:hover {
-
     transform: translateY(-1px);
 }
 
-
 .abono-btn:active {
-
     transform: translateY(0);
 }
 
@@ -323,15 +318,14 @@
    ============================================================ */
 
 .abono-btn-save {
-
     background: #2563eb;
+    color: #ffffff;
 
-    color: #fff;
+    box-shadow:
+            0 4px 10px rgba(37, 99, 235, 0.18);
 }
 
-
 .abono-btn-save:hover {
-
     background: #1d4ed8;
 }
 
@@ -341,15 +335,14 @@
    ============================================================ */
 
 .abono-btn-update {
-
     background: #f59e0b;
+    color: #ffffff;
 
-    color: #fff;
+    box-shadow:
+            0 4px 10px rgba(245, 158, 11, 0.18);
 }
 
-
 .abono-btn-update:hover {
-
     background: #d97706;
 }
 
@@ -359,15 +352,11 @@
    ============================================================ */
 
 .abono-btn-cancel {
-
     background: #e5e7eb;
-
     color: #374151;
 }
 
-
 .abono-btn-cancel:hover {
-
     background: #d1d5db;
 }
 
@@ -377,17 +366,21 @@
    ============================================================ */
 
 .abonos-card {
+    width: 100%;
+    min-width: 0;
 
-    background: #fff;
+    background: #ffffff;
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e2e8f0;
 
     border-radius: 15px;
 
     box-shadow:
-            0 3px 12px rgba(0, 0, 0, .05);
+            0 3px 12px rgba(15, 23, 42, 0.05);
 
     overflow: hidden;
+
+    box-sizing: border-box;
 }
 
 
@@ -396,6 +389,7 @@
    ============================================================ */
 
 .abonos-card-header {
+    width: 100%;
 
     padding: 20px 22px;
 
@@ -407,12 +401,16 @@
 
     gap: 20px;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
+
+    box-sizing: border-box;
 }
 
+.abonos-card-header > div {
+    min-width: 0;
+}
 
 .abonos-card-header h2 {
-
     margin: 0;
 
     display: flex;
@@ -426,18 +424,14 @@
     color: #111827;
 }
 
-
 .abonos-card-header h2 i {
-
     color: #2563eb;
 }
 
-
 .abonos-card-header p {
-
     margin: 6px 0 0;
 
-    color: #6b7280;
+    color: #64748b;
 
     font-size: 13px;
 }
@@ -448,10 +442,12 @@
    ============================================================ */
 
 .abonos-role-badge {
+    flex-shrink: 0;
 
     display: inline-flex;
 
     align-items: center;
+    justify-content: center;
 
     gap: 7px;
 
@@ -466,20 +462,16 @@
     white-space: nowrap;
 }
 
-
 .abonos-role-badge.role-admin {
-
     color: #1d4ed8;
 
     background: #eff6ff;
 }
 
-
 .abonos-role-badge.role-empleado {
+    color: #64748b;
 
-    color: #6b7280;
-
-    background: #f3f4f6;
+    background: #f1f5f9;
 }
 
 
@@ -487,11 +479,25 @@
    CONTENEDOR TABLA
    ============================================================ */
 
-.abonos-table-container {
+/*
+   La tabla puede ser más ancha que un celular.
 
+   NO se recortará.
+
+   En pantallas pequeñas el desplazamiento horizontal
+   ocurre solamente dentro de este contenedor.
+*/
+
+.abonos-table-container {
     width: 100%;
+    max-width: 100%;
 
     overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+
+    box-sizing: border-box;
 }
 
 
@@ -500,12 +506,24 @@
    ============================================================ */
 
 .abonos-table {
-
     width: 100%;
+
+    /*
+       Espacio suficiente para las columnas:
+
+       Cliente
+       Factura
+       Monto
+       Fecha
+       Descripción
+       Acciones
+    */
+
+    min-width: 850px;
 
     border-collapse: collapse;
 
-    min-width: 850px;
+    table-layout: auto;
 }
 
 
@@ -514,13 +532,10 @@
    ============================================================ */
 
 .abonos-table thead {
-
     background: #f8fafc;
 }
 
-
 .abonos-table th {
-
     padding: 14px 16px;
 
     text-align: left;
@@ -533,9 +548,11 @@
 
     text-transform: uppercase;
 
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
 
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
+
+    white-space: nowrap;
 }
 
 
@@ -544,7 +561,6 @@
    ============================================================ */
 
 .abonos-table td {
-
     padding: 14px 16px;
 
     color: #374151;
@@ -556,21 +572,15 @@
     vertical-align: middle;
 }
 
-
 .abonos-table tbody tr {
-
-    transition: background .2s ease;
+    transition: background 0.2s ease;
 }
 
-
 .abonos-table tbody tr:hover {
-
     background: #f8fafc;
 }
 
-
 .abonos-table tbody tr:last-child td {
-
     border-bottom: none;
 }
 
@@ -580,6 +590,7 @@
    ============================================================ */
 
 .abono-cliente {
+    min-width: 150px;
 
     display: flex;
 
@@ -592,11 +603,8 @@
     color: #111827;
 }
 
-
 .abono-avatar {
-
     width: 34px;
-
     height: 34px;
 
     min-width: 34px;
@@ -604,7 +612,6 @@
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
@@ -622,7 +629,6 @@
    ============================================================ */
 
 .abono-factura {
-
     color: #475569;
 
     font-weight: 600;
@@ -636,7 +642,6 @@
    ============================================================ */
 
 .abono-monto {
-
     color: #16a34a;
 
     font-weight: 700;
@@ -650,7 +655,6 @@
    ============================================================ */
 
 .abono-fecha {
-
     color: #64748b;
 
     white-space: nowrap;
@@ -662,7 +666,6 @@
    ============================================================ */
 
 .abono-descripcion {
-
     max-width: 260px;
 
     color: #64748b;
@@ -680,20 +683,20 @@
    ============================================================ */
 
 .abono-actions {
-
     display: flex;
 
     align-items: center;
 
     gap: 7px;
+
+    white-space: nowrap;
 }
 
-
 .abono-action-btn {
-
     width: 34px;
-
     height: 34px;
+
+    min-width: 34px;
 
     padding: 0;
 
@@ -704,17 +707,16 @@
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
 
-    transition: all .2s ease;
+    transition:
+            transform 0.2s ease,
+            background 0.2s ease;
 }
 
-
 .abono-action-btn:hover {
-
     transform: translateY(-1px);
 }
 
@@ -724,15 +726,12 @@
    ============================================================ */
 
 .abono-btn-edit {
-
     background: #eff6ff;
 
     color: #2563eb;
 }
 
-
 .abono-btn-edit:hover {
-
     background: #dbeafe;
 }
 
@@ -742,15 +741,12 @@
    ============================================================ */
 
 .abono-btn-delete {
-
     background: #fef2f2;
 
     color: #dc2626;
 }
 
-
 .abono-btn-delete:hover {
-
     background: #fee2e2;
 }
 
@@ -760,6 +756,9 @@
    ============================================================ */
 
 .abonos-empty {
+    width: 100%;
+
+    box-sizing: border-box;
 
     padding: 45px 20px !important;
 
@@ -768,19 +767,17 @@
     color: #94a3b8 !important;
 }
 
-
 .abonos-empty i {
-
     display: block;
 
     margin-bottom: 10px;
 
     font-size: 32px;
+
+    color: #cbd5e1;
 }
 
-
 .abonos-empty span {
-
     font-size: 14px;
 }
 
@@ -790,7 +787,6 @@
    ============================================================ */
 
 .abono-modal {
-
     position: fixed;
 
     inset: 0;
@@ -805,9 +801,11 @@
 
     padding: 20px;
 
-    background: rgba(15, 23, 42, .58);
+    background: rgba(15, 23, 42, 0.58);
 
     backdrop-filter: blur(3px);
+
+    box-sizing: border-box;
 }
 
 
@@ -816,7 +814,6 @@
    ============================================================ */
 
 .abono-modal.active {
-
     display: flex;
 }
 
@@ -826,7 +823,6 @@
    ============================================================ */
 
 .abono-modal-content {
-
     width: 100%;
 
     max-width: 720px;
@@ -835,30 +831,34 @@
 
     overflow-y: auto;
 
-    background: #fff;
+    background: #ffffff;
 
     border-radius: 16px;
 
     box-shadow:
-            0 20px 50px rgba(0, 0, 0, .22);
+            0 20px 50px rgba(15, 23, 42, 0.22);
 
-    animation: abonoModalEntrada .2s ease;
+    animation: abonoModalEntrada 0.2s ease;
+
+    box-sizing: border-box;
 }
 
+
+/* ============================================================
+   ANIMACION MODAL
+   ============================================================ */
 
 @keyframes abonoModalEntrada {
 
     from {
-
         opacity: 0;
 
         transform:
                 translateY(-15px)
-                scale(.98);
+                scale(0.98);
     }
 
     to {
-
         opacity: 1;
 
         transform:
@@ -873,7 +873,6 @@
    ============================================================ */
 
 .abono-modal-header {
-
     display: flex;
 
     align-items: flex-start;
@@ -887,9 +886,11 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
+.abono-modal-header > div {
+    min-width: 0;
+}
 
 .abono-modal-header h2 {
-
     margin: 0;
 
     display: flex;
@@ -903,20 +904,18 @@
     font-size: 20px;
 }
 
-
 .abono-modal-header h2 i {
-
     color: #2563eb;
 }
 
-
 .abono-modal-header p {
-
     margin: 6px 0 0;
 
     color: #6b7280;
 
     font-size: 13px;
+
+    line-height: 1.5;
 }
 
 
@@ -925,10 +924,10 @@
    ============================================================ */
 
 .abono-modal-cerrar {
-
     width: 36px;
-
     height: 36px;
+
+    min-width: 36px;
 
     border: none;
 
@@ -941,19 +940,18 @@
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
 
     font-size: 17px;
 
-    transition: all .2s ease;
+    transition:
+            background 0.2s ease,
+            color 0.2s ease;
 }
 
-
 .abono-modal-cerrar:hover {
-
     background: #fee2e2;
 
     color: #dc2626;
@@ -965,8 +963,11 @@
    ============================================================ */
 
 #formAbono {
+    width: 100%;
 
     padding: 24px;
+
+    box-sizing: border-box;
 }
 
 
@@ -975,6 +976,7 @@
    ============================================================ */
 
 .abonos-form-grid {
+    width: 100%;
 
     display: grid;
 
@@ -990,6 +992,7 @@
    ============================================================ */
 
 .abono-form-group {
+    min-width: 0;
 
     display: flex;
 
@@ -1002,7 +1005,6 @@
    ============================================================ */
 
 .abono-form-group label {
-
     display: flex;
 
     align-items: center;
@@ -1018,12 +1020,10 @@
     font-weight: 600;
 }
 
-
 .abono-form-group label i {
+    width: 15px;
 
     color: #2563eb;
-
-    width: 15px;
 }
 
 
@@ -1033,8 +1033,9 @@
 
 .abono-form-group input,
 .abono-form-group select {
-
     width: 100%;
+
+    max-width: 100%;
 
     min-height: 43px;
 
@@ -1048,13 +1049,15 @@
 
     outline: none;
 
-    background: #fff;
+    background: #ffffff;
 
     color: #111827;
 
     font-size: 13px;
 
-    transition: all .2s ease;
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
 }
 
 
@@ -1064,11 +1067,10 @@
 
 .abono-form-group input:focus,
 .abono-form-group select:focus {
-
     border-color: #2563eb;
 
     box-shadow:
-            0 0 0 3px rgba(37, 99, 235, .10);
+            0 0 0 3px rgba(37, 99, 235, 0.10);
 }
 
 
@@ -1078,7 +1080,6 @@
 
 .abono-form-group input:disabled,
 .abono-form-group select:disabled {
-
     background: #f8fafc;
 
     color: #94a3b8;
@@ -1092,7 +1093,6 @@
    ============================================================ */
 
 .abono-form-group input::placeholder {
-
     color: #9ca3af;
 }
 
@@ -1102,7 +1102,6 @@
    ============================================================ */
 
 .abono-help-text {
-
     margin-top: 6px;
 
     color: #64748b;
@@ -1118,6 +1117,7 @@
    ============================================================ */
 
 .abono-resumen {
+    width: 100%;
 
     display: grid;
 
@@ -1135,6 +1135,8 @@
     border-radius: 12px;
 
     background: #f8fafc;
+
+    box-sizing: border-box;
 }
 
 
@@ -1143,6 +1145,7 @@
    ============================================================ */
 
 .abono-resumen-item {
+    min-width: 0;
 
     display: flex;
 
@@ -1151,9 +1154,7 @@
     gap: 5px;
 }
 
-
 .abono-resumen-item span {
-
     color: #64748b;
 
     font-size: 11px;
@@ -1162,12 +1163,10 @@
 
     font-weight: 700;
 
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
 }
 
-
 .abono-resumen-item strong {
-
     color: #111827;
 
     font-size: 13px;
@@ -1185,7 +1184,6 @@
    ============================================================ */
 
 .abono-resumen-item .saldo-disponible {
-
     color: #16a34a;
 
     font-size: 15px;
@@ -1197,7 +1195,6 @@
    ============================================================ */
 
 .abonos-buttons {
-
     display: flex;
 
     justify-content: flex-end;
@@ -1215,110 +1212,454 @@
 
 
 /* ============================================================
-   RESPONSIVE TABLET
+   RESPONSIVE - 1200px
+   ============================================================ */
+
+@media (max-width: 1200px) {
+
+    .abonos-page {
+        padding: 22px 24px 35px;
+    }
+
+    .abonos-stats {
+        gap: 14px;
+    }
+
+    .abono-stat-card {
+        padding: 16px;
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE - 900px
    ============================================================ */
 
 @media (max-width: 900px) {
 
     .abonos-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
 
-        grid-template-columns: 1fr;
+    .abonos-stats .abono-stat-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .abonos-card-header {
+        align-items: flex-start;
     }
 
 }
 
 
 /* ============================================================
-   RESPONSIVE MOVIL
+   RESPONSIVE - 768px
    ============================================================ */
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 
     .abonos-page {
-
-        padding: 18px 15px 30px;
+        padding: 20px 16px 30px;
     }
 
 
-    .abonos-card-header {
+    /* ---------------------------------------------
+       TITULO
+    --------------------------------------------- */
 
+    .abonos-title h1 {
+        font-size: 24px;
+    }
+
+
+    /* ---------------------------------------------
+       ALERTA
+    --------------------------------------------- */
+
+    .abonos-page .alert-info {
+        padding: 13px 15px;
+    }
+
+
+    /* ---------------------------------------------
+       ESTADISTICAS
+    --------------------------------------------- */
+
+    .abonos-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .abonos-stats .abono-stat-card:last-child {
+        grid-column: auto;
+    }
+
+
+    /* ---------------------------------------------
+       BOTON NUEVO
+    --------------------------------------------- */
+
+    .abonos-actions {
+        justify-content: stretch;
+    }
+
+    .abonos-actions .abono-btn {
+        width: 100%;
+    }
+
+
+    /* ---------------------------------------------
+       HEADER TARJETA
+    --------------------------------------------- */
+
+    .abonos-card-header {
         flex-direction: column;
 
         align-items: flex-start;
+
+        padding: 18px;
     }
 
+    .abonos-role-badge {
+        align-self: flex-start;
+    }
+
+
+    /* ---------------------------------------------
+       TABLA
+    --------------------------------------------- */
+
+    .abonos-table {
+        min-width: 850px;
+    }
+
+    .abonos-table th,
+    .abonos-table td {
+        padding: 11px 12px;
+
+        font-size: 13px;
+    }
+
+    .abono-descripcion {
+        max-width: 220px;
+    }
+
+
+    /* ---------------------------------------------
+       MODAL
+    --------------------------------------------- */
+
+    .abono-modal {
+        padding: 12px;
+    }
+
+    .abono-modal-content {
+        max-height: 94vh;
+
+        border-radius: 13px;
+    }
+
+    .abono-modal-header {
+        padding: 18px;
+    }
+
+
+    /* ---------------------------------------------
+       FORMULARIO
+    --------------------------------------------- */
+
+    #formAbono {
+        padding: 18px;
+    }
 
     .abonos-form-grid {
-
         grid-template-columns: 1fr;
+
+        gap: 15px;
     }
 
+
+    /* ---------------------------------------------
+       RESUMEN
+    --------------------------------------------- */
 
     .abono-resumen {
-
         grid-template-columns: 1fr;
     }
 
 
-    .abonos-buttons {
+    /* ---------------------------------------------
+       BOTONES
+    --------------------------------------------- */
 
+    .abonos-buttons {
         flex-direction: column;
 
         align-items: stretch;
     }
 
-
     .abonos-buttons .abono-btn {
-
         width: 100%;
-    }
-
-
-    .abono-modal {
-
-        padding: 10px;
-    }
-
-
-    .abono-modal-content {
-
-        max-height: 94vh;
     }
 
 }
 
 
 /* ============================================================
-   RESPONSIVE MOVILES PEQUEÑOS
+   RESPONSIVE - 600px
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .abonos-page {
+        padding: 18px 12px 25px;
+    }
+
+
+    /* ---------------------------------------------
+       TITULO
+    --------------------------------------------- */
+
+    .abonos-title h1 {
+        font-size: 21px;
+
+        gap: 9px;
+    }
+
+    .abonos-title h1 i {
+        font-size: 21px;
+    }
+
+    .abonos-title p {
+        font-size: 13px;
+    }
+
+
+    /* ---------------------------------------------
+       KPI
+    --------------------------------------------- */
+
+    .abono-stat-card {
+        min-height: 85px;
+
+        padding: 15px;
+    }
+
+    .abono-stat-icon {
+        width: 45px;
+        height: 45px;
+
+        min-width: 45px;
+
+        font-size: 19px;
+    }
+
+    .abono-stat-info h3 {
+        font-size: 20px;
+    }
+
+
+    /* ---------------------------------------------
+       TABLA
+    --------------------------------------------- */
+
+    .abonos-table {
+        min-width: 820px;
+    }
+
+    .abonos-table th,
+    .abonos-table td {
+        padding: 10px;
+
+        font-size: 12px;
+    }
+
+    .abono-cliente {
+        min-width: 140px;
+    }
+
+    .abono-descripcion {
+        max-width: 190px;
+    }
+
+
+    /* ---------------------------------------------
+       MODAL
+    --------------------------------------------- */
+
+    .abono-modal {
+        padding: 8px;
+    }
+
+    .abono-modal-header {
+        padding: 16px;
+    }
+
+    .abono-modal-header h2 {
+        font-size: 18px;
+    }
+
+    .abono-modal-header p {
+        font-size: 12px;
+    }
+
+    #formAbono {
+        padding: 16px;
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE - 500px
    ============================================================ */
 
 @media (max-width: 500px) {
 
-    .abonos-title h1 {
+    .abonos-page {
+        padding-left: 10px;
 
-        font-size: 23px;
+        padding-right: 10px;
+    }
+
+
+    /* ---------------------------------------------
+       ALERTA
+    --------------------------------------------- */
+
+    .abonos-page .alert-info {
+        gap: 9px;
+
+        padding: 12px;
+    }
+
+    .abonos-page .alert-info span {
+        font-size: 12px;
+    }
+
+
+    /* ---------------------------------------------
+       TITULO
+    --------------------------------------------- */
+
+    .abonos-title h1 {
+        font-size: 19px;
+    }
+
+
+    /* ---------------------------------------------
+       TARJETA
+    --------------------------------------------- */
+
+    .abonos-card-header {
+        padding: 16px;
+    }
+
+    .abonos-card-header h2 {
+        font-size: 16px;
+    }
+
+    .abonos-card-header p {
+        font-size: 12px;
+    }
+
+
+    /* ---------------------------------------------
+       TABLA
+    --------------------------------------------- */
+
+    .abonos-table {
+        min-width: 800px;
+    }
+
+    .abonos-table th,
+    .abonos-table td {
+        padding: 9px;
+
+        font-size: 12px;
+    }
+
+    .abono-descripcion {
+        max-width: 170px;
+    }
+
+    .abono-action-btn {
+        width: 32px;
+        height: 32px;
+
+        min-width: 32px;
+    }
+
+
+    /* ---------------------------------------------
+       MODAL
+    --------------------------------------------- */
+
+    .abono-modal-content {
+        border-radius: 12px;
+    }
+
+    .abono-modal-header {
+        gap: 10px;
+    }
+
+    .abono-modal-cerrar {
+        width: 34px;
+        height: 34px;
+
+        min-width: 34px;
+    }
+
+}
+
+
+/* ============================================================
+   RESPONSIVE - 380px
+   ============================================================ */
+
+@media (max-width: 380px) {
+
+    .abonos-page {
+        padding-left: 8px;
+
+        padding-right: 8px;
+    }
+
+
+    .abonos-title h1 {
+        font-size: 18px;
     }
 
 
     .abono-stat-card {
-
-        min-height: 85px;
-    }
-
-
-    .abono-stat-icon {
-
-        width: 45px;
-
-        height: 45px;
-
-        min-width: 45px;
+        gap: 11px;
     }
 
 
     .abono-stat-info h3 {
+        font-size: 18px;
+    }
 
-        font-size: 20px;
+
+    .abonos-table {
+        min-width: 780px;
+    }
+
+
+    .abonos-table th,
+    .abonos-table td {
+        padding: 8px;
+
+        font-size: 11px;
+    }
+
+
+    .abono-avatar {
+        width: 30px;
+        height: 30px;
+
+        min-width: 30px;
     }
 
 }

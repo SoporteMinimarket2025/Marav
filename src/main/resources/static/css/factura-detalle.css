@@ -1,21 +1,29 @@
+/* ==========================================================
+   🧾 DETALLE DE FACTURA | MARAV
+   Diseño responsive
+   Basado en Clientes / Facturas / Inventario
+========================================================== */
+
 
 /* ==========================================================
-   CONTENEDOR PRINCIPAL
-   ========================================================== */
+   📄 CONTENEDOR PRINCIPAL
+========================================================== */
 
 .factura-detalle-page {
 
-    padding: 24px 30px 40px;
-
     width: 100%;
 
+    padding: 24px 30px 40px;
+
     box-sizing: border-box;
+
+    min-width: 0;
 }
 
 
 /* ==========================================================
-   ENCABEZADO
-   ========================================================== */
+   🏷️ ENCABEZADO
+========================================================== */
 
 .factura-detalle-header {
 
@@ -25,7 +33,17 @@
 
     align-items: center;
 
+    gap: 20px;
+
     margin-bottom: 22px;
+
+    min-width: 0;
+}
+
+
+.factura-detalle-title {
+
+    min-width: 0;
 }
 
 
@@ -44,10 +62,16 @@
     font-weight: 700;
 
     color: #111827;
+
+    line-height: 1.2;
+
+    min-width: 0;
 }
 
 
 .factura-detalle-title h1 i {
+
+    flex-shrink: 0;
 
     font-size: 27px;
 
@@ -58,6 +82,8 @@
 .factura-detalle-title h1 span {
 
     color: #2563eb;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -68,14 +94,18 @@
     color: #6b7280;
 
     font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
 /* ==========================================================
-   GRID INFORMACIÓN
-   ========================================================== */
+   📊 GRID INFORMACIÓN
+========================================================== */
 
 .factura-info-grid {
+
+    width: 100%;
 
     display: grid;
 
@@ -85,14 +115,20 @@
     gap: 18px;
 
     margin-bottom: 22px;
+
+    min-width: 0;
 }
 
 
 /* ==========================================================
-   TARJETA INFORMACIÓN
-   ========================================================== */
+   🧱 TARJETA INFORMACIÓN
+========================================================== */
 
 .factura-info-card {
+
+    width: 100%;
+
+    min-width: 0;
 
     background: #fff;
 
@@ -104,18 +140,22 @@
             0 3px 12px rgba(0, 0, 0, .05);
 
     overflow: hidden;
+
+    box-sizing: border-box;
 }
 
 
 /* ==========================================================
-   CABECERA TARJETA
-   ========================================================== */
+   🏷️ CABECERA TARJETA
+========================================================== */
 
 .factura-info-card-header {
 
     padding: 18px 20px;
 
     border-bottom: 1px solid #e5e7eb;
+
+    min-width: 0;
 }
 
 
@@ -132,28 +172,34 @@
     color: #111827;
 
     font-size: 16px;
+
+    line-height: 1.3;
 }
 
 
 .factura-info-card-header h2 i {
+
+    flex-shrink: 0;
 
     color: #2563eb;
 }
 
 
 /* ==========================================================
-   CUERPO TARJETA
-   ========================================================== */
+   📄 CUERPO TARJETA
+========================================================== */
 
 .factura-info-body {
 
     padding: 18px 20px;
+
+    min-width: 0;
 }
 
 
 /* ==========================================================
-   DATOS
-   ========================================================== */
+   📋 DATOS
+========================================================== */
 
 .factura-dato {
 
@@ -168,6 +214,8 @@
     padding: 10px 0;
 
     border-bottom: 1px solid #f1f5f9;
+
+    min-width: 0;
 }
 
 
@@ -187,6 +235,8 @@
 
     gap: 8px;
 
+    min-width: 0;
+
     color: #64748b;
 
     font-size: 13px;
@@ -197,6 +247,8 @@
 
     width: 15px;
 
+    min-width: 15px;
+
     color: #2563eb;
 
     text-align: center;
@@ -205,6 +257,8 @@
 
 .factura-dato strong {
 
+    max-width: 65%;
+
     color: #111827;
 
     font-size: 13px;
@@ -212,18 +266,22 @@
     text-align: right;
 
     word-break: break-word;
+
+    overflow-wrap: anywhere;
 }
 
 
 /* ==========================================================
-   ESTADO
-   ========================================================== */
+   🟢 ESTADO
+========================================================== */
 
 .detalle-estado {
 
     display: inline-flex;
 
     align-items: center;
+
+    justify-content: center;
 
     gap: 6px;
 
@@ -234,6 +292,8 @@
     font-size: 11px;
 
     font-weight: 700;
+
+    white-space: nowrap;
 }
 
 
@@ -260,8 +320,8 @@
 
 
 /* ==========================================================
-   CLIENTE DE CONTADO
-   ========================================================== */
+   👤 CLIENTE DE CONTADO
+========================================================== */
 
 .cliente-contado {
 
@@ -270,6 +330,8 @@
     align-items: center;
 
     gap: 12px;
+
+    min-width: 0;
 }
 
 
@@ -302,6 +364,8 @@
     flex-direction: column;
 
     gap: 4px;
+
+    min-width: 0;
 }
 
 
@@ -310,6 +374,8 @@
     color: #111827;
 
     font-size: 13px;
+
+    overflow-wrap: anywhere;
 }
 
 
@@ -318,12 +384,14 @@
     color: #6b7280;
 
     font-size: 12px;
+
+    overflow-wrap: anywhere;
 }
 
 
 /* ==========================================================
-   ACCIONES
-   ========================================================== */
+   🔘 ACCIONES
+========================================================== */
 
 .factura-acciones {
 
@@ -334,14 +402,20 @@
     gap: 10px;
 
     padding: 18px 20px;
+
+    min-width: 0;
 }
 
 
 .factura-btn {
 
+    width: 100%;
+
     min-height: 42px;
 
     padding: 10px 14px;
+
+    box-sizing: border-box;
 
     border-radius: 9px;
 
@@ -400,10 +474,14 @@
 
 
 /* ==========================================================
-   TARJETA PRODUCTOS
-   ========================================================== */
+   📦 TARJETA PRODUCTOS
+========================================================== */
 
 .factura-productos-card {
+
+    width: 100%;
+
+    min-width: 0;
 
     background: #fff;
 
@@ -417,12 +495,14 @@
     overflow: hidden;
 
     margin-bottom: 22px;
+
+    box-sizing: border-box;
 }
 
 
 /* ==========================================================
-   CABECERA PRODUCTOS
-   ========================================================== */
+   🏷️ CABECERA PRODUCTOS
+========================================================== */
 
 .factura-productos-header {
 
@@ -437,6 +517,8 @@
     gap: 20px;
 
     border-bottom: 1px solid #e5e7eb;
+
+    min-width: 0;
 }
 
 
@@ -450,13 +532,19 @@
 
     gap: 10px;
 
+    min-width: 0;
+
     font-size: 18px;
 
     color: #111827;
+
+    line-height: 1.3;
 }
 
 
 .factura-productos-header h2 i {
+
+    flex-shrink: 0;
 
     color: #2563eb;
 }
@@ -469,18 +557,22 @@
     color: #6b7280;
 
     font-size: 13px;
+
+    line-height: 1.4;
 }
 
 
 /* ==========================================================
-   CONTADOR PRODUCTOS
-   ========================================================== */
+   🔢 CONTADOR PRODUCTOS
+========================================================== */
 
 .factura-productos-badge {
 
     display: inline-flex;
 
     align-items: center;
+
+    justify-content: center;
 
     gap: 7px;
 
@@ -497,28 +589,44 @@
     font-weight: 600;
 
     white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
 
 /* ==========================================================
-   TABLA
-   ========================================================== */
+   📋 CONTENEDOR TABLA
+========================================================== */
 
 .factura-table-container {
 
     width: 100%;
 
+    max-width: 100%;
+
     overflow-x: auto;
+
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+
+    box-sizing: border-box;
 }
 
+
+/* ==========================================================
+   📋 TABLA
+========================================================== */
 
 .factura-detalle-table {
 
     width: 100%;
 
-    border-collapse: collapse;
-
     min-width: 700px;
+
+    border-collapse: collapse;
 }
 
 
@@ -545,6 +653,8 @@
     letter-spacing: .3px;
 
     border-bottom: 1px solid #e5e7eb;
+
+    white-space: nowrap;
 }
 
 
@@ -581,8 +691,40 @@
 
 
 /* ==========================================================
-   PRODUCTO
-   ========================================================== */
+   📐 ANCHOS MÍNIMOS DE COLUMNAS
+========================================================== */
+
+.factura-detalle-table th:nth-child(1),
+.factura-detalle-table td:nth-child(1) {
+
+    min-width: 220px;
+}
+
+
+.factura-detalle-table th:nth-child(2),
+.factura-detalle-table td:nth-child(2) {
+
+    min-width: 100px;
+}
+
+
+.factura-detalle-table th:nth-child(3),
+.factura-detalle-table td:nth-child(3) {
+
+    min-width: 140px;
+}
+
+
+.factura-detalle-table th:nth-child(4),
+.factura-detalle-table td:nth-child(4) {
+
+    min-width: 150px;
+}
+
+
+/* ==========================================================
+   🛍️ PRODUCTO
+========================================================== */
 
 .detalle-producto {
 
@@ -591,6 +733,8 @@
     align-items: center;
 
     gap: 10px;
+
+    min-width: 0;
 
     font-weight: 600;
 
@@ -623,8 +767,8 @@
 
 
 /* ==========================================================
-   CANTIDAD
-   ========================================================== */
+   🔢 CANTIDAD
+========================================================== */
 
 .detalle-cantidad {
 
@@ -645,40 +789,50 @@
     color: #374151;
 
     font-weight: 600;
+
+    white-space: nowrap;
 }
 
 
 /* ==========================================================
-   PRECIO
-   ========================================================== */
+   💰 PRECIO
+========================================================== */
 
 .detalle-precio {
 
     color: #475569;
 
     font-weight: 500;
+
+    white-space: nowrap;
 }
 
 
 /* ==========================================================
-   SUBTOTAL
-   ========================================================== */
+   💵 SUBTOTAL
+========================================================== */
 
 .detalle-subtotal {
 
     color: #111827;
 
     font-weight: 700;
+
+    white-space: nowrap;
 }
 
 
 /* ==========================================================
-   ESTADO VACÍO
-   ========================================================== */
+   🚫 ESTADO VACÍO
+========================================================== */
 
 .factura-detalle-empty {
 
+    width: 100%;
+
     padding: 45px 20px !important;
+
+    box-sizing: border-box;
 
     text-align: center;
 
@@ -703,8 +857,8 @@
 
 
 /* ==========================================================
-   RESUMEN
-   ========================================================== */
+   💰 RESUMEN
+========================================================== */
 
 .factura-resumen-card {
 
@@ -724,6 +878,8 @@
             0 3px 12px rgba(0, 0, 0, .05);
 
     overflow: hidden;
+
+    box-sizing: border-box;
 }
 
 
@@ -760,12 +916,14 @@
 .factura-resumen-body {
 
     padding: 20px 22px;
+
+    min-width: 0;
 }
 
 
 /* ==========================================================
-   LINEAS RESUMEN
-   ========================================================== */
+   📄 LÍNEAS RESUMEN
+========================================================== */
 
 .resumen-linea {
 
@@ -782,6 +940,14 @@
     color: #64748b;
 
     font-size: 14px;
+
+    min-width: 0;
+}
+
+
+.resumen-linea span {
+
+    min-width: 0;
 }
 
 
@@ -790,6 +956,10 @@
     color: #374151;
 
     font-weight: 700;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
 }
 
 
@@ -804,8 +974,8 @@
 
 
 /* ==========================================================
-   TOTAL
-   ========================================================== */
+   💰 TOTAL
+========================================================== */
 
 .resumen-total {
 
@@ -824,8 +994,8 @@
 
 
 /* ==========================================================
-   TOTAL DEVUELTO
-   ========================================================== */
+   ↩️ TOTAL DEVUELTO
+========================================================== */
 
 .resumen-devuelto {
 
@@ -840,8 +1010,8 @@
 
 
 /* ==========================================================
-   TOTAL NETO
-   ========================================================== */
+   💵 TOTAL NETO
+========================================================== */
 
 .resumen-neto {
 
@@ -866,6 +1036,10 @@
     font-size: 16px;
 
     font-weight: 700;
+
+    box-sizing: border-box;
+
+    min-width: 0;
 }
 
 
@@ -874,87 +1048,256 @@
     color: #2563eb;
 
     font-size: 20px;
+
+    white-space: nowrap;
 }
 
 
 /* ==========================================================
-   RESPONSIVE
-   ========================================================== */
+   💻 PANTALLAS MEDIANAS
+========================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
 
     .factura-info-grid {
 
         grid-template-columns:
             repeat(2, minmax(0, 1fr));
+
     }
+
 
     .factura-acciones-card {
 
         grid-column: 1 / -1;
+
     }
+
 
     .factura-acciones {
 
         flex-direction: row;
+
     }
+
 
     .factura-btn {
 
         flex: 1;
+
     }
+
 }
 
+
+/* ==========================================================
+   📱 TABLET
+========================================================== */
+
+@media (max-width: 900px) {
+
+    .factura-info-grid {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+    }
+
+
+    .factura-detalle-title h1 {
+
+        font-size: 25px;
+
+    }
+
+}
+
+
+/* ==========================================================
+   📱 MÓVIL
+========================================================== */
 
 @media (max-width: 700px) {
 
     .factura-detalle-page {
 
         padding: 18px 15px 30px;
+
     }
+
+
+    .factura-detalle-header {
+
+        margin-bottom: 18px;
+
+    }
+
 
     .factura-detalle-title h1 {
 
         font-size: 23px;
 
         flex-wrap: wrap;
+
+        gap: 8px;
+
     }
+
+
+    .factura-detalle-title h1 i {
+
+        font-size: 22px;
+
+    }
+
+
+    .factura-detalle-title p {
+
+        font-size: 13px;
+
+    }
+
 
     .factura-info-grid {
 
         grid-template-columns: 1fr;
+
+        gap: 14px;
+
+        margin-bottom: 18px;
+
     }
+
 
     .factura-acciones-card {
 
         grid-column: auto;
+
     }
+
 
     .factura-acciones {
 
         flex-direction: column;
+
     }
+
 
     .factura-btn {
 
         width: 100%;
+
+        flex: none;
+
     }
+
+
+    .factura-productos-card {
+
+        margin-bottom: 18px;
+
+    }
+
 
     .factura-productos-header {
 
         flex-direction: column;
 
         align-items: flex-start;
+
+        padding: 17px 15px;
+
+        gap: 12px;
+
     }
+
+
+    .factura-productos-badge {
+
+        align-self: flex-start;
+
+    }
+
+
+    .factura-table-container {
+
+        overflow-x: auto;
+
+    }
+
+
+    .factura-detalle-table {
+
+        min-width: 700px;
+
+    }
+
 
     .factura-resumen-card {
 
         max-width: none;
+
+        margin-left: 0;
+
     }
+
+
+    .factura-resumen-header {
+
+        padding: 16px 15px;
+
+    }
+
+
+    .factura-resumen-body {
+
+        padding: 17px 15px;
+
+    }
+
 }
 
 
+/* ==========================================================
+   📱 CELULARES PEQUEÑOS
+========================================================== */
+
 @media (max-width: 500px) {
+
+    .factura-detalle-page {
+
+        padding: 15px 10px 25px;
+
+    }
+
+
+    .factura-detalle-title h1 {
+
+        font-size: 21px;
+
+    }
+
+
+    .factura-detalle-title h1 i {
+
+        font-size: 20px;
+
+    }
+
+
+    .factura-info-card-header {
+
+        padding: 15px;
+
+    }
+
+
+    .factura-info-body {
+
+        padding: 15px;
+
+    }
+
 
     .factura-dato {
 
@@ -963,30 +1306,139 @@
         flex-direction: column;
 
         gap: 5px;
+
     }
+
 
     .factura-dato strong {
 
+        max-width: 100%;
+
         text-align: left;
+
     }
+
+
+    .cliente-contado {
+
+        align-items: flex-start;
+
+    }
+
+
+    .factura-productos-header {
+
+        padding: 15px 12px;
+
+    }
+
+
+    .factura-productos-header h2 {
+
+        font-size: 16px;
+
+    }
+
+
+    .factura-table-container {
+
+        overflow-x: auto;
+
+    }
+
+
+    .factura-detalle-table {
+
+        min-width: 700px;
+
+    }
+
 
     .detalle-producto {
 
         min-width: 180px;
+
     }
+
 
     .resumen-linea {
 
         font-size: 13px;
+
+        gap: 10px;
+
     }
+
 
     .resumen-neto {
 
+        padding: 13px;
+
         font-size: 14px;
+
     }
+
 
     .resumen-neto strong {
 
         font-size: 17px;
+
     }
+
+}
+
+
+/* ==========================================================
+   📱 CELULARES MUY PEQUEÑOS
+========================================================== */
+
+@media (max-width: 380px) {
+
+    .factura-detalle-page {
+
+        padding-left: 8px;
+
+        padding-right: 8px;
+
+    }
+
+
+    .factura-detalle-title h1 {
+
+        font-size: 19px;
+
+    }
+
+
+    .factura-info-card-header h2 {
+
+        font-size: 15px;
+
+    }
+
+
+    .factura-productos-header h2 {
+
+        font-size: 15px;
+
+    }
+
+
+    .resumen-neto {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+
+    .resumen-neto strong {
+
+        font-size: 18px;
+
+    }
+
 }

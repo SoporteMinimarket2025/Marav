@@ -1,22 +1,24 @@
-
 /* =========================================================
-   📦 INVENTARIO | ECOMARKET PRO
+   📦 INVENTARIO | MARAV
+   DISEÑO RESPONSIVE
 ========================================================= */
 
 
 /* =========================================================
-   CONTENEDOR PRINCIPAL
+   CONFIGURACIÓN GENERAL
 ========================================================= */
 
 .inventario-page {
-
-    padding: 24px 30px 40px;
-
     width: 100%;
-
+    padding: 24px 30px 40px;
     box-sizing: border-box;
 }
 
+.inventario-page *,
+.inventario-page *::before,
+.inventario-page *::after {
+    box-sizing: border-box;
+}
 
 
 /* =========================================================
@@ -24,48 +26,30 @@
 ========================================================= */
 
 .inventario-header {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     margin-bottom: 22px;
 }
 
-
 .inventario-title h1 {
-
     margin: 0;
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     font-size: 28px;
-
     font-weight: 700;
 }
 
-
 .inventario-title h1 i {
-
     font-size: 27px;
 }
 
-
 .inventario-title p {
-
     margin: 7px 0 0;
-
     color: #6b7280;
-
     font-size: 14px;
 }
-
 
 
 /* =========================================================
@@ -73,52 +57,38 @@
 ========================================================= */
 
 .inventario-page .alert-info {
-
     display: flex;
-
     align-items: flex-start;
-
     gap: 12px;
 
     padding: 15px 18px;
-
     margin-bottom: 22px;
 
     border-radius: 12px;
 
     background: #eff6ff;
-
     border: 1px solid #bfdbfe;
 
     color: #1e40af;
 }
 
-
 .inventario-page .alert-info > i {
-
+    flex-shrink: 0;
     margin-top: 2px;
-
     font-size: 18px;
 }
 
-
 .inventario-page .alert-info strong {
-
     display: block;
-
     margin-bottom: 3px;
-
     font-size: 14px;
 }
 
-
 .inventario-page .alert-info span {
-
     display: block;
-
     font-size: 13px;
+    line-height: 1.5;
 }
-
 
 
 /* =========================================================
@@ -126,33 +96,22 @@
 ========================================================= */
 
 .inventario-stats {
-
     display: grid;
-
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     gap: 18px;
-
     margin-bottom: 22px;
 }
 
-
 .inventario-stat-card {
-
     display: flex;
-
     align-items: center;
-
     gap: 15px;
 
     min-height: 100px;
-
     padding: 18px;
 
     background: #ffffff;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 14px;
 
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
@@ -160,80 +119,55 @@
     transition: all 0.2s ease;
 }
 
-
 .inventario-stat-card:hover {
-
     transform: translateY(-2px);
-
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-
 .inventario-stat-icon {
-
     width: 52px;
-
     height: 52px;
-
     min-width: 52px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 13px;
-
     font-size: 22px;
 }
 
-
 .inventario-icon {
-
     background: #e8f1ff;
-
     color: #2563eb;
 }
 
-
 .stock-bajo-icon {
-
     background: #fff4e5;
-
     color: #ea580c;
 }
 
-
 .vencidos-icon {
-
     background: #fee2e2;
-
     color: #dc2626;
 }
 
+.inventario-stat-info {
+    min-width: 0;
+}
 
 .inventario-stat-info h3 {
-
     margin: 0;
-
     font-size: 24px;
-
     font-weight: 700;
-
     color: #111827;
 }
 
-
 .inventario-stat-info p {
-
     margin: 5px 0 0;
-
     color: #6b7280;
-
     font-size: 13px;
 }
-
 
 
 /* =========================================================
@@ -241,14 +175,10 @@
 ========================================================= */
 
 .inventario-actions {
-
     display: flex;
-
     justify-content: flex-end;
-
     margin-bottom: 18px;
 }
-
 
 
 /* =========================================================
@@ -256,112 +186,75 @@
 ========================================================= */
 
 .inventario-btn {
-
     border: none;
-
     border-radius: 9px;
 
     padding: 11px 17px;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 8px;
 
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
-
     transition: all 0.2s ease;
 }
 
-
 .inventario-btn:hover {
-
     transform: translateY(-1px);
 }
 
-
 .inventario-btn:active {
-
     transform: translateY(0);
 }
 
-
 .inventario-btn-save {
-
     background: #2563eb;
-
     color: #ffffff;
 }
 
-
 .inventario-btn-save:hover {
-
     background: #1d4ed8;
 }
 
-
 .inventario-btn-update {
-
     background: #f59e0b;
-
     color: #ffffff;
 }
 
-
 .inventario-btn-update:hover {
-
     background: #d97706;
 }
 
-
 .inventario-btn-cancel {
-
     background: #e5e7eb;
-
     color: #374151;
 }
 
-
 .inventario-btn-cancel:hover {
-
     background: #d1d5db;
 }
 
-
 .inventario-btn-edit {
-
     background: #eff6ff;
-
     color: #2563eb;
 }
 
-
 .inventario-btn-edit:hover {
-
     background: #dbeafe;
 }
 
-
 .inventario-btn-delete {
-
     background: #fef2f2;
-
     color: #dc2626;
 }
 
-
 .inventario-btn-delete:hover {
-
     background: #fee2e2;
 }
-
 
 
 /* =========================================================
@@ -369,11 +262,10 @@
 ========================================================= */
 
 .inventario-card {
+    width: 100%;
 
     background: #ffffff;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 15px;
 
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
@@ -381,15 +273,11 @@
     overflow: hidden;
 }
 
-
 .inventario-card-header {
-
     padding: 20px 22px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 20px;
@@ -397,38 +285,31 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
+.inventario-card-header > div:first-child {
+    min-width: 0;
+}
 
 .inventario-card-header h2 {
-
     margin: 0;
 
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 
     font-size: 18px;
-
     color: #111827;
 }
 
-
 .inventario-card-header h2 i {
-
     color: #2563eb;
 }
 
-
 .inventario-card-header p {
-
     margin: 6px 0 0;
-
     color: #6b7280;
-
     font-size: 13px;
+    line-height: 1.5;
 }
-
 
 
 /* =========================================================
@@ -436,11 +317,10 @@
 ========================================================= */
 
 .inventario-role-badge {
+    flex-shrink: 0;
 
     display: inline-flex;
-
     align-items: center;
-
     gap: 7px;
 
     padding: 8px 12px;
@@ -448,84 +328,75 @@
     border-radius: 20px;
 
     font-size: 12px;
-
     font-weight: 600;
 
     white-space: nowrap;
 }
 
-
 .inventario-role-badge.role-admin {
-
     color: #1d4ed8;
-
     background: #eff6ff;
 }
 
-
 .inventario-role-badge.role-empleado {
-
     color: #6b7280;
-
     background: #f3f4f6;
 }
 
+
+/* =========================================================
+   CONTENEDOR DE TABLA
+   IMPORTANTE PARA RESPONSIVE
+========================================================= */
+
+.inventario-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
 
 
 /* =========================================================
    TABLA
 ========================================================= */
 
-.inventario-table-container {
-
-    width: 100%;
-
-    overflow-x: auto;
-}
-
-
 .inventario-table {
-
     width: 100%;
+    min-width: 950px;
 
     border-collapse: collapse;
-
-    min-width: 900px;
+    table-layout: auto;
 }
 
-
 .inventario-table thead {
-
     background: #f8fafc;
 }
 
-
 .inventario-table th {
-
     padding: 14px 16px;
 
     text-align: left;
 
     color: #475569;
-
     font-size: 12px;
-
     font-weight: 700;
 
     text-transform: uppercase;
-
     letter-spacing: 0.3px;
 
     border-bottom: 1px solid #e5e7eb;
+
+    white-space: nowrap;
 }
 
-
 .inventario-table td {
-
     padding: 14px 16px;
 
     color: #374151;
-
     font-size: 13px;
 
     border-bottom: 1px solid #f1f5f9;
@@ -533,24 +404,63 @@
     vertical-align: middle;
 }
 
-
 .inventario-table tbody tr {
-
     transition: background 0.2s ease;
 }
 
-
 .inventario-table tbody tr:hover {
-
     background: #f8fafc;
 }
 
-
 .inventario-table tbody tr:last-child td {
-
     border-bottom: none;
 }
 
+
+/* =========================================================
+   ANCHOS MÍNIMOS DE COLUMNAS
+   EVITA QUE LOS DATOS SE APRIETEN
+========================================================= */
+
+.inventario-table th:nth-child(1),
+.inventario-table td:nth-child(1) {
+    min-width: 210px;
+}
+
+.inventario-table th:nth-child(2),
+.inventario-table td:nth-child(2) {
+    min-width: 90px;
+}
+
+.inventario-table th:nth-child(3),
+.inventario-table td:nth-child(3) {
+    min-width: 90px;
+}
+
+.inventario-table th:nth-child(4),
+.inventario-table td:nth-child(4) {
+    min-width: 120px;
+}
+
+.inventario-table th:nth-child(5),
+.inventario-table td:nth-child(5) {
+    min-width: 150px;
+}
+
+.inventario-table th:nth-child(6),
+.inventario-table td:nth-child(6) {
+    min-width: 130px;
+}
+
+.inventario-table th:nth-child(7),
+.inventario-table td:nth-child(7) {
+    min-width: 130px;
+}
+
+.inventario-table th:nth-child(8),
+.inventario-table td:nth-child(8) {
+    min-width: 110px;
+}
 
 
 /* =========================================================
@@ -558,80 +468,63 @@
 ========================================================= */
 
 .inventario-producto {
-
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 
-    font-weight: 600;
+    min-width: 180px;
 
+    font-weight: 600;
     color: #111827;
 }
 
-
 .inventario-avatar {
-
     width: 34px;
-
     height: 34px;
-
     min-width: 34px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
 
     background: #eff6ff;
-
     color: #2563eb;
 
     font-size: 14px;
 }
 
-
 .inventario-stock {
-
     font-weight: 700;
-
     color: #111827;
-}
-
-
-.inventario-minimo {
-
-    color: #475569;
-
-    font-weight: 500;
-}
-
-
-.inventario-lote {
-
-    color: #475569;
-}
-
-
-.inventario-ubicacion {
-
-    max-width: 180px;
-
-    color: #64748b;
-}
-
-
-.inventario-vencimiento {
-
-    color: #475569;
-
     white-space: nowrap;
 }
 
+.inventario-minimo {
+    color: #475569;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.inventario-lote {
+    color: #475569;
+    white-space: nowrap;
+}
+
+.inventario-ubicacion {
+    max-width: 180px;
+    color: #64748b;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.inventario-vencimiento {
+    color: #475569;
+    white-space: nowrap;
+}
 
 
 /* =========================================================
@@ -639,11 +532,8 @@
 ========================================================= */
 
 .inventario-estado {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 6px;
 
     padding: 6px 10px;
@@ -651,34 +541,25 @@
     border-radius: 20px;
 
     font-size: 11px;
-
     font-weight: 700;
+
+    white-space: nowrap;
 }
 
-
 .estado-disponible {
-
     background: #dcfce7;
-
     color: #15803d;
 }
 
-
 .estado-stock-bajo {
-
     background: #fef3c7;
-
     color: #b45309;
 }
 
-
 .estado-vencido {
-
     background: #fee2e2;
-
     color: #b91c1c;
 }
-
 
 
 /* =========================================================
@@ -686,31 +567,25 @@
 ========================================================= */
 
 .inventario-actions-table {
-
     display: flex;
-
     align-items: center;
-
     gap: 7px;
+
+    white-space: nowrap;
 }
 
-
 .inventario-action-btn {
-
     width: 34px;
-
     height: 34px;
+    min-width: 34px;
 
     padding: 0;
 
     border: none;
-
     border-radius: 8px;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
@@ -718,12 +593,9 @@
     transition: all 0.2s ease;
 }
 
-
 .inventario-action-btn:hover {
-
     transform: translateY(-1px);
 }
-
 
 
 /* =========================================================
@@ -731,17 +603,13 @@
 ========================================================= */
 
 .inventario-modal {
-
     position: fixed;
-
     inset: 0;
 
     z-index: 9999;
 
     display: none;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -751,21 +619,16 @@
     backdrop-filter: blur(3px);
 }
 
-
 .inventario-modal.active {
-
     display: flex;
 }
 
-
 .inventario-modal-content {
-
-    width: 100%;
-
-    max-width: 720px;
+    width: min(720px, 100%);
 
     max-height: 90vh;
 
+    overflow-x: hidden;
     overflow-y: auto;
 
     background: #ffffff;
@@ -777,26 +640,17 @@
     animation: inventarioModalEntrada 0.2s ease;
 }
 
-
 @keyframes inventarioModalEntrada {
-
     from {
-
         opacity: 0;
-
         transform: translateY(-15px) scale(0.98);
-
     }
 
     to {
-
         opacity: 1;
-
         transform: translateY(0) scale(1);
-
     }
 }
-
 
 
 /* =========================================================
@@ -804,11 +658,8 @@
 ========================================================= */
 
 .inventario-modal-header {
-
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
 
     gap: 20px;
@@ -818,57 +669,47 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
+.inventario-modal-header > div {
+    min-width: 0;
+}
 
 .inventario-modal-header h2 {
-
     margin: 0;
 
     display: flex;
-
     align-items: center;
-
     gap: 10px;
 
     color: #111827;
-
     font-size: 20px;
 }
 
-
 .inventario-modal-header h2 i {
-
     color: #2563eb;
 }
 
-
 .inventario-modal-header p {
-
     margin: 6px 0 0;
 
     color: #6b7280;
-
     font-size: 13px;
+
+    line-height: 1.5;
 }
 
-
 .inventario-modal-cerrar {
-
     width: 36px;
-
     height: 36px;
+    min-width: 36px;
 
     border: none;
-
     border-radius: 8px;
 
     background: #f3f4f6;
-
     color: #4b5563;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
@@ -878,14 +719,10 @@
     transition: all 0.2s ease;
 }
 
-
 .inventario-modal-cerrar:hover {
-
     background: #fee2e2;
-
     color: #dc2626;
 }
-
 
 
 /* =========================================================
@@ -893,13 +730,11 @@
 ========================================================= */
 
 #formInventario {
-
+    width: 100%;
     padding: 24px;
 }
 
-
 .inventario-form-grid {
-
     display: grid;
 
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -907,21 +742,16 @@
     gap: 18px;
 }
 
-
 .inventario-form-group {
-
     display: flex;
-
     flex-direction: column;
+
+    min-width: 0;
 }
 
-
 .inventario-form-group label {
-
     display: flex;
-
     align-items: center;
-
     gap: 7px;
 
     margin-bottom: 7px;
@@ -929,24 +759,21 @@
     color: #374151;
 
     font-size: 13px;
-
     font-weight: 600;
 }
 
-
 .inventario-form-group label i {
+    flex-shrink: 0;
 
     color: #2563eb;
-
     width: 15px;
 }
 
-
 .inventario-form-group input,
-
 .inventario-form-group select {
-
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
 
     min-height: 43px;
 
@@ -955,13 +782,11 @@
     padding: 10px 12px;
 
     border: 1px solid #d1d5db;
-
     border-radius: 9px;
 
     outline: none;
 
     background: #ffffff;
-
     color: #111827;
 
     font-size: 13px;
@@ -969,22 +794,17 @@
     transition: all 0.2s ease;
 }
 
-
 .inventario-form-group input:focus,
-
 .inventario-form-group select:focus {
-
     border-color: #2563eb;
 
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    box-shadow:
+            0 0 0 3px rgba(37, 99, 235, 0.10);
 }
-
 
 .inventario-form-group input::placeholder {
-
     color: #9ca3af;
 }
-
 
 
 /* =========================================================
@@ -992,22 +812,18 @@
 ========================================================= */
 
 .inventario-buttons {
-
     display: flex;
 
     justify-content: flex-end;
-
     align-items: center;
 
     gap: 10px;
 
     margin-top: 25px;
-
     padding-top: 20px;
 
     border-top: 1px solid #e5e7eb;
 }
-
 
 
 /* =========================================================
@@ -1015,7 +831,6 @@
 ========================================================= */
 
 .inventario-empty {
-
     padding: 45px 20px !important;
 
     text-align: center;
@@ -1023,9 +838,7 @@
     color: #94a3b8 !important;
 }
 
-
 .inventario-empty i {
-
     display: block;
 
     margin-bottom: 10px;
@@ -1033,119 +846,319 @@
     font-size: 32px;
 }
 
-
 .inventario-empty span {
-
     font-size: 14px;
 }
 
 
+/* =========================================================
+   RESPONSIVE TABLET GRANDE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .inventario-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 
 /* =========================================================
-   RESPONSIVE
+   RESPONSIVE TABLET
 ========================================================= */
 
 @media (max-width: 900px) {
 
-    .inventario-stats {
-
-        grid-template-columns: 1fr;
-
+    .inventario-page {
+        padding: 22px 20px 35px;
     }
 
+    .inventario-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .inventario-card-header {
+        align-items: flex-start;
+    }
 }
 
 
+/* =========================================================
+   RESPONSIVE MÓVIL
+========================================================= */
 
 @media (max-width: 700px) {
 
     .inventario-page {
-
         padding: 18px 15px 30px;
-
     }
 
+
+    /* HEADER */
+
+    .inventario-header {
+        margin-bottom: 18px;
+    }
+
+    .inventario-title h1 {
+        font-size: 25px;
+        gap: 9px;
+    }
+
+    .inventario-title h1 i {
+        font-size: 23px;
+    }
+
+    .inventario-title p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+
+    /* ALERTA */
+
+    .inventario-page .alert-info {
+        padding: 13px 14px;
+    }
+
+
+    /* KPIs */
+
+    .inventario-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .inventario-stat-card {
+        min-height: 85px;
+        padding: 15px;
+    }
+
+
+    /* BOTÓN NUEVO */
+
+    .inventario-actions {
+        justify-content: stretch;
+    }
+
+    .inventario-actions .inventario-btn {
+        width: 100%;
+    }
+
+
+    /* CARD */
+
+    .inventario-card {
+        border-radius: 12px;
+    }
 
     .inventario-card-header {
-
         flex-direction: column;
-
-        align-items: flex-start;
-
-    }
-
-
-    .inventario-form-grid {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .inventario-buttons {
-
-        flex-direction: column;
-
         align-items: stretch;
 
+        padding: 17px 16px;
+
+        gap: 14px;
+    }
+
+    .inventario-card-header h2 {
+        font-size: 17px;
+    }
+
+    .inventario-card-header p {
+        font-size: 12px;
+    }
+
+    .inventario-role-badge {
+        align-self: flex-start;
     }
 
 
-    .inventario-buttons .inventario-btn {
+    /* TABLA */
 
+    .inventario-table-container {
         width: 100%;
 
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        border-top: 1px solid #f1f5f9;
     }
 
+    .inventario-table {
+        min-width: 950px;
+    }
+
+    .inventario-table th,
+    .inventario-table td {
+        padding: 12px 13px;
+    }
+
+
+    /* MODAL */
 
     .inventario-modal {
-
         padding: 10px;
-
     }
-
 
     .inventario-modal-content {
-
+        width: 100%;
         max-height: 94vh;
 
+        border-radius: 14px;
     }
 
+    .inventario-modal-header {
+        padding: 18px 17px;
+
+        gap: 12px;
+    }
+
+    .inventario-modal-header h2 {
+        font-size: 18px;
+    }
+
+    .inventario-modal-header p {
+        font-size: 12px;
+    }
+
+    #formInventario {
+        padding: 18px 17px;
+    }
+
+    .inventario-form-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+
+    /* BOTONES MODAL */
+
+    .inventario-buttons {
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 8px;
+    }
+
+    .inventario-buttons .inventario-btn {
+        width: 100%;
+    }
 }
 
 
+/* =========================================================
+   RESPONSIVE MÓVIL PEQUEÑO
+========================================================= */
 
 @media (max-width: 500px) {
 
-    .inventario-title h1 {
-
-        font-size: 23px;
-
+    .inventario-page {
+        padding: 15px 12px 25px;
     }
 
+    .inventario-title h1 {
+        font-size: 22px;
+    }
+
+    .inventario-title h1 i {
+        font-size: 21px;
+    }
+
+    .inventario-title p {
+        font-size: 12px;
+    }
+
+
+    /* KPI */
 
     .inventario-stat-card {
-
-        min-height: 85px;
-
+        gap: 12px;
+        padding: 14px;
     }
-
 
     .inventario-stat-icon {
-
         width: 45px;
-
         height: 45px;
-
         min-width: 45px;
 
+        font-size: 19px;
     }
-
 
     .inventario-stat-info h3 {
-
         font-size: 20px;
-
     }
 
+    .inventario-stat-info p {
+        font-size: 12px;
+    }
+
+
+    /* TABLA */
+
+    .inventario-table {
+        min-width: 950px;
+    }
+
+
+    /* MODAL */
+
+    .inventario-modal {
+        padding: 7px;
+    }
+
+    .inventario-modal-header {
+        padding: 16px 14px;
+    }
+
+    .inventario-modal-header h2 {
+        font-size: 17px;
+    }
+
+    #formInventario {
+        padding: 16px 14px;
+    }
+
+    .inventario-form-group input,
+    .inventario-form-group select {
+        min-height: 42px;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   TELÉFONOS MUY PEQUEÑOS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .inventario-page {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .inventario-title h1 {
+        font-size: 20px;
+    }
+
+    .inventario-title h1 i {
+        font-size: 19px;
+    }
+
+    .inventario-stat-card {
+        padding: 12px;
+    }
+
+    .inventario-stat-info h3 {
+        font-size: 19px;
+    }
+
+    .inventario-card-header {
+        padding: 15px 13px;
+    }
+
+    #formInventario {
+        padding: 15px 12px;
+    }
 }

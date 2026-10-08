@@ -1,33 +1,326 @@
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    background:#f4f6f9;
-    font-family:sans-serif;
+/* =========================================================
+   MARAV | REGISTRO DE NEGOCIO
+   Diseño responsive
+   ========================================================= */
+
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
 }
 
-.box{
-    background:white;
-    padding:40px;
-    border-radius:10px;
-    width:350px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0;
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100vh;
+
+    /* Espacio para celulares */
+    padding: 20px;
+
+    background: #f4f6f9;
+
+    font-family: sans-serif;
+
+    /* Evita desplazamiento horizontal */
+    overflow-x: hidden;
 }
 
-button{
-    width:100%;
-    padding:12px;
-    background:#16a34a;
-    color:white;
-    border:none;
-    cursor:pointer;
+
+/* =========================================================
+   CAJA PRINCIPAL
+   ========================================================= */
+
+.box {
+    width: 350px;
+    max-width: 100%;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 10px;
+
+    box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.msg{margin-top:10px;font-weight:bold;text-align:center;}
+
+/* =========================================================
+   TITULO
+   ========================================================= */
+
+.box h2 {
+    margin: 0 0 20px 0;
+
+    text-align: center;
+
+    color: #1f2937;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 10px;
+
+    margin: 8px 0;
+
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+
+/* =========================================================
+   INPUT AL SELECCIONAR
+   ========================================================= */
+
+input:focus {
+    border-color: #16a34a;
+
+    box-shadow:
+            0 0 0 2px rgba(22, 163, 74, 0.12);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+   ========================================================= */
+
+input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   BOTÓN
+   ========================================================= */
+
+button {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    padding: 12px;
+
+    margin-top: 12px;
+
+    background: #16a34a;
+
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+
+    transition:
+            background 0.2s ease,
+            transform 0.1s ease,
+            opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   BOTÓN HOVER
+   ========================================================= */
+
+button:hover {
+    background: #15803d;
+}
+
+
+/* =========================================================
+   BOTÓN AL PRESIONAR
+   ========================================================= */
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================================================
+   BOTÓN DESHABILITADO
+   ========================================================= */
+
+button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   MENSAJE
+   ========================================================= */
+
+.msg {
+    width: 100%;
+
+    margin-top: 12px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RESPONSIVE | TABLET
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+
+    .box {
+        width: 100%;
+        max-width: 350px;
+
+        padding: 30px 25px;
+    }
+
+
+    .box h2 {
+        font-size: 22px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE | CELULAR
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    body {
+        padding: 12px;
+    }
+
+
+    .box {
+        width: 100%;
+
+        padding: 25px 18px;
+
+        border-radius: 9px;
+    }
+
+
+    .box h2 {
+        margin-bottom: 18px;
+
+        font-size: 21px;
+    }
+
+
+    input {
+        padding: 11px 10px;
+
+        font-size: 14px;
+    }
+
+
+    button {
+        padding: 12px 10px;
+
+        font-size: 14px;
+    }
+
+
+    .msg {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE | CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 320px) {
+
+    body {
+        padding: 8px;
+    }
+
+
+    .box {
+        padding: 20px 14px;
+    }
+
+
+    .box h2 {
+        font-size: 19px;
+    }
+
+
+    input {
+        font-size: 13px;
+    }
+
+
+    button {
+        font-size: 13px;
+    }
+
+
+    .msg {
+        font-size: 12px;
+    }
+}

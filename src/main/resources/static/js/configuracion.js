@@ -446,7 +446,7 @@ const MANUAL_MODULOS = [
         descripcion:
             "Permite crear y administrar los usuarios empleados que tendrán acceso al negocio.",
 
-        video: "https://youtu.be/4Zv3lSoV0DM?si=1AciLD5Ml4e4v2FY",
+        video: "https://youtu.be/vD3jNYJsImY?si=QQI0YtVxgHwdvdtF",
 
         rol:
             "Este módulo está orientado principalmente al administrador.",

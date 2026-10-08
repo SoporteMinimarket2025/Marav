@@ -1,32 +1,39 @@
+/* =========================================================
+   MARAV | LOGIN
+   Diseño responsive para computador, tablet y celular
+   ========================================================= */
 
-    /* =========================================================
-       MARAV | LOGIN
-       Diseño responsive para computador, tablet y celular
-       ========================================================= */
 
-
-    /* =========================================================
-       BASE
-       ========================================================= */
+/* =========================================================
+   RESET Y BASE
+   ========================================================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
     font-family: 'Poppins', sans-serif;
 }
 
-html,
 body {
     width: 100%;
-    min-height: 100%;
-}
-
-body {
-    display: flex;
     min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+
     overflow-x: hidden;
+
     background: #f0fdf4;
+
+    font-family: 'Poppins', sans-serif;
+
+    -webkit-text-size-adjust: 100%;
 }
 
 
@@ -37,12 +44,23 @@ body {
 .slider {
     width: 60%;
     min-height: 100vh;
+    min-height: 100svh;
+
     position: relative;
+
     overflow: hidden;
+
+    flex-shrink: 0;
 }
+
+
+/* =========================================================
+   SLIDES
+   ========================================================= */
 
 .slide {
     position: absolute;
+
     inset: 0;
 
     width: 100%;
@@ -56,26 +74,28 @@ body {
     transition: opacity 1.2s ease-in-out;
 }
 
+.slide.active {
+    opacity: 1;
+}
+
 
 /* =========================================================
    IMÁGENES
    ========================================================= */
 
 .slide1 {
-    background-image: url('https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=2070');
+    background-image:
+            url('https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=2070');
 }
 
 .slide2 {
-    background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070');
+    background-image:
+            url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=2070');
 }
 
 .slide3 {
-    background-image: url('https://images.unsplash.com/photo-1604719312566-8912e9c8a213?q=80&w=2070');
-}
-
-
-.slide.active {
-    opacity: 1;
+    background-image:
+            url('https://images.unsplash.com/photo-1604719312566-8912e9c8a213?q=80&w=2070');
 }
 
 
@@ -85,15 +105,17 @@ body {
 
 .overlay {
     position: absolute;
+
     inset: 0;
 
     width: 100%;
     height: 100%;
 
-    background: linear-gradient(
-            rgba(0, 0, 0, 0.5),
-            rgba(0, 0, 0, 0.7)
-    );
+    background:
+            linear-gradient(
+                    rgba(0, 0, 0, 0.50),
+                    rgba(0, 0, 0, 0.72)
+            );
 
     backdrop-filter: blur(3px);
 }
@@ -106,19 +128,19 @@ body {
 .text {
     position: absolute;
 
-    bottom: 50px;
     left: 50px;
+    bottom: 50px;
+
+    z-index: 2;
+
+    max-width: 420px;
 
     color: white;
 
     font-size: 32px;
     font-weight: 600;
 
-    max-width: 420px;
-
     line-height: 1.3;
-
-    z-index: 2;
 }
 
 
@@ -129,6 +151,7 @@ body {
 .panel {
     width: 40%;
     min-height: 100vh;
+    min-height: 100svh;
 
     display: flex;
 
@@ -137,13 +160,17 @@ body {
 
     padding: 30px;
 
-    background: linear-gradient(
-            135deg,
-            #ecfdf5,
-            #f0fdf4
-    );
+    background:
+            linear-gradient(
+                    135deg,
+                    #ecfdf5,
+                    #f0fdf4
+            );
 
+    overflow-x: hidden;
     overflow-y: auto;
+
+    flex: 1;
 }
 
 
@@ -155,18 +182,20 @@ body {
     width: 100%;
     max-width: 360px;
 
-    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.96);
 
     backdrop-filter: blur(10px);
-
-    padding: 40px;
 
     border-radius: 18px;
 
     box-shadow:
             0 30px 60px rgba(0, 0, 0, 0.15);
 
-    animation: fade 1s ease;
+    animation: fade 0.7s ease;
+
+    overflow: hidden;
 }
 
 
@@ -205,143 +234,14 @@ body {
 }
 
 .logo img {
+    display: block;
+
     width: 120px;
     height: 90px;
 
     max-width: 100%;
 
     object-fit: contain;
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-input {
-    display: block;
-
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 12px;
-
-    margin: 10px 0;
-
-    border-radius: 10px;
-
-    border: 1px solid #ccc;
-
-    background: #ffffff;
-
-    font-size: 14px;
-
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: #16a34a;
-
-    box-shadow:
-            0 0 8px rgba(22, 163, 74, 0.3);
-
-    outline: none;
-}
-
-
-/* =========================================================
-   BOTONES
-   ========================================================= */
-
-button {
-    display: block;
-
-    width: 100%;
-
-    padding: 12px;
-
-    margin-top: 10px;
-
-    background: #16a34a;
-
-    color: white;
-
-    border: none;
-
-    border-radius: 10px;
-
-    font-weight: 600;
-
-    font-size: 14px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-}
-
-button:hover {
-    background: #15803d;
-
-    transform: scale(1.02);
-}
-
-button:disabled {
-    opacity: 0.7;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-
-/* =========================================================
-   LINKS
-   ========================================================= */
-
-.toggle {
-    text-align: center;
-
-    margin-top: 12px;
-
-    color: #2563eb;
-
-    cursor: pointer;
-
-    font-size: 14px;
-
-    padding: 4px;
-}
-
-.toggle:hover {
-    text-decoration: underline;
-}
-
-
-/* =========================================================
-   RECUPERAR CONTRASEÑA
-   ========================================================= */
-
-.forgot {
-    text-align: center;
-
-    margin-top: 15px;
-}
-
-.forgot a {
-    color: #166534;
-
-    text-decoration: none;
-
-    font-size: 14px;
-
-    font-weight: 500;
-}
-
-.forgot a:hover {
-    text-decoration: underline;
-
-    color: #15803d;
 }
 
 
@@ -361,7 +261,198 @@ button:disabled {
 
 
 /* =========================================================
+   INPUTS
+   ========================================================= */
+
+input {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    margin: 10px 0;
+
+    border-radius: 10px;
+
+    border: 1px solid #d1d5db;
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+
+    appearance: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+input:focus {
+    border-color: #16a34a;
+
+    background: #ffffff;
+
+    box-shadow:
+            0 0 0 3px rgba(22, 163, 74, 0.12);
+
+    outline: none;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+button {
+    display: block;
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 12px 14px;
+
+    margin-top: 10px;
+
+    background: #16a34a;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+button:hover {
+    background: #15803d;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+            0 6px 15px rgba(22, 163, 74, 0.20);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   LINK CREAR NEGOCIO / VOLVER
+   ========================================================= */
+
+.toggle {
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 14px;
+
+    padding: 6px;
+
+    color: #2563eb;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    user-select: none;
+}
+
+.toggle:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RECUPERAR CONTRASEÑA
+   ========================================================= */
+
+.forgot {
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 15px;
+}
+
+.forgot a {
+    color: #166534;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 1.4;
+}
+
+.forgot a:hover {
+    text-decoration: underline;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   MENSAJE REGISTRO
+   ========================================================= */
+
+#mensajeRegistro {
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
    TABLET
+   769px - 1000px
    ========================================================= */
 
 @media (max-width: 1000px) {
@@ -386,31 +477,41 @@ button:disabled {
         left: 35px;
         bottom: 40px;
 
-        font-size: 27px;
-
         max-width: 330px;
+
+        font-size: 27px;
     }
 
 }
 
 
 /* =========================================================
-   TABLET PEQUEÑA
+   TABLET PEQUEÑA / MÓVIL
+   Hasta 768px
    ========================================================= */
 
 @media (max-width: 768px) {
+
+    html,
+    body {
+        width: 100%;
+
+        min-height: 100%;
+    }
 
     body {
         display: block;
 
         min-height: 100vh;
+        min-height: 100svh;
 
         overflow-x: hidden;
+        overflow-y: auto;
     }
 
 
     /* ---------------------------------------------
-       Ocultamos el slider en celular
+       Ocultar slider
        --------------------------------------------- */
 
     .slider {
@@ -419,21 +520,25 @@ button:disabled {
 
 
     /* ---------------------------------------------
-       Panel ocupa toda la pantalla
+       Panel completo
        --------------------------------------------- */
 
     .panel {
         width: 100%;
 
         min-height: 100vh;
+        min-height: 100svh;
 
-        padding: 25px 18px;
+        padding:
+                24px
+                18px;
 
         display: flex;
 
         justify-content: center;
         align-items: center;
 
+        overflow-x: hidden;
         overflow-y: auto;
     }
 
@@ -445,9 +550,11 @@ button:disabled {
     .box {
         width: 100%;
 
-        max-width: 420px;
+        max-width: 430px;
 
-        padding: 32px 25px;
+        padding:
+                32px
+                25px;
 
         border-radius: 18px;
     }
@@ -473,9 +580,11 @@ button:disabled {
        --------------------------------------------- */
 
     input {
+        min-height: 46px;
+
         padding: 13px;
 
-        font-size: 15px;
+        font-size: 16px;
     }
 
 
@@ -484,9 +593,22 @@ button:disabled {
        --------------------------------------------- */
 
     button {
+        min-height: 48px;
+
         padding: 13px;
 
         font-size: 15px;
+    }
+
+
+    .toggle {
+        font-size: 14px;
+
+        padding: 8px 4px;
+    }
+
+    .forgot a {
+        font-size: 14px;
     }
 
 }
@@ -494,30 +616,61 @@ button:disabled {
 
 /* =========================================================
    CELULARES
+   Hasta 480px
    ========================================================= */
 
 @media (max-width: 480px) {
 
+    html {
+        width: 100%;
+
+        min-height: 100%;
+
+        overflow-x: hidden;
+    }
+
     body {
-        min-height: 100dvh;
+        width: 100%;
+
+        min-width: 0;
+
+        min-height: 100vh;
+        min-height: 100svh;
+
+        overflow-x: hidden;
     }
 
 
-    .panel {
-        min-height: 100dvh;
+    /* ---------------------------------------------
+       Panel móvil
+       --------------------------------------------- */
 
-        padding: 18px 12px;
+    .panel {
+        width: 100%;
+
+        min-height: 100vh;
+        min-height: 100svh;
+
+        padding:
+                16px
+                12px;
 
         align-items: center;
     }
 
+
+    /* ---------------------------------------------
+       Tarjeta móvil
+       --------------------------------------------- */
 
     .box {
         width: 100%;
 
         max-width: 100%;
 
-        padding: 25px 18px;
+        padding:
+                25px
+                18px;
 
         border-radius: 15px;
 
@@ -526,10 +679,13 @@ button:disabled {
     }
 
 
+    /* ---------------------------------------------
+       Logo
+       --------------------------------------------- */
+
     .logo {
         margin-bottom: 18px;
     }
-
 
     .logo img {
         width: 100px;
@@ -538,49 +694,88 @@ button:disabled {
     }
 
 
+    /* ---------------------------------------------
+       Inputs
+       --------------------------------------------- */
+
     input {
         width: 100%;
 
-        padding: 12px;
+        min-height: 46px;
 
-        margin: 8px 0;
+        padding:
+                12px
+                13px;
 
-        font-size: 14px;
+        margin:
+                8px
+                0;
+
+        font-size: 16px;
+
+        border-radius: 9px;
     }
 
+
+    /* ---------------------------------------------
+       Botones
+       --------------------------------------------- */
 
     button {
         width: 100%;
 
-        padding: 12px;
+        min-height: 48px;
+
+        padding:
+                12px
+                14px;
 
         margin-top: 10px;
 
-        font-size: 14px;
+        font-size: 15px;
+
+        border-radius: 9px;
     }
 
+
+    /* ---------------------------------------------
+       Recuperar contraseña
+       --------------------------------------------- */
 
     .forgot {
         margin-top: 13px;
     }
-
 
     .forgot a {
         font-size: 13px;
     }
 
 
+    /* ---------------------------------------------
+       Crear negocio
+       --------------------------------------------- */
+
     .toggle {
         margin-top: 12px;
 
         font-size: 13px;
+
+        line-height: 1.5;
     }
 
 
+    /* ---------------------------------------------
+       Mensaje registro
+       --------------------------------------------- */
+
     #mensajeRegistro {
+        margin-top: 10px;
+
+        margin-bottom: 10px;
+
         font-size: 13px !important;
 
-        line-height: 1.4;
+        line-height: 1.45;
     }
 
 }
@@ -588,21 +783,28 @@ button:disabled {
 
 /* =========================================================
    CELULARES MUY PEQUEÑOS
+   Hasta 360px
    ========================================================= */
 
 @media (max-width: 360px) {
 
     .panel {
-        padding: 12px 8px;
+        padding:
+                12px
+                8px;
     }
 
-
     .box {
-        padding: 20px 15px;
+        padding:
+                20px
+                15px;
 
         border-radius: 13px;
     }
 
+    .logo {
+        margin-bottom: 15px;
+    }
 
     .logo img {
         width: 90px;
@@ -610,20 +812,25 @@ button:disabled {
         height: 68px;
     }
 
-
     input {
-        padding: 11px;
+        min-height: 44px;
 
-        font-size: 13px;
+        padding:
+                11px
+                12px;
+
+        font-size: 16px;
     }
-
 
     button {
-        padding: 11px;
+        min-height: 46px;
 
-        font-size: 13px;
+        padding:
+                11px
+                12px;
+
+        font-size: 14px;
     }
-
 
     .forgot a,
     .toggle {
@@ -631,3 +838,78 @@ button:disabled {
     }
 
 }
+
+
+/* =========================================================
+   CELULARES MUY PEQUEÑOS EN ALTURA
+   ========================================================= */
+
+@media (max-height: 650px) and (max-width: 768px) {
+
+    .panel {
+        align-items: flex-start;
+
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    .box {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .logo {
+        margin-bottom: 12px;
+    }
+
+    .logo img {
+        width: 85px;
+        height: 65px;
+    }
+
+}
+
+
+/* =========================================================
+   SAFE AREA — IPHONE
+   ========================================================= */
+
+@supports (padding: env(safe-area-inset-top)) {
+
+    .panel {
+        padding-top:
+                max(16px, env(safe-area-inset-top));
+
+        padding-bottom:
+                max(16px, env(safe-area-inset-bottom));
+
+        padding-left:
+                max(12px, env(safe-area-inset-left));
+
+        padding-right:
+                max(12px, env(safe-area-inset-right));
+    }
+
+}
+
+
+/* =========================================================
+   REDUCIR MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .slide {
+        transition: none;
+    }
+
+    .box {
+        animation: none;
+    }
+
+    button {
+        transition: none;
+    }
+
+}
+

@@ -1,478 +1,379 @@
+/* =========================================================
+   👥 CLIENTES | MARAV
+   CSS RESPONSIVE COMPLETO
+   ========================================================= */
 
-    /* =========================================================
-       👥 CLIENTES | ECOMARKET PRO
-    ========================================================= */
 
-
-    /* =========================================================
-       CONTENEDOR PRINCIPAL
-    ========================================================= */
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+   ========================================================= */
 
 .clientes-page {
-
-    padding: 24px 30px 40px;
-
     width: 100%;
-
+    max-width: 100%;
+    padding: 24px 30px 40px;
     box-sizing: border-box;
 }
 
 
+/* Evita problemas de tamaño en todos los elementos */
+
+.clientes-page *,
+.cliente-modal *,
+.cliente-stat-card,
+.clientes-card {
+    box-sizing: border-box;
+}
+
 
 /* =========================================================
    HEADER
-========================================================= */
+   ========================================================= */
 
 .clientes-header {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
+    gap: 20px;
     margin-bottom: 22px;
 }
 
+.clientes-title {
+    min-width: 0;
+}
 
 .clientes-title h1 {
-
     margin: 0;
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     font-size: 28px;
-
     font-weight: 700;
-
+    line-height: 1.2;
 }
-
 
 .clientes-title h1 i {
-
     font-size: 27px;
-
+    flex-shrink: 0;
 }
-
 
 .clientes-title p {
-
     margin: 7px 0 0;
-
     color: #6b7280;
-
     font-size: 14px;
-
+    line-height: 1.5;
 }
-
 
 
 /* =========================================================
    MENSAJE MODO CONSULTA
-========================================================= */
+   ========================================================= */
 
 .clientes-page .alert-info {
-
     display: flex;
-
     align-items: flex-start;
-
     gap: 12px;
 
-    padding: 15px 18px;
+    width: 100%;
 
+    padding: 15px 18px;
     margin-bottom: 22px;
 
     border-radius: 12px;
 
     background: #eff6ff;
-
     border: 1px solid #bfdbfe;
-
     color: #1e40af;
 
+    box-sizing: border-box;
 }
-
 
 .clientes-page .alert-info > i {
-
     margin-top: 2px;
-
     font-size: 18px;
-
+    flex-shrink: 0;
 }
 
+.clientes-page .alert-info > div {
+    min-width: 0;
+}
 
 .clientes-page .alert-info strong {
-
     display: block;
-
     margin-bottom: 3px;
-
     font-size: 14px;
-
 }
-
 
 .clientes-page .alert-info span {
-
     display: block;
-
     font-size: 13px;
-
+    line-height: 1.5;
 }
-
 
 
 /* =========================================================
    KPIs
-========================================================= */
+   ========================================================= */
 
 .clientes-stats {
-
     display: grid;
 
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
     gap: 18px;
-
     margin-bottom: 22px;
+
+    width: 100%;
 }
 
-
 .cliente-stat-card {
-
     display: flex;
-
     align-items: center;
 
     gap: 15px;
 
+    min-width: 0;
     min-height: 100px;
 
     padding: 18px;
 
     background: #ffffff;
-
     border: 1px solid #e5e7eb;
-
     border-radius: 14px;
 
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
 
     transition: all 0.2s ease;
-
 }
 
-
 .cliente-stat-card:hover {
-
     transform: translateY(-2px);
 
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-
 }
 
-
 .cliente-stat-icon {
-
     width: 52px;
-
     height: 52px;
 
     min-width: 52px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 13px;
 
     font-size: 22px;
 
+    flex-shrink: 0;
 }
-
 
 .clientes-icon {
-
     background: #e8f1ff;
-
     color: #2563eb;
-
 }
-
 
 .activos-icon {
-
     background: #eaf8ef;
-
     color: #16a34a;
-
 }
-
 
 .deuda-icon {
-
     background: #fff4e5;
-
     color: #ea580c;
-
 }
 
+.cliente-stat-info {
+    min-width: 0;
+}
 
 .cliente-stat-info h3 {
-
     margin: 0;
 
     font-size: 24px;
-
     font-weight: 700;
 
     color: #111827;
 
+    overflow-wrap: anywhere;
 }
 
-
 .cliente-stat-info p {
-
     margin: 5px 0 0;
 
     color: #6b7280;
-
     font-size: 13px;
 
+    line-height: 1.4;
 }
-
 
 
 /* =========================================================
    ACCIONES
-========================================================= */
+   ========================================================= */
 
 .clientes-actions {
-
     display: flex;
-
     justify-content: flex-end;
 
+    width: 100%;
+
     margin-bottom: 18px;
-
 }
-
 
 
 /* =========================================================
    BOTONES
-========================================================= */
+   ========================================================= */
 
 .cliente-btn {
-
     border: none;
-
     border-radius: 9px;
 
     padding: 11px 17px;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
     gap: 8px;
 
-    font-size: 14px;
+    min-height: 42px;
 
+    font-size: 14px;
     font-weight: 600;
 
     cursor: pointer;
 
     transition: all 0.2s ease;
 
+    box-sizing: border-box;
 }
-
 
 .cliente-btn:hover {
-
     transform: translateY(-1px);
-
 }
-
 
 .cliente-btn:active {
-
     transform: translateY(0);
-
 }
-
 
 .cliente-btn-save {
-
     background: #2563eb;
-
     color: #ffffff;
-
 }
-
 
 .cliente-btn-save:hover {
-
     background: #1d4ed8;
-
 }
-
 
 .cliente-btn-update {
-
     background: #f59e0b;
-
     color: #ffffff;
-
 }
-
 
 .cliente-btn-update:hover {
-
     background: #d97706;
-
 }
-
 
 .cliente-btn-cancel {
-
     background: #e5e7eb;
-
     color: #374151;
-
 }
-
 
 .cliente-btn-cancel:hover {
-
     background: #d1d5db;
-
 }
-
 
 .cliente-btn-edit {
-
     background: #eff6ff;
-
     color: #2563eb;
-
 }
-
 
 .cliente-btn-edit:hover {
-
     background: #dbeafe;
-
 }
-
 
 .cliente-btn-delete {
-
     background: #fef2f2;
-
     color: #dc2626;
-
 }
-
 
 .cliente-btn-delete:hover {
-
     background: #fee2e2;
-
 }
-
 
 
 /* =========================================================
    CARD TABLA
-========================================================= */
+   ========================================================= */
 
 .clientes-card {
+    width: 100%;
+    max-width: 100%;
 
     background: #ffffff;
 
     border: 1px solid #e5e7eb;
-
     border-radius: 15px;
 
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
 
     overflow: hidden;
-
 }
 
-
 .clientes-card-header {
-
-    padding: 20px 22px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 20px;
 
-    border-bottom: 1px solid #e5e7eb;
+    padding: 20px 22px;
 
+    border-bottom: 1px solid #e5e7eb;
 }
 
+.clientes-card-header > div:first-child {
+    min-width: 0;
+}
 
 .clientes-card-header h2 {
-
     margin: 0;
 
     display: flex;
-
     align-items: center;
 
     gap: 10px;
 
     font-size: 18px;
-
     color: #111827;
 
+    line-height: 1.3;
 }
-
 
 .clientes-card-header h2 i {
-
     color: #2563eb;
-
+    flex-shrink: 0;
 }
 
-
 .clientes-card-header p {
-
     margin: 6px 0 0;
 
     color: #6b7280;
-
     font-size: 13px;
 
+    line-height: 1.5;
 }
-
 
 
 /* =========================================================
    BADGE ROL
-========================================================= */
+   ========================================================= */
 
 .clientes-role-badge {
-
     display: inline-flex;
-
     align-items: center;
 
     gap: 7px;
@@ -482,66 +383,71 @@
     border-radius: 20px;
 
     font-size: 12px;
-
     font-weight: 600;
 
     white-space: nowrap;
 
+    flex-shrink: 0;
 }
-
 
 .clientes-role-badge.role-admin {
-
     color: #1d4ed8;
-
     background: #eff6ff;
-
 }
-
 
 .clientes-role-badge.role-empleado {
-
     color: #6b7280;
-
     background: #f3f4f6;
-
 }
 
+
+/* =========================================================
+   CONTENEDOR TABLA
+   ========================================================= */
+
+/*
+   IMPORTANTE:
+   En celular NO escondemos columnas.
+
+   La tabla conserva su tamaño mínimo y permite
+   desplazamiento horizontal.
+*/
+
+.clientes-table-container {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+}
 
 
 /* =========================================================
    TABLA
-========================================================= */
-
-.clientes-table-container {
-
-    width: 100%;
-
-    overflow-x: auto;
-
-}
-
+   ========================================================= */
 
 .clientes-table {
-
     width: 100%;
+
+    min-width: 900px;
 
     border-collapse: collapse;
 
-    min-width: 850px;
-
+    table-layout: auto;
 }
 
+
+/* Encabezado */
 
 .clientes-table thead {
-
     background: #f8fafc;
-
 }
 
-
 .clientes-table th {
-
     padding: 14px 16px;
 
     text-align: left;
@@ -549,20 +455,20 @@
     color: #475569;
 
     font-size: 12px;
-
     font-weight: 700;
 
     text-transform: uppercase;
-
     letter-spacing: 0.3px;
 
-    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
 
+    border-bottom: 1px solid #e5e7eb;
 }
 
 
-.clientes-table td {
+/* Celdas */
 
+.clientes-table td {
     padding: 14px 16px;
 
     color: #374151;
@@ -572,136 +478,153 @@
     border-bottom: 1px solid #f1f5f9;
 
     vertical-align: middle;
-
 }
 
+
+/* Filas */
 
 .clientes-table tbody tr {
-
     transition: background 0.2s ease;
-
 }
-
 
 .clientes-table tbody tr:hover {
-
     background: #f8fafc;
-
 }
-
 
 .clientes-table tbody tr:last-child td {
-
     border-bottom: none;
-
 }
 
+
+/* =========================================================
+   ANCHOS MÍNIMOS DE COLUMNAS
+   ========================================================= */
+
+/*
+   Esto evita que los datos queden demasiado comprimidos.
+*/
+
+.clientes-table th:nth-child(1),
+.clientes-table td:nth-child(1) {
+    min-width: 210px;
+}
+
+.clientes-table th:nth-child(2),
+.clientes-table td:nth-child(2) {
+    min-width: 135px;
+}
+
+.clientes-table th:nth-child(3),
+.clientes-table td:nth-child(3) {
+    min-width: 120px;
+}
+
+.clientes-table th:nth-child(4),
+.clientes-table td:nth-child(4) {
+    min-width: 190px;
+}
+
+.clientes-table th:nth-child(5),
+.clientes-table td:nth-child(5) {
+    min-width: 110px;
+}
+
+.clientes-table th:nth-child(6),
+.clientes-table td:nth-child(6) {
+    min-width: 110px;
+}
+
+.clientes-table th:nth-child(7),
+.clientes-table td:nth-child(7) {
+    min-width: 105px;
+}
 
 
 /* =========================================================
    CLIENTE EN TABLA
-========================================================= */
+   ========================================================= */
 
 .cliente-nombre {
-
     display: flex;
-
     align-items: center;
 
     gap: 10px;
 
+    min-width: 0;
+
     font-weight: 600;
-
     color: #111827;
-
 }
 
-
 .cliente-avatar {
-
     width: 34px;
-
     height: 34px;
 
     min-width: 34px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border-radius: 50%;
 
     background: #eff6ff;
-
     color: #2563eb;
 
     font-size: 14px;
 
+    flex-shrink: 0;
 }
-
 
 .cliente-documento {
-
     font-weight: 500;
-
     color: #475569;
 
+    white-space: nowrap;
 }
-
 
 .cliente-telefono {
-
     color: #475569;
 
+    white-space: nowrap;
 }
 
-
 .cliente-direccion {
-
     max-width: 220px;
 
     color: #64748b;
 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
 
 
 /* =========================================================
    DEUDA
-========================================================= */
+   ========================================================= */
 
 .cliente-deuda {
-
     font-weight: 700;
 
+    white-space: nowrap;
 }
-
 
 .cliente-deuda.sin-deuda {
-
     color: #16a34a;
-
 }
-
 
 .cliente-deuda.con-deuda {
-
     color: #dc2626;
-
 }
-
 
 
 /* =========================================================
    ESTADO
-========================================================= */
+   ========================================================= */
 
 .estado-badge {
-
     display: inline-flex;
-
     align-items: center;
 
     gap: 6px;
@@ -711,85 +634,65 @@
     border-radius: 20px;
 
     font-size: 11px;
-
     font-weight: 700;
 
+    white-space: nowrap;
 }
-
 
 .estado-activo {
-
     background: #dcfce7;
-
     color: #15803d;
-
 }
-
 
 .estado-inactivo {
-
     background: #fee2e2;
-
     color: #b91c1c;
-
 }
-
 
 
 /* =========================================================
    ACCIONES TABLA
-========================================================= */
+   ========================================================= */
 
 .cliente-actions {
-
     display: flex;
-
     align-items: center;
 
     gap: 7px;
 
+    white-space: nowrap;
 }
 
-
 .cliente-action-btn {
-
     width: 34px;
-
     height: 34px;
+
+    min-width: 34px;
 
     padding: 0;
 
     border: none;
-
     border-radius: 8px;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
 
     transition: all 0.2s ease;
-
 }
-
 
 .cliente-action-btn:hover {
-
     transform: translateY(-1px);
-
 }
-
 
 
 /* =========================================================
    MODAL
-========================================================= */
+   ========================================================= */
 
 .cliente-modal {
-
     position: fixed;
 
     inset: 0;
@@ -799,7 +702,6 @@
     display: none;
 
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -807,25 +709,25 @@
     background: rgba(15, 23, 42, 0.58);
 
     backdrop-filter: blur(3px);
-
 }
-
 
 .cliente-modal.active {
-
     display: flex;
-
 }
 
 
-.cliente-modal-content {
+/*
+   El modal nunca debe superar el ancho de la pantalla.
+*/
 
-    width: 100%;
+.cliente-modal-content {
+    width: min(720px, 100%);
 
     max-width: 720px;
 
     max-height: 90vh;
 
+    overflow-x: hidden;
     overflow-y: auto;
 
     background: #ffffff;
@@ -835,42 +737,31 @@
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
 
     animation: clienteModalEntrada 0.2s ease;
-
 }
 
 
 @keyframes clienteModalEntrada {
 
     from {
-
         opacity: 0;
-
         transform: translateY(-15px) scale(0.98);
-
     }
 
     to {
-
         opacity: 1;
-
         transform: translateY(0) scale(1);
-
     }
 
 }
 
 
-
 /* =========================================================
    HEADER MODAL
-========================================================= */
+   ========================================================= */
 
 .cliente-modal-header {
-
     display: flex;
-
     align-items: flex-start;
-
     justify-content: space-between;
 
     gap: 20px;
@@ -878,16 +769,16 @@
     padding: 22px 24px;
 
     border-bottom: 1px solid #e5e7eb;
-
 }
 
+.cliente-modal-header > div {
+    min-width: 0;
+}
 
 .cliente-modal-header h2 {
-
     margin: 0;
 
     display: flex;
-
     align-items: center;
 
     gap: 10px;
@@ -896,45 +787,38 @@
 
     font-size: 20px;
 
+    line-height: 1.3;
 }
-
 
 .cliente-modal-header h2 i {
-
     color: #2563eb;
-
+    flex-shrink: 0;
 }
 
-
 .cliente-modal-header p {
-
     margin: 6px 0 0;
 
     color: #6b7280;
 
     font-size: 13px;
 
+    line-height: 1.5;
 }
 
-
 .cliente-modal-cerrar {
-
     width: 36px;
-
     height: 36px;
 
-    border: none;
+    min-width: 36px;
 
+    border: none;
     border-radius: 8px;
 
     background: #f3f4f6;
-
     color: #4b5563;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     cursor: pointer;
@@ -943,61 +827,47 @@
 
     transition: all 0.2s ease;
 
+    flex-shrink: 0;
 }
-
 
 .cliente-modal-cerrar:hover {
-
     background: #fee2e2;
-
     color: #dc2626;
-
 }
-
 
 
 /* =========================================================
    FORMULARIO
-========================================================= */
+   ========================================================= */
 
 #formCliente {
-
+    width: 100%;
     padding: 24px;
-
 }
 
-
 .clientes-form-grid {
-
     display: grid;
 
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 18px;
 
+    width: 100%;
 }
-
 
 .cliente-form-group {
-
     display: flex;
-
     flex-direction: column;
 
+    min-width: 0;
 }
-
 
 .cliente-form-full {
-
     grid-column: 1 / -1;
-
 }
 
-
 .cliente-form-group label {
-
     display: flex;
-
     align-items: center;
 
     gap: 7px;
@@ -1007,27 +877,25 @@
     color: #374151;
 
     font-size: 13px;
-
     font-weight: 600;
 
+    line-height: 1.4;
 }
 
-
 .cliente-form-group label i {
-
     color: #2563eb;
 
     width: 15px;
 
+    flex-shrink: 0;
 }
 
-
 .cliente-form-group input,
-
 .cliente-form-group select {
-
     width: 100%;
+    max-width: 100%;
 
+    min-width: 0;
     min-height: 43px;
 
     box-sizing: border-box;
@@ -1035,209 +903,440 @@
     padding: 10px 12px;
 
     border: 1px solid #d1d5db;
-
     border-radius: 9px;
 
     outline: none;
 
     background: #ffffff;
-
     color: #111827;
 
     font-size: 13px;
 
     transition: all 0.2s ease;
-
 }
 
-
 .cliente-form-group input:focus,
-
 .cliente-form-group select:focus {
-
     border-color: #2563eb;
 
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
-
 }
-
 
 .cliente-form-group input::placeholder {
-
     color: #9ca3af;
-
 }
-
 
 
 /* =========================================================
    BOTONES MODAL
-========================================================= */
+   ========================================================= */
 
 .clientes-buttons {
-
     display: flex;
 
     justify-content: flex-end;
-
     align-items: center;
 
     gap: 10px;
 
     margin-top: 25px;
-
     padding-top: 20px;
 
     border-top: 1px solid #e5e7eb;
-
 }
-
 
 
 /* =========================================================
    ESTADO VACÍO
-========================================================= */
+   ========================================================= */
 
 .clientes-empty {
-
     padding: 45px 20px !important;
 
     text-align: center;
 
     color: #94a3b8 !important;
-
 }
 
-
 .clientes-empty i {
-
     display: block;
 
     margin-bottom: 10px;
 
     font-size: 32px;
-
 }
-
 
 .clientes-empty span {
-
     font-size: 14px;
-
 }
-
 
 
 /* =========================================================
-   RESPONSIVE
-========================================================= */
+   RESPONSIVE - TABLET GRANDE
+   ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
 
     .clientes-stats {
-
-        grid-template-columns: 1fr;
-
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
 
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .clientes-page {
+        padding: 22px 20px 35px;
+    }
+
+    .clientes-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .clientes-card-header {
+        align-items: flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET PEQUEÑA / CELULAR
+   ========================================================= */
 
 @media (max-width: 700px) {
 
     .clientes-page {
-
         padding: 18px 15px 30px;
-
     }
 
 
-    .clientes-card-header {
+    /* HEADER */
 
-        flex-direction: column;
+    .clientes-header {
+        margin-bottom: 18px;
+    }
 
-        align-items: flex-start;
+    .clientes-title h1 {
+        font-size: 25px;
+    }
 
+    .clientes-title h1 i {
+        font-size: 23px;
+    }
+
+    .clientes-title p {
+        font-size: 13px;
     }
 
 
-    .clientes-form-grid {
+    /* ALERTA */
 
+    .clientes-page .alert-info {
+        padding: 13px 14px;
+        margin-bottom: 18px;
+    }
+
+
+    /* KPIs */
+
+    .clientes-stats {
         grid-template-columns: 1fr;
 
+        gap: 12px;
+
+        margin-bottom: 18px;
     }
 
+    .cliente-stat-card {
+        min-height: 88px;
+
+        padding: 15px;
+    }
+
+
+    /* ACCIÓN NUEVO CLIENTE */
+
+    .clientes-actions {
+        justify-content: stretch;
+    }
+
+    .clientes-actions .cliente-btn {
+        width: 100%;
+    }
+
+
+    /* CARD */
+
+    .clientes-card {
+        border-radius: 13px;
+    }
+
+
+    /* HEADER CARD */
+
+    .clientes-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 13px;
+
+        padding: 17px;
+    }
+
+    .clientes-card-header h2 {
+        font-size: 17px;
+    }
+
+    .clientes-card-header p {
+        font-size: 12px;
+    }
+
+    .clientes-role-badge {
+        align-self: flex-start;
+    }
+
+
+    /*
+       LA TABLA SIGUE SIENDO HORIZONTAL.
+       No se eliminan datos.
+    */
+
+    .clientes-table-container {
+        overflow-x: auto;
+    }
+
+    .clientes-table {
+        min-width: 900px;
+    }
+
+
+    /* MODAL */
+
+    .cliente-modal {
+        padding: 10px;
+    }
+
+    .cliente-modal-content {
+        width: 100%;
+        max-width: 100%;
+
+        max-height: 94vh;
+
+        border-radius: 14px;
+    }
+
+    .cliente-modal-header {
+        padding: 18px;
+    }
+
+    #formCliente {
+        padding: 18px;
+    }
+
+
+    /* FORMULARIO */
+
+    .clientes-form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
 
     .cliente-form-full {
-
         grid-column: auto;
-
     }
 
 
-    .clientes-buttons {
+    /* BOTONES */
 
+    .clientes-buttons {
         flex-direction: column;
 
         align-items: stretch;
 
+        gap: 9px;
     }
-
 
     .clientes-buttons .cliente-btn {
-
         width: 100%;
-
-    }
-
-
-    .cliente-modal {
-
-        padding: 10px;
-
-    }
-
-
-    .cliente-modal-content {
-
-        max-height: 94vh;
-
     }
 
 }
 
 
+/* =========================================================
+   RESPONSIVE - CELULAR
+   ========================================================= */
+
 @media (max-width: 500px) {
 
-    .clientes-title h1 {
-
-        font-size: 23px;
-
+    .clientes-page {
+        padding: 15px 12px 25px;
     }
 
+
+    /* TÍTULO */
+
+    .clientes-title h1 {
+        font-size: 22px;
+
+        gap: 8px;
+    }
+
+    .clientes-title h1 i {
+        font-size: 21px;
+    }
+
+
+    /* ALERTA */
+
+    .clientes-page .alert-info {
+        gap: 9px;
+
+        padding: 12px;
+    }
+
+    .clientes-page .alert-info > i {
+        font-size: 16px;
+    }
+
+    .clientes-page .alert-info strong {
+        font-size: 13px;
+    }
+
+    .clientes-page .alert-info span {
+        font-size: 12px;
+    }
+
+
+    /* KPI */
 
     .cliente-stat-card {
+        min-height: 82px;
 
-        min-height: 85px;
-
+        padding: 13px;
     }
 
-
     .cliente-stat-icon {
-
         width: 45px;
-
         height: 45px;
 
         min-width: 45px;
 
+        font-size: 19px;
+    }
+
+    .cliente-stat-info h3 {
+        font-size: 20px;
+    }
+
+    .cliente-stat-info p {
+        font-size: 12px;
     }
 
 
-    .cliente-stat-info h3 {
+    /* CARD */
 
+    .clientes-card-header {
+        padding: 15px;
+    }
+
+    .clientes-card-header h2 {
+        font-size: 16px;
+    }
+
+
+    /* MODAL */
+
+    .cliente-modal {
+        padding: 7px;
+    }
+
+    .cliente-modal-content {
+        border-radius: 12px;
+    }
+
+    .cliente-modal-header {
+        padding: 15px;
+    }
+
+    .cliente-modal-header h2 {
+        font-size: 17px;
+    }
+
+    .cliente-modal-header p {
+        font-size: 12px;
+    }
+
+    #formCliente {
+        padding: 15px;
+    }
+
+
+    /* CAMPOS */
+
+    .cliente-form-group label {
+        font-size: 12px;
+    }
+
+    .cliente-form-group input,
+    .cliente-form-group select {
+        min-height: 42px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - CELULARES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .clientes-page {
+        padding: 13px 10px 22px;
+    }
+
+    .clientes-title h1 {
         font-size: 20px;
+    }
 
+    .clientes-title h1 i {
+        font-size: 19px;
+    }
+
+    .cliente-stat-card {
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .cliente-stat-icon {
+        width: 42px;
+        height: 42px;
+
+        min-width: 42px;
+
+        font-size: 18px;
+    }
+
+    .cliente-stat-info h3 {
+        font-size: 18px;
+    }
+
+    .cliente-stat-info p {
+        font-size: 11px;
+    }
+
+    .clientes-card-header h2 {
+        font-size: 15px;
     }
 
 }

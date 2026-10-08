@@ -1,24 +1,22 @@
 /* =========================================================
-   ECOMARKET PRO
+   MARAV
    CONFIGURACIÓN / MANUAL INTERACTIVO
    =========================================================
 
-   Este archivo corresponde exclusivamente a:
+   Archivo:
+       configuracion.css
 
-   configuracion.html
-   configuracion.js
+   Compatible con:
+       configuracion.html
+       configuracion.js
 
-   NO necesita:
-   - manual.html
-   - manual.css
-   - manual.js
-
-   El contenedor principal utilizado por dashboard.css
-   es:
-
-       .main
-
-   Por eso NO utilizamos .main-content.
+   IMPORTANTE:
+   - No modifica JavaScript.
+   - No modifica Thymeleaf.
+   - No modifica backend.
+   - No modifica dashboard.css.
+   - Mantiene las clases existentes.
+   - Adaptado para PC, tablet y celular.
 ========================================================= */
 
 
@@ -59,7 +57,7 @@
 
 
 /* =========================================================
-   2. RESET DEL MANUAL
+   2. RESET
 ========================================================= */
 
 .manual-page,
@@ -94,7 +92,8 @@
 
 
 /*
- * Evitamos que elementos internos generen scroll horizontal.
+ * Evita que contenido multimedia
+ * genere scroll horizontal.
  */
 
 .manual-page img,
@@ -136,8 +135,6 @@
 }
 
 
-/* Decoración superior derecha */
-
 .manual-header::before {
 
     content: "";
@@ -159,8 +156,6 @@
 
 }
 
-
-/* Decoración inferior */
 
 .manual-header::after {
 
@@ -192,10 +187,10 @@
 
     max-width: 850px;
 
+    min-width: 0;
+
 }
 
-
-/* Etiqueta */
 
 .manual-kicker {
 
@@ -204,6 +199,8 @@
     align-items: center;
 
     gap: 8px;
+
+    max-width: 100%;
 
     padding: 7px 12px;
 
@@ -234,6 +231,8 @@
 
     line-height: 1.15;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -249,6 +248,8 @@
     line-height: 1.7;
 
     max-width: 700px;
+
+    overflow-wrap: anywhere;
 
 }
 
@@ -317,6 +318,8 @@
 
     font-size: 20px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -329,6 +332,8 @@
 
     line-height: 1.7;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -339,6 +344,8 @@
 .progress-card {
 
     width: 100%;
+
+    min-width: 0;
 
     background: white;
 
@@ -393,6 +400,8 @@
 
     font-size: 22px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -401,6 +410,8 @@
     width: 58px;
 
     height: 58px;
+
+    min-width: 58px;
 
     border-radius: 50%;
 
@@ -565,6 +576,8 @@
 
     font-size: 21px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -575,20 +588,16 @@
     color:
             var(--manual-text-light);
 
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
+
 }
 
 
-/*
- * IMPORTANTE:
- *
- * El JavaScript crea:
- *
- * button.ruta-item
- *
- * Por eso ya NO utilizamos:
- *
- * .ruta-list span
- */
+/* =========================================================
+   8. LISTA DE RUTA
+========================================================= */
 
 .ruta-list {
 
@@ -603,8 +612,6 @@
 
 }
 
-
-/* Cada elemento de la ruta */
 
 .ruta-item {
 
@@ -651,8 +658,6 @@
 }
 
 
-/* Hover */
-
 .ruta-item:hover {
 
     transform: translateY(-2px);
@@ -668,8 +673,6 @@
 
 }
 
-
-/* Número */
 
 .ruta-numero {
 
@@ -700,8 +703,6 @@
 }
 
 
-/* Nombre */
-
 .ruta-nombre {
 
     flex: 1;
@@ -710,10 +711,10 @@
 
     line-height: 1.3;
 
+    overflow-wrap: anywhere;
+
 }
 
-
-/* Flecha */
 
 .ruta-flecha {
 
@@ -728,7 +729,7 @@
 
 
 /* =========================================================
-   8. HERRAMIENTAS
+   9. HERRAMIENTAS
 ========================================================= */
 
 .manual-tools {
@@ -780,6 +781,8 @@
 
     width: 100%;
 
+    max-width: 100%;
+
     height: 48px;
 
     padding:
@@ -799,8 +802,6 @@
 
     font-size: 14px;
 
-    transition: 0.2s;
-
 }
 
 
@@ -816,11 +817,11 @@
 }
 
 
-/* Botón reiniciar */
-
 .btn-reset {
 
     height: 48px;
+
+    max-width: 100%;
 
     padding:
             0 17px;
@@ -844,6 +845,8 @@
     display: flex;
 
     align-items: center;
+
+    justify-content: center;
 
     gap: 8px;
 
@@ -869,12 +872,14 @@
 
 
 /* =========================================================
-   9. SECCIONES
+   10. SECCIONES
 ========================================================= */
 
 .manual-section {
 
     width: 100%;
+
+    min-width: 0;
 
     margin-bottom: 32px;
 
@@ -927,6 +932,8 @@
 
     font-size: 23px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -939,16 +946,20 @@
 
     font-size: 14px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
 /* =========================================================
-   10. GRID DE MÓDULOS
+   11. GRID DE MÓDULOS
 ========================================================= */
 
 .manual-grid {
 
     width: 100%;
+
+    min-width: 0;
 
     display: grid;
 
@@ -961,7 +972,7 @@
 
 
 /* =========================================================
-   11. TARJETAS DE MÓDULOS
+   12. TARJETAS DE MÓDULOS
 ========================================================= */
 
 .manual-card {
@@ -1015,10 +1026,6 @@
 }
 
 
-/*
- * Icono de cada módulo
- */
-
 .manual-card-icon {
 
     flex:
@@ -1047,10 +1054,6 @@
 }
 
 
-/*
- * Contenido
- */
-
 .manual-card-content {
 
     flex: 1;
@@ -1059,10 +1062,6 @@
 
 }
 
-
-/*
- * Parte superior
- */
 
 .manual-card-top {
 
@@ -1075,6 +1074,8 @@
     align-items: center;
 
     gap: 10px;
+
+    min-width: 0;
 
 }
 
@@ -1091,36 +1092,7 @@
 }
 
 
-/* Badge tutorial */
-
-.manual-video-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 5px;
-
-    padding:
-            5px 8px;
-
-    border-radius: 999px;
-
-    background:
-            #fee2e2;
-
-    color:
-            #dc2626;
-
-    font-size: 10px;
-
-    font-weight: 800;
-
-}
-
-
-/* Badge guía */
-
+.manual-video-badge,
 .manual-no-video {
 
     display: inline-flex;
@@ -1134,20 +1106,36 @@
 
     border-radius: 999px;
 
+    font-size: 10px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+.manual-video-badge {
+
+    background:
+            #fee2e2;
+
+    color:
+            #dc2626;
+
+}
+
+
+.manual-no-video {
+
     background:
             var(--manual-green-light);
 
     color:
             var(--manual-green);
 
-    font-size: 10px;
-
-    font-weight: 800;
-
 }
 
-
-/* Título */
 
 .manual-card h3 {
 
@@ -1158,10 +1146,10 @@
 
     line-height: 1.3;
 
+    overflow-wrap: anywhere;
+
 }
 
-
-/* Descripción */
 
 .manual-card p {
 
@@ -1174,11 +1162,13 @@
 
     font-size: 13px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
 /* =========================================================
-   12. PROGRESO DE CADA TARJETA
+   13. PROGRESO DE TARJETA
 ========================================================= */
 
 .manual-card-progress {
@@ -1258,12 +1248,14 @@
 
 
 /* =========================================================
-   13. BOTÓN DE LA TARJETA
+   14. BOTÓN TARJETA
 ========================================================= */
 
 .manual-card-button {
 
     width: 100%;
+
+    max-width: 100%;
 
     margin-top: 15px;
 
@@ -1296,8 +1288,6 @@
 
     gap: 7px;
 
-    transition: 0.2s;
-
 }
 
 
@@ -1313,7 +1303,7 @@
 
 
 /* =========================================================
-   14. SIN RESULTADOS
+   15. SIN RESULTADOS
 ========================================================= */
 
 .manual-empty {
@@ -1386,20 +1376,14 @@
 
 
 /* =========================================================
-   15. DETALLE DEL MÓDULO
+   16. DETALLE DEL MÓDULO
 ========================================================= */
-
-/*
- * El JS utiliza:
-
-       .manual-detalle-visible
-
-   para mostrar el detalle.
- */
 
 #manualDetalle {
 
     width: 100%;
+
+    min-width: 0;
 
     margin-bottom: 35px;
 
@@ -1453,6 +1437,8 @@
 
     width: 100%;
 
+    min-width: 0;
+
     background: white;
 
     border:
@@ -1469,7 +1455,7 @@
 
 
 /* =========================================================
-   16. ENCABEZADO DEL DETALLE
+   17. ENCABEZADO DEL DETALLE
 ========================================================= */
 
 .manual-detail-header {
@@ -1558,6 +1544,8 @@
 
     font-size: 24px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -1570,10 +1558,10 @@
 
     line-height: 1.6;
 
+    overflow-wrap: anywhere;
+
 }
 
-
-/* Botón cerrar */
 
 .manual-detail-close {
 
@@ -1597,8 +1585,6 @@
 
     font-size: 16px;
 
-    transition: 0.2s;
-
 }
 
 
@@ -1614,7 +1600,7 @@
 
 
 /* =========================================================
-   17. INFORMACIÓN DEL ROL
+   18. INFORMACIÓN DEL ROL
 ========================================================= */
 
 .manual-role-info {
@@ -1675,6 +1661,8 @@
 
     font-size: 13px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -1689,11 +1677,13 @@
 
     line-height: 1.6;
 
+    overflow-wrap: anywhere;
+
 }
 
 
 /* =========================================================
-   18. PROGRESO DEL DETALLE
+   19. PROGRESO DEL DETALLE
 ========================================================= */
 
 .manual-detail-progress {
@@ -1738,6 +1728,8 @@
 
     gap: 4px;
 
+    min-width: 0;
+
 }
 
 
@@ -1764,6 +1756,8 @@
             var(--manual-green);
 
     font-size: 20px;
+
+    flex-shrink: 0;
 
 }
 
@@ -1808,7 +1802,7 @@
 
 
 /* =========================================================
-   19. PASOS DEL MANUAL
+   20. PASOS
 ========================================================= */
 
 .manual-detail-steps {
@@ -1845,10 +1839,10 @@
 
     font-size: 13px;
 
+    overflow-wrap: anywhere;
+
 }
 
-
-/* Lista */
 
 .manual-steps-list {
 
@@ -1861,11 +1855,11 @@
 }
 
 
-/* Paso */
-
 .manual-step {
 
     width: 100%;
+
+    min-width: 0;
 
     display: flex;
 
@@ -1885,11 +1879,6 @@
 
     cursor: pointer;
 
-    transition:
-            background 0.2s ease,
-            border-color 0.2s ease,
-            transform 0.2s ease;
-
 }
 
 
@@ -1904,8 +1893,6 @@
 }
 
 
-/* Paso completado */
-
 .manual-step.completed {
 
     background:
@@ -1918,7 +1905,7 @@
 
 
 /* =========================================================
-   20. CHECKBOX
+   21. CHECKBOX
 ========================================================= */
 
 .manual-step-check {
@@ -1934,10 +1921,6 @@
 
 }
 
-
-/*
- * Checkbox real.
- */
 
 .manual-step-checkbox {
 
@@ -1959,10 +1942,6 @@
 
 }
 
-
-/*
- * Apariencia visual.
- */
 
 .manual-checkmark {
 
@@ -1991,15 +1970,8 @@
 
     font-size: 11px;
 
-    transition:
-            0.2s;
-
 }
 
-
-/*
- * Cuando está marcado.
- */
 
 .manual-step-checkbox:checked
 + .manual-checkmark {
@@ -2014,7 +1986,7 @@
 
 
 /* =========================================================
-   21. NÚMERO DEL PASO
+   22. NÚMERO DEL PASO
 ========================================================= */
 
 .manual-step-number {
@@ -2060,7 +2032,7 @@
 
 
 /* =========================================================
-   22. CONTENIDO DEL PASO
+   23. CONTENIDO DEL PASO
 ========================================================= */
 
 .manual-step-content {
@@ -2082,6 +2054,8 @@
     color:
             var(--manual-text);
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -2096,6 +2070,8 @@
 
     line-height: 1.6;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -2109,7 +2085,7 @@
 
 
 /* =========================================================
-   23. VIDEO
+   24. VIDEO
 ========================================================= */
 
 .manual-video-section {
@@ -2180,12 +2156,21 @@
 }
 
 
+.manual-video-info > div {
+
+    min-width: 0;
+
+}
+
+
 .manual-video-info h3 {
 
     margin:
             0 0 3px;
 
     font-size: 14px;
+
+    overflow-wrap: anywhere;
 
 }
 
@@ -2199,15 +2184,17 @@
 
     font-size: 12px;
 
+    overflow-wrap: anywhere;
+
 }
 
-
-/* Botón video */
 
 .manual-video-button {
 
     flex:
             0 0 auto;
+
+    max-width: 100%;
 
     border: 0;
 
@@ -2233,9 +2220,9 @@
 
     align-items: center;
 
-    gap: 7px;
+    justify-content: center;
 
-    transition: 0.2s;
+    gap: 7px;
 
 }
 
@@ -2250,8 +2237,6 @@
 
 }
 
-
-/* Sin video */
 
 .manual-no-video-section {
 
@@ -2285,6 +2270,15 @@
 
     margin-top: 2px;
 
+    flex-shrink: 0;
+
+}
+
+
+.manual-no-video-section > div {
+
+    min-width: 0;
+
 }
 
 
@@ -2308,11 +2302,13 @@
 
     font-size: 12px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
 /* =========================================================
-   24. ROLES
+   25. ROLES
 ========================================================= */
 
 .roles-grid {
@@ -2447,6 +2443,8 @@
 
     font-size: 18px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -2461,6 +2459,8 @@
     font-size: 13px;
 
     line-height: 1.6;
+
+    overflow-wrap: anywhere;
 
 }
 
@@ -2480,7 +2480,7 @@
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-start;
 
     gap: 8px;
 
@@ -2491,6 +2491,8 @@
 
     font-size: 13px;
 
+    line-height: 1.5;
+
 }
 
 
@@ -2499,11 +2501,13 @@
     color:
             var(--manual-green);
 
+    flex-shrink: 0;
+
 }
 
 
 /* =========================================================
-   25. RECOMENDACIONES
+   26. RECOMENDACIONES
 ========================================================= */
 
 .manual-tips {
@@ -2564,6 +2568,8 @@
 
     font-size: 19px;
 
+    overflow-wrap: anywhere;
+
 }
 
 
@@ -2591,7 +2597,7 @@
 
 
 /* =========================================================
-   26. FOOTER
+   27. FOOTER
 ========================================================= */
 
 .manual-footer {
@@ -2620,20 +2626,7 @@
 
 
 /* =========================================================
-   27. MODAL DE VIDEO
-=========================================================
-
-   El JS crea dinámicamente:
-
-       #modalVideoManual
-
-   con las clases:
-
-       .manual-video-modal
-       .manual-video-overlay
-       .manual-video-dialog
-       .manual-video-close
-       .manual-video-frame
+   28. MODAL DE VIDEO
 ========================================================= */
 
 .manual-video-modal {
@@ -2662,8 +2655,6 @@
 }
 
 
-/* Fondo */
-
 .manual-video-overlay {
 
     position: absolute;
@@ -2676,8 +2667,6 @@
 }
 
 
-/* Ventana */
-
 .manual-video-dialog {
 
     position: relative;
@@ -2686,6 +2675,8 @@
 
     width:
             min(950px, 100%);
+
+    max-width: 100%;
 
     background: black;
 
@@ -2699,8 +2690,6 @@
 
 }
 
-
-/* Botón cerrar */
 
 .manual-video-close {
 
@@ -2746,8 +2735,6 @@
 }
 
 
-/* Marco */
-
 .manual-video-frame {
 
     width: 100%;
@@ -2773,7 +2760,7 @@
 
 
 /* =========================================================
-   28. BLOQUEO DEL SCROLL CUANDO EL VIDEO ESTÁ ABIERTO
+   29. BLOQUEO SCROLL VIDEO
 ========================================================= */
 
 body.manual-video-open {
@@ -2784,7 +2771,7 @@ body.manual-video-open {
 
 
 /* =========================================================
-   29. RESPONSIVE - 1200 PX
+   30. RESPONSIVE - 1200 PX
 ========================================================= */
 
 @media (max-width: 1200px) {
@@ -2808,15 +2795,39 @@ body.manual-video-open {
 
 
 /* =========================================================
-   30. RESPONSIVE - 900 PX
+   31. RESPONSIVE - 1000 PX
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .manual-header {
+
+        padding: 35px 30px;
+
+    }
+
+
+    .manual-grid {
+
+        gap: 15px;
+
+    }
+
+
+    .role-card {
+
+        padding: 20px;
+
+    }
+
+}
+
+
+/* =========================================================
+   32. RESPONSIVE - 900 PX
 ========================================================= */
 
 @media (max-width: 900px) {
-
-    /*
-     * dashboard.css oculta el sidebar y deja
-     * .main con ancho completo.
-     */
 
     .manual-page {
 
@@ -2862,6 +2873,8 @@ body.manual-video-open {
 
     .btn-reset {
 
+        width: 100%;
+
         justify-content: center;
 
     }
@@ -2874,11 +2887,18 @@ body.manual-video-open {
 
     }
 
+
+    .manual-video-section {
+
+        align-items: flex-start;
+
+    }
+
 }
 
 
 /* =========================================================
-   31. RESPONSIVE - 700 PX
+   33. RESPONSIVE - 700 PX
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -2982,7 +3002,7 @@ body.manual-video-open {
 
 
 /* =========================================================
-   32. RESPONSIVE - 500 PX
+   34. RESPONSIVE - 500 PX
 ========================================================= */
 
 @media (max-width: 500px) {
@@ -3026,13 +3046,29 @@ body.manual-video-open {
     }
 
 
+    .progress-top h2 {
+
+        font-size: 19px;
+
+    }
+
+
     .progress-circle {
 
         width: 50px;
 
         height: 50px;
 
-        flex-shrink: 0;
+        min-width: 50px;
+
+    }
+
+
+    .progress-info {
+
+        flex-direction: column;
+
+        gap: 4px;
 
     }
 
@@ -3091,6 +3127,8 @@ body.manual-video-open {
 
     .manual-video-button {
 
+        width: 100%;
+
         justify-content: center;
 
     }
@@ -3105,11 +3143,16 @@ body.manual-video-open {
     }
 
 
-    .progress-info {
+    .manual-video-info {
 
-        flex-direction: column;
+        width: 100%;
 
-        gap: 4px;
+    }
+
+
+    .manual-detail-progress-top {
+
+        align-items: flex-start;
 
     }
 
@@ -3117,7 +3160,7 @@ body.manual-video-open {
 
 
 /* =========================================================
-   33. RESPONSIVE - 420 PX
+   35. RESPONSIVE - 420 PX
 ========================================================= */
 
 @media (max-width: 420px) {
@@ -3140,9 +3183,20 @@ body.manual-video-open {
     }
 
 
+    .manual-welcome,
+    .ruta-card,
+    .manual-tips {
+
+        padding: 15px;
+
+    }
+
+
     .manual-card {
 
         display: block;
+
+        padding: 16px;
 
     }
 
@@ -3154,9 +3208,28 @@ body.manual-video-open {
     }
 
 
+    .manual-card-top {
+
+        align-items: flex-start;
+
+    }
+
+
+    .manual-video-badge,
+    .manual-no-video {
+
+        white-space: normal;
+
+        text-align: center;
+
+    }
+
+
     .manual-detail-header {
 
         gap: 10px;
+
+        padding: 16px;
 
     }
 
@@ -3188,6 +3261,8 @@ body.manual-video-open {
 
         margin-right: 14px;
 
+        padding: 14px;
+
     }
 
 
@@ -3208,11 +3283,135 @@ body.manual-video-open {
 
     }
 
+
+    .manual-step {
+
+        padding: 12px;
+
+    }
+
+
+    .manual-step-number {
+
+        flex-basis: 28px;
+
+        width: 28px;
+
+        height: 28px;
+
+    }
+
 }
 
 
 /* =========================================================
-   34. ACCESIBILIDAD
+   36. RESPONSIVE - 360 PX
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .manual-header {
+
+        padding:
+                20px 14px;
+
+    }
+
+
+    .manual-header h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .manual-header p {
+
+        font-size: 14px;
+
+    }
+
+
+    .manual-welcome,
+    .ruta-card,
+    .manual-tips,
+    .progress-card {
+
+        padding: 13px;
+
+    }
+
+
+    .manual-detail-header {
+
+        padding: 14px;
+
+    }
+
+
+    .manual-detail-title h2 {
+
+        font-size: 17px;
+
+    }
+
+
+    .manual-detail-close {
+
+        width: 36px;
+
+        height: 36px;
+
+    }
+
+
+    .manual-role-info,
+    .manual-detail-progress {
+
+        margin-left: 12px;
+
+        margin-right: 12px;
+
+    }
+
+
+    .manual-video-section,
+    .manual-no-video-section {
+
+        margin-left: 12px;
+
+        margin-right: 12px;
+
+        padding: 13px;
+
+    }
+
+
+    .manual-detail-steps {
+
+        padding: 12px;
+
+    }
+
+
+    .manual-step-content h4 {
+
+        font-size: 13px;
+
+    }
+
+
+    .manual-step-content p {
+
+        font-size: 12px;
+
+    }
+
+}
+
+
+/* =========================================================
+   37. ACCESIBILIDAD
 ========================================================= */
 
 .ruta-item:focus-visible,
@@ -3232,7 +3431,7 @@ body.manual-video-open {
 
 
 /* =========================================================
-   35. REDUCIR ANIMACIONES
+   38. REDUCIR ANIMACIONES
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
