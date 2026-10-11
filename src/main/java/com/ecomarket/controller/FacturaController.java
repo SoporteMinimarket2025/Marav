@@ -729,9 +729,9 @@ public class FacturaController {
 
             document.add(
                     new Paragraph(
-                            "Metodo de Pago: "
-                                    + metodoPago
-                    );
+                            "Metodo de Pago: " + metodoPago
+                    )
+            );
 
             document.add(
                     new Paragraph(" ")
@@ -1464,3 +1464,5 @@ public class FacturaController {
         return negocioId;
     }
 }
+
+
