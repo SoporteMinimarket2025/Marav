@@ -843,8 +843,8 @@ public class FacturaController {
 
             document.add(
                     new Paragraph(
-                            "\nGracias por comprar en MARAV",
-                            subtitulo
+                            "\nGracias por comprar en MARAV"
+
                     )
             );
 
