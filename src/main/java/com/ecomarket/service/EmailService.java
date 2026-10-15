@@ -1,4 +1,3 @@
-
 // ======================================================
 // 📧 SERVICIO DE CORREO - MARAV
 // ======================================================
@@ -28,7 +27,7 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     // ==================================================
-    // 🔑 CONFIGURACIÓN DESDE LAS VARIABLES DE RAILWAY
+    // 🔑 VARIABLES DE ENTORNO
     // ==================================================
 
     @Value("${RESEND_API_KEY:}")
@@ -44,41 +43,37 @@ public class EmailService {
     public void enviarRecuperacion(String destinatario, String enlace) {
 
         // ----------------------------------------------
-        // 1. VALIDAR LA CLAVE DE RESEND
+        // 1. VALIDAR LA CLAVE API
         // ----------------------------------------------
 
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException(
-                    "Falta configurar RESEND_API_KEY en las variables de Railway."
+                    "Falta configurar RESEND_API_KEY en Railway."
             );
         }
 
-        // Eliminar únicamente espacios al principio y al final.
-        // No modificar silenciosamente el contenido interno de la clave.
+        // Quitar únicamente espacios externos.
         String apiKeyLimpia = apiKey.trim();
 
-        // Detectar saltos de línea dentro de la clave.
+        // No permitir saltos de línea dentro de la clave.
         if (apiKeyLimpia.contains("\n")
                 || apiKeyLimpia.contains("\r")) {
-
             throw new IllegalStateException(
                     "RESEND_API_KEY contiene saltos de línea. "
-                            + "Corrige la variable en Railway y vuelve a desplegar."
+                            + "Corrige la variable en Railway."
             );
         }
 
-        // Evitar configurar por error la clave con el prefijo Bearer.
+        // La variable debe contener la clave, no el prefijo Bearer.
         if (apiKeyLimpia.regionMatches(
                 true, 0, "Bearer ", 0, 7)) {
-
             throw new IllegalStateException(
-                    "RESEND_API_KEY debe contener solamente la clave "
-                            + "de Resend, sin el prefijo Bearer."
+                    "Configura RESEND_API_KEY sin el prefijo Bearer."
             );
         }
 
         // ----------------------------------------------
-        // 2. VALIDAR EL CORREO DESTINATARIO
+        // 2. VALIDAR EL DESTINATARIO
         // ----------------------------------------------
 
         if (destinatario == null || destinatario.isBlank()) {
@@ -91,14 +86,13 @@ public class EmailService {
 
         if (destinatarioLimpio.contains("\n")
                 || destinatarioLimpio.contains("\r")) {
-
             throw new IllegalArgumentException(
-                    "El correo destinatario contiene caracteres inválidos."
+                    "El correo destinatario tiene caracteres inválidos."
             );
         }
 
         // ----------------------------------------------
-        // 3. VALIDAR EL ENLACE DE RECUPERACIÓN
+        // 3. VALIDAR EL ENLACE
         // ----------------------------------------------
 
         if (enlace == null || enlace.isBlank()) {
@@ -111,9 +105,8 @@ public class EmailService {
 
         if (enlaceLimpio.contains("\n")
                 || enlaceLimpio.contains("\r")) {
-
             throw new IllegalArgumentException(
-                    "El enlace de recuperación contiene caracteres inválidos."
+                    "El enlace de recuperación tiene caracteres inválidos."
             );
         }
 
@@ -133,26 +126,24 @@ public class EmailService {
                 || remitenteLimpio.contains("\r")
                 || remitenteLimpio.contains("<")
                 || remitenteLimpio.contains(">")) {
-
             throw new IllegalStateException(
                     "RESEND_FROM_EMAIL tiene un formato inválido."
             );
         }
 
         // ----------------------------------------------
-        // 5. CREAR EL CLIENTE DE RESEND Y ENVIAR
+        // 5. PREPARAR Y ENVIAR EL CORREO
         // ----------------------------------------------
 
         try {
 
-            // Crear conexión con Resend.
+            // Crear cliente de Resend.
             Resend resend = new Resend(apiKeyLimpia);
 
-            // Preparar el contenido HTML del correo.
+            // Plantilla HTML del correo de MARAV.
             String html = """
                     <!DOCTYPE html>
                     <html lang="es">
-
                     <head>
                         <meta charset="UTF-8">
                         <meta name="viewport"
@@ -161,31 +152,31 @@ public class EmailService {
                     </head>
 
                     <body style="
-                        margin: 0;
-                        padding: 24px;
-                        font-family: Arial, sans-serif;
-                        background-color: #f3f4f6;
-                        color: #1f2937;
+                        margin:0;
+                        padding:24px;
+                        font-family:Arial,sans-serif;
+                        background-color:#f3f4f6;
+                        color:#1f2937;
                     ">
 
                         <div style="
-                            max-width: 560px;
-                            margin: 0 auto;
-                            padding: 30px;
-                            background-color: #ffffff;
-                            border-radius: 12px;
-                            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+                            max-width:560px;
+                            margin:0 auto;
+                            padding:30px;
+                            background-color:#ffffff;
+                            border-radius:12px;
+                            box-shadow:0 4px 15px rgba(0,0,0,0.08);
                         ">
 
                             <h1 style="
-                                margin-top: 0;
-                                color: #047857;
-                                text-align: center;
+                                margin-top:0;
+                                color:#047857;
+                                text-align:center;
                             ">
                                 MARAV
                             </h1>
 
-                            <h2 style="color: #111827;">
+                            <h2 style="color:#111827;">
                                 Recuperación de contraseña
                             </h2>
 
@@ -195,27 +186,25 @@ public class EmailService {
                             </p>
 
                             <p>
-                                Para establecer una nueva contraseña,
-                                haz clic en el siguiente botón:
+                                Haz clic en el siguiente botón para
+                                establecer una nueva contraseña:
                             </p>
 
                             <div style="
-                                margin: 30px 0;
-                                text-align: center;
+                                margin:30px 0;
+                                text-align:center;
                             ">
-
                                 <a href="%s" style="
-                                    display: inline-block;
-                                    padding: 14px 24px;
-                                    background-color: #047857;
-                                    color: #ffffff;
-                                    border-radius: 8px;
-                                    text-decoration: none;
-                                    font-weight: bold;
+                                    display:inline-block;
+                                    padding:14px 24px;
+                                    background-color:#047857;
+                                    color:#ffffff;
+                                    border-radius:8px;
+                                    text-decoration:none;
+                                    font-weight:bold;
                                 ">
                                     Restablecer contraseña
                                 </a>
-
                             </div>
 
                             <p>
@@ -223,20 +212,20 @@ public class EmailService {
                             </p>
 
                             <p>
-                                Si no solicitaste recuperar tu contraseña,
+                                Si no solicitaste este cambio,
                                 puedes ignorar este mensaje.
                             </p>
 
                             <hr style="
-                                margin-top: 28px;
-                                border: none;
-                                border-top: 1px solid #e5e7eb;
+                                margin-top:28px;
+                                border:none;
+                                border-top:1px solid #e5e7eb;
                             ">
 
                             <p style="
-                                font-size: 12px;
-                                color: #6b7280;
-                                text-align: center;
+                                font-size:12px;
+                                color:#6b7280;
+                                text-align:center;
                             ">
                                 MARAV - Gestión para pequeños negocios.
                                 <br>
@@ -249,7 +238,7 @@ public class EmailService {
                     </html>
                     """.formatted(escaparHtml(enlaceLimpio));
 
-            // Configurar el mensaje.
+            // Construir el correo.
             CreateEmailOptions correo = CreateEmailOptions.builder()
                     .from("MARAV <" + remitenteLimpio + ">")
                     .to(destinatarioLimpio)
@@ -257,23 +246,18 @@ public class EmailService {
                     .html(html)
                     .build();
 
-            // Enviar el correo a través de Resend.
+            // Enviar mediante Resend.
             CreateEmailResponse respuesta =
                     resend.emails().send(correo);
 
-            // ------------------------------------------
-            // 6. COMPROBAR LA RESPUESTA
-            // ------------------------------------------
-
+            // Verificar que Resend devuelva un identificador.
             if (respuesta == null || respuesta.getId() == null) {
-
                 throw new IllegalStateException(
                         "Resend no confirmó el envío del correo."
                 );
             }
 
-            // Registrar únicamente el identificador del envío.
-            // Nunca registrar la clave API.
+            // Registrar el resultado sin exponer la clave API.
             System.out.println(
                     "MARAV: correo aceptado por Resend. ID: "
                             + respuesta.getId()
@@ -282,22 +266,56 @@ public class EmailService {
         } catch (ResendException e) {
 
             // ------------------------------------------
-            // 7. REGISTRAR EL ERROR DE RESEND
+            // 6. DIAGNÓSTICO DEL ERROR DE RESEND
             // ------------------------------------------
 
             System.err.println(
-                    "MARAV: error al enviar correo mediante Resend."
+                    "================================================"
             );
+            System.err.println(
+                    "MARAV - ERROR AL ENVIAR CORREO CON RESEND"
+            );
+            System.err.println(
+                    "Tipo: " + e.getClass().getName()
+            );
+            System.err.println(
+                    "Mensaje: " + e.getMessage()
+            );
+
+            // Mostrar la causa inmediata, si existe.
+            Throwable causa = e.getCause();
+
+            if (causa != null) {
+                System.err.println(
+                        "Tipo de causa: "
+                                + causa.getClass().getName()
+                );
+                System.err.println(
+                        "Mensaje de causa: "
+                                + causa.getMessage()
+                );
+            }
+
+            // Imprimir una cadena limitada de causas.
+            Throwable actual = e;
+            int nivel = 0;
+
+            while (actual != null && nivel < 5) {
+                System.err.println(
+                        "Causa nivel " + nivel + ": "
+                                + actual.getClass().getSimpleName()
+                                + " - " + actual.getMessage()
+                );
+
+                actual = actual.getCause();
+                nivel++;
+            }
 
             System.err.println(
-                    "Tipo de error: " + e.getClass().getSimpleName()
+                    "================================================"
             );
 
-            System.err.println(
-                    "Detalle: " + e.getMessage()
-            );
-
-            // Conservar el error original para facilitar el diagnóstico.
+            // Mantener la excepción original como causa.
             throw new IllegalStateException(
                     "Resend no pudo enviar el correo de recuperación.",
                     e
@@ -306,7 +324,7 @@ public class EmailService {
     }
 
     // ==================================================
-    // 🛡️ ESCAPAR TEXTO PARA INSERTARLO EN HTML
+    // 🛡️ ESCAPAR CARACTERES ESPECIALES PARA HTML
     // ==================================================
 
     private String escaparHtml(String texto) {
