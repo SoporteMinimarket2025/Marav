@@ -27,37 +27,24 @@ import java.util.UUID;
 public class AuthController {
 
     // =========================================================
-    // REPOSITORIO DE NEGOCIOS
+    // REPOSITORIOS Y SERVICIOS
     // =========================================================
 
     @Autowired
     private NegocioRepository negocioRepo;
 
-    // =========================================================
-    // REPOSITORIO DE USUARIOS
-    // =========================================================
-
     @Autowired
     private UsuarioRepository usuarioRepo;
 
-    // =========================================================
-    // CIFRADO DE CONTRASEÑAS
-    // =========================================================
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    // =========================================================
-    // SERVICIO DE CORREO RESEND
-    // =========================================================
 
     @Autowired
     private EmailService emailService;
 
     // =========================================================
-    // URL BASE DE MARAV
-    // En local usa localhost.
-    // En Railway se configura APP_BASE_URL.
+    // URL BASE PÚBLICA DE MARAV
+    // En Railway se configura mediante APP_BASE_URL.
     // =========================================================
 
     @Value("${APP_BASE_URL:http://localhost:8080}")
@@ -81,88 +68,62 @@ public class AuthController {
     public String registrar(@RequestBody RegistroDTO dto) {
 
         try {
-
-            // Validar objeto recibido.
             if (dto == null) {
                 return "DATOS_INVALIDOS";
             }
 
-            // Validar nombre del negocio.
             if (dto.getNombreNegocio() == null
                     || dto.getNombreNegocio().trim().isEmpty()) {
                 return "NEGOCIO_REQUERIDO";
             }
 
-            // Validar nombre del administrador.
             if (dto.getNombre() == null
                     || dto.getNombre().trim().isEmpty()) {
                 return "NOMBRE_REQUERIDO";
             }
 
-            // Validar correo.
             if (dto.getEmail() == null
                     || dto.getEmail().trim().isEmpty()) {
                 return "EMAIL_REQUERIDO";
             }
 
-            // Validar contraseña.
             if (dto.getPassword() == null
                     || dto.getPassword().trim().isEmpty()) {
                 return "PASSWORD_REQUERIDO";
             }
 
-            // Normalizar correo.
             String email = dto.getEmail()
                     .trim()
                     .toLowerCase();
 
-            // Comprobar si el correo ya está registrado.
             if (usuarioRepo.findByEmail(email).isPresent()) {
                 return "EMAIL_EXISTE";
             }
 
-            // Crear negocio.
+            // Crear y guardar el negocio.
             Negocio negocio = new Negocio();
-
-            negocio.setNombre(
-                    dto.getNombreNegocio().trim()
-            );
-
-            // Guardar negocio.
+            negocio.setNombre(dto.getNombreNegocio().trim());
             negocio = negocioRepo.save(negocio);
 
-            // Crear administrador.
+            // Crear administrador asociado al negocio.
             Usuario usuario = new Usuario();
-
-            usuario.setNombre(
-                    dto.getNombre().trim()
-            );
-
+            usuario.setNombre(dto.getNombre().trim());
             usuario.setEmail(email);
-
-            // Guardar contraseña cifrada.
             usuario.setPassword(
                     passwordEncoder.encode(dto.getPassword())
             );
-
-            // Asignar rol de administrador.
             usuario.setRol("ADMIN");
-
-            // Asociar usuario con su negocio.
             usuario.setNegocioId(negocio.getId());
 
-            // Guardar administrador.
             usuarioRepo.save(usuario);
 
             return "REGISTRO_OK";
 
         } catch (Exception e) {
-
-            // No exponer detalles internos al cliente.
-            System.err.println(
-                    "Error durante el registro de MARAV: "
-                            + e.getClass().getSimpleName()
-            );
+            System.err.println("Error durante el registro de MARAV.");
+            System.err.println("Tipo: " + e.getClass().getName());
+            System.err.println("Detalle: " + e.getMessage());
+            e.printStackTrace(System.err);
 
             return "ERROR_SERVIDOR";
         }
@@ -186,7 +147,6 @@ public class AuthController {
             @RequestParam String email
     ) {
 
-        // Normalizar correo para buscarlo.
         if (email == null || email.trim().isEmpty()) {
             return "redirect:/recuperar?error";
         }
@@ -197,44 +157,39 @@ public class AuthController {
                 .findByEmail(correo)
                 .orElse(null);
 
-        // Mantener el comportamiento actual.
         if (usuario == null) {
             return "redirect:/recuperar?error";
         }
 
-        // =====================================================
-        // GENERAR TOKEN
-        // =====================================================
-
+        // Generar un token único con vigencia de 15 minutos.
         String token = UUID.randomUUID().toString();
 
         usuario.setToken(token);
-
         usuario.setTokenExpiracion(
                 LocalDateTime.now().plusMinutes(15)
         );
 
         usuarioRepo.save(usuario);
 
-        // =====================================================
-        // CONSTRUIR URL PÚBLICA
-        // =====================================================
-
-        String baseUrl = appBaseUrl.replaceAll("/+$", "");
-
-        String enlace = baseUrl
-                + "/reset-password?token="
-                + URLEncoder.encode(
-                token,
-                StandardCharsets.UTF_8
-        );
-
-        // =====================================================
-        // ENVIAR CORREO MEDIANTE RESEND
-        // =====================================================
-
         try {
+            // Validar la URL configurada para construir el enlace.
+            if (appBaseUrl == null || appBaseUrl.isBlank()) {
+                throw new IllegalStateException(
+                        "APP_BASE_URL no está configurada."
+                );
+            }
 
+            String baseUrl = appBaseUrl.trim()
+                    .replaceAll("/+$", "");
+
+            String enlace = baseUrl
+                    + "/reset-password?token="
+                    + URLEncoder.encode(
+                    token,
+                    StandardCharsets.UTF_8
+            );
+
+            // Enviar correo mediante Resend.
             emailService.enviarRecuperacion(
                     usuario.getEmail(),
                     enlace
@@ -244,17 +199,37 @@ public class AuthController {
 
         } catch (Exception e) {
 
-            // Invalidar el token si el envío falla.
-            usuario.setToken(null);
-            usuario.setTokenExpiracion(null);
-
-            usuarioRepo.save(usuario);
-
-            // No imprimir claves ni datos privados.
+            // Registrar la causa real del error en Railway.
+            // No imprimir API keys ni contraseñas.
             System.err.println(
-                    "Error de envío de recuperación: "
-                            + e.getClass().getSimpleName()
+                    "ERROR COMPLETO AL ENVIAR RECUPERACIÓN EN MARAV"
             );
+            System.err.println(
+                    "Tipo: " + e.getClass().getName()
+            );
+            System.err.println(
+                    "Detalle: " + e.getMessage()
+            );
+            e.printStackTrace(System.err);
+
+            // Si el envío falla, invalidar el token generado.
+            try {
+                usuario.setToken(null);
+                usuario.setTokenExpiracion(null);
+                usuarioRepo.save(usuario);
+
+            } catch (Exception errorGuardar) {
+                System.err.println(
+                        "No se pudo invalidar el token de recuperación."
+                );
+                System.err.println(
+                        "Tipo: " + errorGuardar.getClass().getName()
+                );
+                System.err.println(
+                        "Detalle: " + errorGuardar.getMessage()
+                );
+                errorGuardar.printStackTrace(System.err);
+            }
 
             return "redirect:/recuperar?errorEnvio";
         }
@@ -280,7 +255,6 @@ public class AuthController {
         if (usuario.getTokenExpiracion() == null
                 || usuario.getTokenExpiracion()
                 .isBefore(LocalDateTime.now())) {
-
             return "redirect:/login?tokenExpirado";
         }
 
@@ -301,34 +275,29 @@ public class AuthController {
                 .findByToken(token)
                 .orElse(null);
 
-        // Validar token.
         if (usuario == null) {
             return "redirect:/login?tokenInvalido";
         }
 
-        // Validar vencimiento.
         if (usuario.getTokenExpiracion() == null
                 || usuario.getTokenExpiracion()
                 .isBefore(LocalDateTime.now())) {
-
             return "redirect:/login?tokenExpirado";
         }
 
-        // Validar que la nueva contraseña no esté vacía.
         if (password == null || password.isBlank()) {
             return "redirect:/login?passwordInvalido";
         }
 
-        // Cifrar nueva contraseña.
+        // Guardar la contraseña cifrada.
         usuario.setPassword(
                 passwordEncoder.encode(password)
         );
 
-        // Invalidar token después de usarlo.
+        // El token solo se puede utilizar una vez.
         usuario.setToken(null);
         usuario.setTokenExpiracion(null);
 
-        // Guardar cambios.
         usuarioRepo.save(usuario);
 
         return "redirect:/login?passwordActualizado";
