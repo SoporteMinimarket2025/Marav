@@ -3,21 +3,48 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
+    <!-- ========================================= -->
+    <!-- CONFIGURACIÓN -->
+    <!-- ========================================= -->
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Recuperar contraseña | MARAV</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <meta name="description"
-          content="Recupera tu contraseña de MARAV de forma segura.">
+    <meta name="theme-color" content="#166534">
 
-    <!-- Hoja de estilos general de inicio de sesión -->
-    <link rel="stylesheet" th:href="@{/css/login.css}" href="/css/login.css">
+    <title>Recuperar Contraseña | MARAV</title>
+
+    <!-- ========================================= -->
+    <!-- FUENTE ORIGINAL: POPPINS -->
+    <!-- ========================================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- ========================================= -->
+    <!-- CSS ORIGINAL DE MARAV -->
+    <!-- ========================================= -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/login.css}"
+          href="/css/login.css">
+
+    <!-- ========================================= -->
+    <!-- AJUSTES RESPONSIVE Y FORMULARIO -->
+    <!-- Se conserva el diseño original.
+         Estos estilos complementan login.css. -->
+    <!-- ========================================= -->
 
     <style>
-        /* ==========================================
-           CONFIGURACIÓN GENERAL
-           ========================================== */
 
         * {
             box-sizing: border-box;
@@ -30,424 +57,517 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: 'Poppins', Arial, sans-serif;
-            background: #f1f5f9;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* ==========================================
-           FONDO CON IMÁGENES
-           ========================================== */
+        /* =========================================
+           SLIDER ORIGINAL
+           ========================================= */
 
         .slider {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
             overflow: hidden;
-            background: linear-gradient(
-                    135deg,
-                    #052e16,
-                    #064e3b,
-                    #022c22
-            );
         }
 
-        .slide {
+        .slider .slide {
             position: absolute;
             inset: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                    opacity 0.8s ease,
+                    visibility 0.8s ease;
             background-size: cover;
             background-position: center;
-            opacity: 0;
-            animation: cambiarImagen 18s infinite;
         }
 
-        .slide1 {
-            background-image:
-                    linear-gradient(
-                            rgba(2, 44, 34, 0.76),
-                            rgba(2, 44, 34, 0.76)
-                    ),
-                    url('/images/fondo1.jpg');
-            animation-delay: 0s;
+        .slider .slide.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .slide2 {
-            background-image:
-                    linear-gradient(
-                            rgba(2, 44, 34, 0.76),
-                            rgba(2, 44, 34, 0.76)
-                    ),
-                    url('/images/fondo2.jpg');
-            animation-delay: 6s;
+        .slider .overlay {
+            position: absolute;
+            inset: 0;
         }
 
-        .slide3 {
-            background-image:
-                    linear-gradient(
-                            rgba(2, 44, 34, 0.76),
-                            rgba(2, 44, 34, 0.76)
-                    ),
-                    url('/images/fondo3.jpg');
-            animation-delay: 12s;
+        .slider .text {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            width: 85%;
+            max-width: 650px;
+            padding: 15px;
+            color: #ffffff;
+            font-size: clamp(24px, 3vw, 38px);
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: center;
+            overflow-wrap: anywhere;
+            transform: translate(-50%, -50%);
         }
 
-        @keyframes cambiarImagen {
-            0%   { opacity: 0; }
-            8%   { opacity: 1; }
-            30%  { opacity: 1; }
-            38%  { opacity: 0; }
-            100% { opacity: 0; }
+        /* =========================================
+           PANEL Y TARJETA
+           ========================================= */
+
+        .panel {
+            min-width: 0;
         }
 
-        /* ==========================================
-           CONTENEDOR PRINCIPAL
-           ========================================== */
-
-        .recuperar-contenedor {
-            position: relative;
-            z-index: 1;
-            min-height: 100vh;
+        .box {
             width: 100%;
-            padding: 30px 18px;
+            min-width: 0;
+        }
+
+        .logo {
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        .recuperar-tarjeta {
-            width: 100%;
-            max-width: 460px;
-            padding: 38px 34px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.97);
-            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24);
+        .logo img {
+            display: block;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            max-height: 130px;
+            object-fit: contain;
+        }
+
+        /* =========================================
+           TEXTOS
+           ========================================= */
+
+        .titulo-recuperacion {
+            margin: 15px 0 20px;
+            color: #166534;
+            font-size: clamp(23px, 2.5vw, 29px);
+            font-weight: 600;
+            line-height: 1.35;
             text-align: center;
         }
 
-        /* ==========================================
-           LOGO
-           ========================================== */
-
-        .logo-contenedor {
-            margin-bottom: 22px;
-        }
-
-        .logo-marav {
-            display: block;
-            width: 125px;
-            height: auto;
-            max-height: 115px;
-            object-fit: contain;
-            margin: 0 auto;
-        }
-
-        /* ==========================================
-           TÍTULOS
-           ========================================== */
-
-        .recuperar-tarjeta h1 {
-            margin: 0 0 12px;
-            color: #064e3b;
-            font-size: 27px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .descripcion {
-            margin: 0 0 25px;
-            color: #64748b;
+        .descripcion-recuperacion {
+            margin: 0 0 22px;
+            color: #666666;
             font-size: 14px;
-            line-height: 1.7;
+            line-height: 1.8;
+            text-align: center;
         }
 
-        /* ==========================================
+        /* =========================================
            FORMULARIO
-           ========================================== */
+           ========================================= */
 
-        .form-recuperar {
+        .form.active {
             display: flex;
             flex-direction: column;
+            gap: 14px;
             width: 100%;
-            gap: 10px;
-            margin: 0;
-            text-align: left;
+            min-width: 0;
         }
 
-        .form-recuperar label {
+        .form.active input[type="email"] {
             display: block;
-            margin-top: 2px;
-            color: #334155;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .campo-correo {
             width: 100%;
+            min-width: 0;
             min-height: 48px;
             padding: 13px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             background: #ffffff;
-            color: #0f172a;
-            font-family: inherit;
+            color: #1f2937;
+            font-family: 'Poppins', sans-serif;
             font-size: 14px;
             outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            transition:
+                    border-color 0.2s ease,
+                    box-shadow 0.2s ease;
         }
 
-        .campo-correo::placeholder {
-            color: #94a3b8;
-        }
-
-        .campo-correo:focus {
+        .form.active input[type="email"]:focus {
             border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.13);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
         }
 
-        .btn-recuperar {
+        .form.active input[type="email"]::placeholder {
+            color: #9ca3af;
+        }
+
+        .form.active button[type="submit"] {
             display: block;
             width: 100%;
             min-height: 48px;
-            margin-top: 12px;
-            padding: 13px 16px;
+            padding: 12px 15px;
             border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #15803d, #047857);
+            border-radius: 8px;
+            background: #166534;
             color: #ffffff;
-            font-family: inherit;
+            font-family: 'Poppins', sans-serif;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
+            line-height: 1.5;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            overflow-wrap: anywhere;
+            transition:
+                    background 0.2s ease,
+                    transform 0.2s ease;
         }
 
-        .btn-recuperar:hover {
+        .form.active button[type="submit"]:hover {
+            background: #14532d;
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(21, 128, 61, 0.22);
         }
 
-        .btn-recuperar:disabled {
-            opacity: 0.65;
+        .form.active button[type="submit"]:disabled {
+            opacity: 0.7;
             cursor: wait;
             transform: none;
         }
 
-        /* ==========================================
-           MENSAJES
-           ========================================== */
+        .form.active .toggle {
+            margin-top: 4px;
+            text-align: center;
+        }
 
-        .mensaje {
-            padding: 12px 14px;
-            margin: 0 0 18px;
-            border-radius: 10px;
+        .form.active .toggle a {
+            display: inline-block;
+            padding: 5px;
             font-size: 13px;
-            line-height: 1.6;
-            text-align: left;
+            line-height: 1.7;
+        }
+
+        /* =========================================
+           MENSAJES
+           ========================================= */
+
+        .mensaje-recuperacion {
+            margin: 0 0 16px;
+            padding: 12px 14px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-size: 12px;
+            line-height: 1.7;
+            text-align: center;
             overflow-wrap: anywhere;
         }
 
         .mensaje-exito {
-            border: 1px solid #bbf7d0;
-            background: #f0fdf4;
+            border-color: #bbf7d0;
+            background: #dcfce7;
             color: #166534;
         }
 
         .mensaje-error {
-            border: 1px solid #fecaca;
-            background: #fef2f2;
-            color: #b91c1c;
+            border-color: #fecaca;
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        /* ==========================================
-           VOLVER AL LOGIN
-           ========================================== */
+        /* =========================================
+           TABLETAS
+           ========================================= */
 
-        .volver-login {
-            display: inline-block;
-            margin-top: 24px;
-            color: #047857;
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+        @media (max-width: 900px) {
 
-        .volver-login:hover {
-            color: #064e3b;
-            text-decoration: underline;
-        }
-
-        .pie-pagina {
-            margin-top: 24px;
-            color: #94a3b8;
-            font-size: 11px;
-        }
-
-        /* ==========================================
-           RESPONSIVE: TABLETAS Y CELULARES
-           ========================================== */
-
-        @media (max-width: 600px) {
-            .recuperar-contenedor {
-                padding: 20px 14px;
+            .slider .text {
+                width: 90%;
+                font-size: 27px;
             }
 
-            .recuperar-tarjeta {
+            .logo img {
+                max-height: 110px;
+            }
+        }
+
+        /* =========================================
+           CELULARES
+           ========================================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                min-height: 100vh;
+            }
+
+            /*
+             * Los paneles se apilan verticalmente.
+             * No se cambia el HTML original.
+             */
+
+            .slider {
+                position: relative;
+                width: 100%;
+                height: 220px;
+                min-height: 220px;
+            }
+
+            .slider .slide {
+                position: absolute;
+                inset: 0;
+            }
+
+            .slider .text {
+                width: 92%;
+                padding: 12px;
+                font-size: clamp(21px, 5vw, 29px);
+                line-height: 1.4;
+            }
+
+            .panel {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+                padding: 30px 20px 35px;
+            }
+
+            .box {
+                width: 100%;
                 max-width: 430px;
-                padding: 30px 22px;
-                border-radius: 16px;
+                margin: 0 auto;
             }
 
-            .logo-marav {
-                width: 105px;
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .logo img {
                 max-height: 95px;
             }
 
-            .recuperar-tarjeta h1 {
-                font-size: 24px;
+            .titulo-recuperacion {
+                margin-top: 12px;
+                margin-bottom: 15px;
+                font-size: 25px;
             }
 
-            .descripcion {
+            .descripcion-recuperacion {
+                margin-bottom: 20px;
                 font-size: 13px;
             }
         }
 
-        @media (max-width: 360px) {
-            .recuperar-tarjeta {
-                padding: 26px 17px;
+        /* =========================================
+           CELULARES PEQUEÑOS
+           ========================================= */
+
+        @media (max-width: 380px) {
+
+            .slider {
+                height: 185px;
+                min-height: 185px;
             }
 
-            .recuperar-tarjeta h1 {
+            .slider .text {
+                font-size: 21px;
+            }
+
+            .panel {
+                padding: 25px 16px 30px;
+            }
+
+            .titulo-recuperacion {
                 font-size: 22px;
             }
 
-            .btn-recuperar {
+            .descripcion-recuperacion {
+                font-size: 12px;
+            }
+
+            .form.active input[type="email"],
+            .form.active button[type="submit"] {
                 font-size: 13px;
             }
         }
 
-        /* Accesibilidad: reducir animaciones si el usuario lo prefiere */
+        /* =========================================
+           ACCESIBILIDAD
+           ========================================= */
+
         @media (prefers-reduced-motion: reduce) {
-            .slide {
-                animation: none;
+
+            .slider .slide {
+                transition: none;
             }
 
-            .slide1 {
-                opacity: 1;
-            }
-
-            .btn-recuperar,
-            .campo-correo,
-            .volver-login {
+            .form.active input[type="email"],
+            .form.active button[type="submit"] {
                 transition: none;
             }
         }
+
     </style>
+
 </head>
 
 <body>
 
-<!-- ==========================================
-     FONDO ANIMADO
-     Si las imágenes no existen, se conserva
-     el fondo verde de MARAV.
-     ========================================== -->
+<!-- ========================================= -->
+<!-- SLIDER ORIGINAL DE MARAV -->
+<!-- ========================================= -->
 
-<div class="slider" aria-hidden="true">
-    <div class="slide slide1"></div>
-    <div class="slide slide2"></div>
-    <div class="slide slide3"></div>
+<div class="slider">
+
+    <div class="slide slide1 active">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Recupera el acceso a tu negocio en segundos
+        </div>
+
+    </div>
+
+    <div class="slide slide2">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Tu información siempre protegida
+        </div>
+
+    </div>
+
+    <div class="slide slide3">
+
+        <div class="overlay"></div>
+
+        <div class="text">
+            Continúa administrando tu tienda sin interrupciones
+        </div>
+
+    </div>
+
 </div>
 
-<!-- ==========================================
-     CONTENIDO PRINCIPAL
-     ========================================== -->
+<!-- ========================================= -->
+<!-- PANEL DE RECUPERACIÓN -->
+<!-- ========================================= -->
 
-<main class="recuperar-contenedor">
+<div class="panel">
 
-    <section class="recuperar-tarjeta"
-             aria-labelledby="tituloRecuperar">
+    <div class="box">
 
-        <!-- Logo de MARAV -->
-        <div class="logo-contenedor">
+        <!-- LOGO ORIGINAL -->
+
+        <div class="logo">
+
             <img
-                    class="logo-marav"
                     th:src="@{/images/logo.png}"
                     src="/images/logo.png"
                     alt="Logo de MARAV">
+
         </div>
 
-        <!-- Título -->
-        <h1 id="tituloRecuperar">Recuperar contraseña</h1>
+        <!-- TÍTULO -->
 
-        <p class="descripcion">
-            Ingresa el correo electrónico registrado en MARAV
-            y te enviaremos un enlace para restablecer tu contraseña.
+        <h2 class="titulo-recuperacion">
+            Recuperar contraseña
+        </h2>
+
+        <!-- DESCRIPCIÓN -->
+
+        <p class="descripcion-recuperacion">
+            Ingresa tu correo y te enviaremos un enlace para
+            restablecer tu contraseña.
         </p>
 
-        <!-- ======================================
-             MENSAJES DEL CONTROLADOR
-             ====================================== -->
+        <!-- ===================================== -->
+        <!-- MENSAJE DE ÉXITO -->
+        <!-- ===================================== -->
 
-        <div class="mensaje mensaje-exito"
-             th:if="${param.enviado}"
-             role="status">
-            Si el correo se procesó correctamente, recibirás las
-            instrucciones para restablecer tu contraseña.
+        <div
+                class="mensaje-recuperacion mensaje-exito"
+                th:if="${param.enviado}"
+                role="status">
+
+            Si el correo se procesó correctamente, recibirás
+            las instrucciones para restablecer tu contraseña.
+
         </div>
 
-        <div class="mensaje mensaje-error"
-             th:if="${param.error}"
-             role="alert">
-            No se encontró una cuenta con ese correo electrónico.
+        <!-- ===================================== -->
+        <!-- MENSAJE: CORREO NO ENCONTRADO -->
+        <!-- ===================================== -->
+
+        <div
+                class="mensaje-recuperacion mensaje-error"
+                th:if="${param.error}"
+                role="alert">
+
+            No existe una cuenta registrada con ese correo.
             Verifica la dirección e inténtalo nuevamente.
+
         </div>
 
-        <div class="mensaje mensaje-error"
-             th:if="${param.errorEnvio}"
-             role="alert">
+        <!-- ===================================== -->
+        <!-- MENSAJE: ERROR AL ENVIAR -->
+        <!-- ===================================== -->
+
+        <div
+                class="mensaje-recuperacion mensaje-error"
+                th:if="${param.errorEnvio}"
+                role="alert">
+
             No fue posible enviar el correo de recuperación.
             Inténtalo nuevamente más tarde.
+
         </div>
 
-        <div class="mensaje mensaje-error"
-             th:if="${param.tokenInvalido}"
-             role="alert">
+        <!-- ===================================== -->
+        <!-- MENSAJE: TOKEN INVÁLIDO -->
+        <!-- ===================================== -->
+
+        <div
+                class="mensaje-recuperacion mensaje-error"
+                th:if="${param.tokenInvalido}"
+                role="alert">
+
             El enlace de recuperación no es válido.
             Solicita uno nuevo.
+
         </div>
 
-        <div class="mensaje mensaje-error"
-             th:if="${param.tokenExpirado}"
-             role="alert">
+        <!-- ===================================== -->
+        <!-- MENSAJE: TOKEN EXPIRADO -->
+        <!-- ===================================== -->
+
+        <div
+                class="mensaje-recuperacion mensaje-error"
+                th:if="${param.tokenExpirado}"
+                role="alert">
+
             El enlace de recuperación ha expirado.
             Solicita uno nuevo.
+
         </div>
 
-        <!-- ======================================
-             FORMULARIO REAL DE RECUPERACIÓN
-             ====================================== -->
+        <!-- ===================================== -->
+        <!-- FORMULARIO ORIGINAL -->
+        <!-- Integrado con el controlador existente -->
+        <!-- ===================================== -->
 
         <form
                 id="formRecuperar"
-                class="form-recuperar"
                 th:action="@{/enviar-recuperacion}"
                 action="/enviar-recuperacion"
-                method="post">
-
-            <label for="email">Correo electrónico</label>
+                method="post"
+                class="form active">
 
             <input
-                    class="campo-correo"
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="ejemplo@correo.com"
+                    placeholder="Correo registrado"
                     autocomplete="email"
                     maxlength="254"
+                    aria-label="Correo electrónico registrado"
                     required
                     autofocus>
 
-            <!-- Protección CSRF de Spring Security -->
+            <!-- Token CSRF, si Spring Security lo habilita -->
+
             <input
                     th:if="${_csrf != null}"
                     type="hidden"
@@ -455,63 +575,100 @@
                     th:value="${_csrf.token}">
 
             <button
-                    id="btnEnviar"
-                    class="btn-recuperar"
-                    type="submit">
-                Enviar enlace de recuperación
+                    type="submit"
+                    id="btnEnviar">
+
+                <span id="textoBoton">
+                    Enviar enlace de recuperación
+                </span>
+
             </button>
+
+            <div class="toggle">
+
+                <a
+                        th:href="@{/login}"
+                        href="/login"
+                        style="text-decoration: none; color: #2563eb;">
+
+                    &#8592; Volver al login
+
+                </a>
+
+            </div>
 
         </form>
 
-        <!-- Regresar al inicio de sesión -->
-        <a
-                class="volver-login"
-                th:href="@{/login}"
-                href="/login">
-            &#8592; Volver al inicio de sesión
-        </a>
+    </div>
 
-        <div class="pie-pagina">
-            MARAV &copy; 2026 — Gestión inteligente para tu negocio
-        </div>
+</div>
 
-    </section>
-
-</main>
-
-<!-- ==========================================
-     INTERACCIÓN DEL FORMULARIO
-     ========================================== -->
+<!-- ========================================= -->
+<!-- JAVASCRIPT ORIGINAL DEL SLIDER -->
+<!-- ========================================= -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
 
-        const formulario = document.getElementById('formRecuperar');
-        const boton = document.getElementById('btnEnviar');
-        const campoCorreo = document.getElementById('email');
+    document.addEventListener("DOMContentLoaded", function () {
 
-        if (!formulario || !boton || !campoCorreo) {
-            return;
+        /* =====================================
+           SLIDER AUTOMÁTICO
+           ===================================== */
+
+        const slides = document.querySelectorAll(".slide");
+        const indicadores = slides.length;
+
+        let index = 0;
+
+        if (indicadores > 1) {
+
+            window.setInterval(function () {
+
+                slides[index].classList.remove("active");
+
+                index = (index + 1) % indicadores;
+
+                slides[index].classList.add("active");
+
+            }, 5000);
+
         }
 
-        formulario.addEventListener('submit', function (evento) {
+        /* =====================================
+           ENVÍO DEL FORMULARIO
+           ===================================== */
 
-            if (!campoCorreo.checkValidity()) {
-                campoCorreo.reportValidity();
-                evento.preventDefault();
-                return;
-            }
+        const formulario = document.getElementById("formRecuperar");
+        const campoEmail = document.getElementById("email");
+        const boton = document.getElementById("btnEnviar");
+        const textoBoton = document.getElementById("textoBoton");
 
-            // Evita varios clics accidentales mientras se envía.
-            boton.disabled = true;
-            boton.textContent = 'Procesando solicitud...';
+        if (formulario && campoEmail && boton && textoBoton) {
 
-            // El formulario se envía normalmente a Spring Boot.
-            // No se simula el envío del correo desde JavaScript.
-        });
+            formulario.addEventListener("submit", function (evento) {
+
+                if (!campoEmail.checkValidity()) {
+                    evento.preventDefault();
+                    campoEmail.reportValidity();
+                    return;
+                }
+
+                /*
+                 * El navegador enviará el formulario al controlador
+                 * de Spring Boot. No se simula el envío del correo.
+                 */
+
+                boton.disabled = true;
+                textoBoton.textContent = "Procesando solicitud...";
+
+            });
+
+        }
 
     });
+
 </script>
 
 </body>
+
 </html>
