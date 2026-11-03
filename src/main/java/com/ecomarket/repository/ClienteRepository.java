@@ -85,5 +85,8 @@ public interface ClienteRepository
             Integer id,
             Integer negocioId
     );
+
+    // Todos los clientes del negocio, activos e inactivos
+    List<Cliente> findByNegocioId(Integer negocioId);
 }
 

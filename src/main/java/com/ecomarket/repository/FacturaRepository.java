@@ -98,3 +98,4 @@ public interface FacturaRepository
             @Param("negocioId") Integer negocioId
     );
 }
+

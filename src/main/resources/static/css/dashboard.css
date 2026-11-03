@@ -1709,3 +1709,42 @@ a {
         height: 200px;
     }
 }
+
+
+    /* ======================================================
+       BACKUP MARAV
+    ====================================================== */
+
+    .backup-box {
+        margin-bottom: 25px;
+    }
+
+    .backup-box p {
+        color: #64748b;
+        margin-bottom: 18px;
+    }
+
+    .btn-backup {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        background: linear-gradient(135deg, #15803d, #064e3b);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .btn-backup:hover {
+        background: linear-gradient(135deg, #166534, #022c22);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .backup-box small {
+        display: block;
+        margin-top: 12px;
+        color: #94a3b8;
+    }

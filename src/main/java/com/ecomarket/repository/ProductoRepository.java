@@ -68,6 +68,9 @@ public interface ProductoRepository
     Long countByNegocioIdAndEstadoTrue(
             Integer negocioId
     );
+
+    // Todos los productos del negocio, activos e inactivos
+    List<Producto> findByNegocioId(Integer negocioId);
 }
 
 

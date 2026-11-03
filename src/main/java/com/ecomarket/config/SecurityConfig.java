@@ -271,6 +271,10 @@ public class SecurityConfig {
 
                         .requestMatchers(
 
+                                // RESPALDOS MARAV
+                                "/backup/**",
+
+                                // REPORTES Y CONFIGURACIÓN
                                 "/reportes/**",
                                 "/configuracion/**"
 
