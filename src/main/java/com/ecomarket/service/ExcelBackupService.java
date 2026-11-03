@@ -1,25 +1,27 @@
+
 package com.ecomarket.service;
 
 import com.ecomarket.model.Producto;
 import com.ecomarket.model.Cliente;
-import com.ecomarket.model.Venta;
 import com.ecomarket.model.Inventario;
+import com.ecomarket.model.Venta;
 import com.ecomarket.model.Factura;
 
 import com.ecomarket.repository.ProductoRepository;
 import com.ecomarket.repository.ClienteRepository;
-import com.ecomarket.repository.VentaRepository;
 import com.ecomarket.repository.InventarioRepository;
+import com.ecomarket.repository.VentaRepository;
 import com.ecomarket.repository.FacturaRepository;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -27,49 +29,29 @@ public class ExcelBackupService {
 
     private final ProductoRepository productoRepository;
     private final ClienteRepository clienteRepository;
-    private final VentaRepository ventaRepository;
     private final InventarioRepository inventarioRepository;
+    private final VentaRepository ventaRepository;
     private final FacturaRepository facturaRepository;
 
     public ExcelBackupService(
             ProductoRepository productoRepository,
             ClienteRepository clienteRepository,
-            VentaRepository ventaRepository,
             InventarioRepository inventarioRepository,
+            VentaRepository ventaRepository,
             FacturaRepository facturaRepository) {
 
         this.productoRepository = productoRepository;
         this.clienteRepository = clienteRepository;
-        this.ventaRepository = ventaRepository;
         this.inventarioRepository = inventarioRepository;
+        this.ventaRepository = ventaRepository;
         this.facturaRepository = facturaRepository;
     }
-
-    // ======================================================
-    // GENERAR EXCEL DEL NEGOCIO AUTENTICADO
-    // ======================================================
 
     public byte[] generarExcel(Integer negocioId) throws IOException {
 
         try (Workbook workbook = new XSSFWorkbook();
              ByteArrayOutputStream salida = new ByteArrayOutputStream()) {
 
-            // Estilo de encabezados
-            CellStyle estiloEncabezado = workbook.createCellStyle();
-
-            Font fuente = workbook.createFont();
-            fuente.setBold(true);
-            fuente.setColor(IndexedColors.WHITE.getIndex());
-
-            estiloEncabezado.setFont(fuente);
-            estiloEncabezado.setFillForegroundColor(
-                    IndexedColors.DARK_GREEN.getIndex()
-            );
-            estiloEncabezado.setFillPattern(
-                    FillPatternType.SOLID_FOREGROUND
-            );
-
-            // Obtener exclusivamente los registros del negocio
             List<Producto> productos =
                     productoRepository.findByNegocioId(negocioId);
 
@@ -85,11 +67,19 @@ public class ExcelBackupService {
             List<Factura> facturas =
                     facturaRepository.findAllByNegocioIdOrderByFechaDesc(negocioId);
 
-            crearHojaProductos(workbook, estiloEncabezado, productos);
-            crearHojaClientes(workbook, estiloEncabezado, clientes);
-            crearHojaInventario(workbook, estiloEncabezado, inventarios);
-            crearHojaVentas(workbook, estiloEncabezado, ventas);
-            crearHojaFacturas(workbook, estiloEncabezado, facturas);
+            EstilosExcel estilos = new EstilosExcel(workbook);
+
+            crearHojaResumen(
+                    workbook, estilos, negocioId,
+                    productos.size(), clientes.size(),
+                    inventarios.size(), ventas.size(), facturas.size()
+            );
+
+            crearHojaProductos(workbook, estilos, productos);
+            crearHojaClientes(workbook, estilos, clientes);
+            crearHojaInventario(workbook, estilos, inventarios);
+            crearHojaVentas(workbook, estilos, ventas);
+            crearHojaFacturas(workbook, estilos, facturas);
 
             workbook.write(salida);
 
@@ -97,261 +87,496 @@ public class ExcelBackupService {
         }
     }
 
-    // ======================================================
-    // HOJA 1: PRODUCTOS
-    // ======================================================
+    // =====================================================
+    // RESUMEN GENERAL
+    // =====================================================
+
+    private void crearHojaResumen(
+            Workbook workbook,
+            EstilosExcel estilos,
+            Integer negocioId,
+            int totalProductos,
+            int totalClientes,
+            int totalInventarios,
+            int totalVentas,
+            int totalFacturas) {
+
+        Sheet hoja = workbook.createSheet("Resumen");
+
+        hoja.setColumnWidth(0, 8500);
+        hoja.setColumnWidth(1, 5500);
+
+        hoja.createFreezePane(0, 3);
+
+        Row titulo = hoja.createRow(0);
+        titulo.setHeightInPoints(35);
+
+        Cell celdaTitulo = titulo.createCell(0);
+        celdaTitulo.setCellValue("MARAV | RESPALDO GENERAL");
+        celdaTitulo.setCellStyle(estilos.titulo);
+
+        hoja.addMergedRegion(
+                new org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, 1)
+        );
+
+        Row subtitulo = hoja.createRow(1);
+        Cell celdaSubtitulo = subtitulo.createCell(0);
+
+        celdaSubtitulo.setCellValue(
+                "Copia de seguridad de la información del negocio"
+        );
+
+        celdaSubtitulo.setCellStyle(estilos.subtitulo);
+
+        hoja.addMergedRegion(
+                new org.apache.poi.ss.util.CellRangeAddress(1, 1, 0, 1)
+        );
+
+        crearFilaResumen(hoja, 3, "INFORMACIÓN", "DETALLE", estilos.encabezado);
+
+        crearFilaResumen(hoja, 4, "Identificador del negocio",
+                negocioId, estilos.celda);
+
+        crearFilaResumen(hoja, 5, "Fecha del respaldo",
+                LocalDateTime.now().format(
+                        DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+                ), estilos.celda);
+
+        crearFilaResumen(hoja, 7, "MÓDULO", "REGISTROS", estilos.encabezado);
+
+        crearFilaResumen(hoja, 8, "Productos", totalProductos, estilos.celda);
+        crearFilaResumen(hoja, 9, "Clientes", totalClientes, estilos.celda);
+        crearFilaResumen(hoja, 10, "Inventario", totalInventarios, estilos.celda);
+        crearFilaResumen(hoja, 11, "Ventas", totalVentas, estilos.celda);
+        crearFilaResumen(hoja, 12, "Facturas", totalFacturas, estilos.celda);
+
+        Row pie = hoja.createRow(14);
+        Cell celdaPie = pie.createCell(0);
+
+        celdaPie.setCellValue(
+                "MARAV - Sistema de gestión para pequeños negocios"
+        );
+
+        celdaPie.setCellStyle(estilos.subtitulo);
+
+        hoja.addMergedRegion(
+                new org.apache.poi.ss.util.CellRangeAddress(14, 14, 0, 1)
+        );
+    }
+
+    private void crearFilaResumen(
+            Sheet hoja,
+            int numeroFila,
+            String texto1,
+            Object texto2,
+            CellStyle estilo) {
+
+        Row fila = hoja.createRow(numeroFila);
+
+        Cell celda1 = fila.createCell(0);
+        celda1.setCellValue(texto1);
+        celda1.setCellStyle(estilo);
+
+        Cell celda2 = fila.createCell(1);
+
+        if (texto2 instanceof Number) {
+            celda2.setCellValue(((Number) texto2).doubleValue());
+        } else {
+            celda2.setCellValue(String.valueOf(texto2));
+        }
+
+        celda2.setCellStyle(estilo);
+    }
+
+    // =====================================================
+    // PRODUCTOS
+    // =====================================================
 
     private void crearHojaProductos(
             Workbook workbook,
-            CellStyle estilo,
+            EstilosExcel estilos,
             List<Producto> productos) {
-
-        Sheet hoja = workbook.createSheet("Productos");
 
         String[] columnas = {
                 "ID", "Nombre", "Descripción",
                 "Precio", "Estado", "Fecha de creación"
         };
 
-        crearEncabezado(hoja, columnas, estilo);
+        crearHojaDatos(
+                workbook, estilos, "Productos",
+                columnas, productos.size(), (fila, indice) -> {
 
-        int fila = 1;
+                    Producto p = productos.get(indice);
 
-        for (Producto p : productos) {
-
-            Row row = hoja.createRow(fila++);
-
-            escribirNumero(row, 0, p.getId());
-            escribirTexto(row, 1, p.getNombre());
-            escribirTexto(row, 2, p.getDescripcion());
-            escribirNumero(row, 3, p.getPrecio());
-            escribirTexto(row, 4, estadoTexto(p.getEstado()));
-            escribirTexto(row, 5, fechaTexto(p.getFechaCreacion()));
-        }
-
-        ajustarColumnas(hoja, columnas.length);
+                    escribir(fila, 0, p.getId(), estilos.celda);
+                    escribir(fila, 1, p.getNombre(), estilos.celda);
+                    escribir(fila, 2, p.getDescripcion(), estilos.celda);
+                    escribir(fila, 3, p.getPrecio(), estilos.moneda);
+                    escribir(fila, 4, p.getEstado(), estilos.celda);
+                    escribir(fila, 5, p.getFechaCreacion(), estilos.celda);
+                }
+        );
     }
 
-    // ======================================================
-    // HOJA 2: CLIENTES
-    // ======================================================
+    // =====================================================
+    // CLIENTES
+    // =====================================================
 
     private void crearHojaClientes(
             Workbook workbook,
-            CellStyle estilo,
+            EstilosExcel estilos,
             List<Cliente> clientes) {
 
-        Sheet hoja = workbook.createSheet("Clientes");
-
         String[] columnas = {
-                "ID", "Nombre", "Tipo de identificación",
-                "Número de identificación", "Teléfono",
-                "Dirección", "Deuda", "Estado", "Fecha de creación"
+                "ID", "Nombre", "Tipo identificación",
+                "Número identificación", "Teléfono",
+                "Dirección", "Deuda", "Estado", "Fecha creación"
         };
 
-        crearEncabezado(hoja, columnas, estilo);
+        crearHojaDatos(
+                workbook, estilos, "Clientes",
+                columnas, clientes.size(), (fila, indice) -> {
 
-        int fila = 1;
+                    Cliente c = clientes.get(indice);
 
-        for (Cliente c : clientes) {
-
-            Row row = hoja.createRow(fila++);
-
-            escribirNumero(row, 0, c.getId());
-            escribirTexto(row, 1, c.getNombre());
-            escribirTexto(row, 2, c.getTipoIdentificacion());
-            escribirTexto(row, 3, c.getNumeroIdentificacion());
-            escribirTexto(row, 4, c.getTelefono());
-            escribirTexto(row, 5, c.getDireccion());
-            escribirNumero(row, 6, c.getDeuda());
-            escribirTexto(row, 7, estadoTexto(c.getEstado()));
-            escribirTexto(row, 8, fechaTexto(c.getFechaCreacion()));
-        }
-
-        ajustarColumnas(hoja, columnas.length);
+                    escribir(fila, 0, c.getId(), estilos.celda);
+                    escribir(fila, 1, c.getNombre(), estilos.celda);
+                    escribir(fila, 2, c.getTipoIdentificacion(), estilos.celda);
+                    escribir(fila, 3, c.getNumeroIdentificacion(), estilos.celda);
+                    escribir(fila, 4, c.getTelefono(), estilos.celda);
+                    escribir(fila, 5, c.getDireccion(), estilos.celda);
+                    escribir(fila, 6, c.getDeuda(), estilos.moneda);
+                    escribir(fila, 7, c.getEstado(), estilos.celda);
+                    escribir(fila, 8, c.getFechaCreacion(), estilos.celda);
+                }
+        );
     }
 
-    // ======================================================
-    // HOJA 3: INVENTARIO
-    // ======================================================
+    // =====================================================
+    // INVENTARIO
+    // =====================================================
 
     private void crearHojaInventario(
             Workbook workbook,
-            CellStyle estilo,
+            EstilosExcel estilos,
             List<Inventario> inventarios) {
 
-        Sheet hoja = workbook.createSheet("Inventario");
-
         String[] columnas = {
-                "ID", "ID del producto", "Stock actual",
+                "ID", "Producto ID", "Stock actual",
                 "Stock mínimo", "Ubicación", "Lote",
-                "Fecha de vencimiento", "Fecha de actualización"
+                "Fecha vencimiento", "Fecha actualización"
         };
 
-        crearEncabezado(hoja, columnas, estilo);
+        crearHojaDatos(
+                workbook, estilos, "Inventario",
+                columnas, inventarios.size(), (fila, indice) -> {
 
-        int fila = 1;
+                    Inventario i = inventarios.get(indice);
 
-        for (Inventario i : inventarios) {
-
-            Row row = hoja.createRow(fila++);
-
-            escribirNumero(row, 0, i.getId());
-            escribirNumero(row, 1, i.getProductoId());
-            escribirNumero(row, 2, i.getStockActual());
-            escribirNumero(row, 3, i.getStockMinimo());
-            escribirTexto(row, 4, i.getUbicacion());
-            escribirTexto(row, 5, i.getLote());
-            escribirTexto(row, 6, fechaTexto(i.getFechaVencimiento()));
-            escribirTexto(row, 7, fechaTexto(i.getFechaActualizacion()));
-        }
-
-        ajustarColumnas(hoja, columnas.length);
+                    escribir(fila, 0, i.getId(), estilos.celda);
+                    escribir(fila, 1, i.getProductoId(), estilos.celda);
+                    escribir(fila, 2, i.getStockActual(), estilos.celda);
+                    escribir(fila, 3, i.getStockMinimo(), estilos.celda);
+                    escribir(fila, 4, i.getUbicacion(), estilos.celda);
+                    escribir(fila, 5, i.getLote(), estilos.celda);
+                    escribir(fila, 6, i.getFechaVencimiento(), estilos.celda);
+                    escribir(fila, 7, i.getFechaActualizacion(), estilos.celda);
+                }
+        );
     }
 
-    // ======================================================
-    // HOJA 4: VENTAS
-    // ======================================================
+    // =====================================================
+    // VENTAS
+    // =====================================================
 
     private void crearHojaVentas(
             Workbook workbook,
-            CellStyle estilo,
+            EstilosExcel estilos,
             List<Venta> ventas) {
 
-        Sheet hoja = workbook.createSheet("Ventas");
-
         String[] columnas = {
-                "ID", "Número de factura", "Fecha",
-                "ID del usuario", "ID del cliente",
-                "Método de pago", "Total",
-                "Efectivo recibido", "Cambio", "Estado"
+                "ID", "Número factura", "Fecha",
+                "Usuario ID", "Cliente ID", "Método de pago",
+                "Total", "Efectivo recibido", "Cambio", "Estado"
         };
 
-        crearEncabezado(hoja, columnas, estilo);
+        crearHojaDatos(
+                workbook, estilos, "Ventas",
+                columnas, ventas.size(), (fila, indice) -> {
 
-        int fila = 1;
+                    Venta v = ventas.get(indice);
 
-        for (Venta v : ventas) {
-
-            Row row = hoja.createRow(fila++);
-
-            escribirNumero(row, 0, v.getId());
-            escribirTexto(row, 1, v.getNumeroFactura());
-            escribirTexto(row, 2, fechaTexto(v.getFecha()));
-            escribirNumero(row, 3, v.getIdUsuario());
-            escribirNumero(row, 4, v.getIdCliente());
-            escribirTexto(row, 5, v.getMetodoPago());
-            escribirNumero(row, 6, v.getTotal());
-            escribirNumero(row, 7, v.getEfectivoRecibido());
-            escribirNumero(row, 8, v.getCambio());
-            escribirTexto(row, 9, v.getEstado());
-        }
-
-        ajustarColumnas(hoja, columnas.length);
+                    escribir(fila, 0, v.getId(), estilos.celda);
+                    escribir(fila, 1, v.getNumeroFactura(), estilos.celda);
+                    escribir(fila, 2, v.getFecha(), estilos.celda);
+                    escribir(fila, 3, v.getIdUsuario(), estilos.celda);
+                    escribir(fila, 4, v.getIdCliente(), estilos.celda);
+                    escribir(fila, 5, v.getMetodoPago(), estilos.celda);
+                    escribir(fila, 6, v.getTotal(), estilos.moneda);
+                    escribir(fila, 7, v.getEfectivoRecibido(), estilos.moneda);
+                    escribir(fila, 8, v.getCambio(), estilos.moneda);
+                    escribir(fila, 9, v.getEstado(), estilos.celda);
+                }
+        );
     }
 
-    // ======================================================
-    // HOJA 5: FACTURAS
-    // ======================================================
+    // =====================================================
+    // FACTURAS
+    // =====================================================
 
     private void crearHojaFacturas(
             Workbook workbook,
-            CellStyle estilo,
+            EstilosExcel estilos,
             List<Factura> facturas) {
 
-        Sheet hoja = workbook.createSheet("Facturas");
-
         String[] columnas = {
-                "ID", "ID de venta", "Número de factura",
+                "ID", "Venta ID", "Número factura",
                 "Subtotal", "IVA", "Aplica IVA",
                 "Total", "Fecha", "Estado", "Observación"
         };
 
-        crearEncabezado(hoja, columnas, estilo);
+        crearHojaDatos(
+                workbook, estilos, "Facturas",
+                columnas, facturas.size(), (fila, indice) -> {
 
-        int fila = 1;
+                    Factura f = facturas.get(indice);
 
-        for (Factura f : facturas) {
-
-            Row row = hoja.createRow(fila++);
-
-            escribirNumero(row, 0, f.getId());
-            escribirNumero(row, 1, f.getVentaId());
-            escribirTexto(row, 2, f.getNumeroFactura());
-            escribirNumero(row, 3, f.getSubtotal());
-            escribirNumero(row, 4, f.getIva());
-            escribirTexto(row, 5, f.getAplicarIva() != null
-                    && f.getAplicarIva() ? "Sí" : "No");
-            escribirNumero(row, 6, f.getTotal());
-            escribirTexto(row, 7, fechaTexto(f.getFecha()));
-            escribirTexto(row, 8, f.getEstado());
-            escribirTexto(row, 9, f.getObservacion());
-        }
-
-        ajustarColumnas(hoja, columnas.length);
+                    escribir(fila, 0, f.getId(), estilos.celda);
+                    escribir(fila, 1, f.getVentaId(), estilos.celda);
+                    escribir(fila, 2, f.getNumeroFactura(), estilos.celda);
+                    escribir(fila, 3, f.getSubtotal(), estilos.moneda);
+                    escribir(fila, 4, f.getIva(), estilos.moneda);
+                    escribir(fila, 5, f.getAplicarIva(), estilos.celda);
+                    escribir(fila, 6, f.getTotal(), estilos.moneda);
+                    escribir(fila, 7, f.getFecha(), estilos.celda);
+                    escribir(fila, 8, f.getEstado(), estilos.celda);
+                    escribir(fila, 9, f.getObservacion(), estilos.celda);
+                }
+        );
     }
 
-    // ======================================================
-    // MÉTODOS AUXILIARES
-    // ======================================================
+    // =====================================================
+    // MÉTODO GENERAL PARA CREAR HOJAS
+    // =====================================================
 
-    private void crearEncabezado(
-            Sheet hoja,
+    private void crearHojaDatos(
+            Workbook workbook,
+            EstilosExcel estilos,
+            String nombreHoja,
             String[] columnas,
-            CellStyle estilo) {
+            int totalRegistros,
+            FilaExcel escritor) {
 
-        Row encabezado = hoja.createRow(0);
+        Sheet hoja = workbook.createSheet(nombreHoja);
+
+        hoja.createFreezePane(0, 3);
+
+        Row titulo = hoja.createRow(0);
+        titulo.setHeightInPoints(32);
+
+        Cell celdaTitulo = titulo.createCell(0);
+        celdaTitulo.setCellValue("MARAV | " + nombreHoja.toUpperCase());
+        celdaTitulo.setCellStyle(estilos.titulo);
+
+        if (columnas.length > 1) {
+            hoja.addMergedRegion(
+                    new org.apache.poi.ss.util.CellRangeAddress(
+                            0, 0, 0, columnas.length - 1
+                    )
+            );
+        }
+
+        Row subtitulo = hoja.createRow(1);
+        Cell celdaSubtitulo = subtitulo.createCell(0);
+
+        celdaSubtitulo.setCellValue(
+                "Respaldo de información | Total de registros: " + totalRegistros
+        );
+
+        celdaSubtitulo.setCellStyle(estilos.subtitulo);
+
+        if (columnas.length > 1) {
+            hoja.addMergedRegion(
+                    new org.apache.poi.ss.util.CellRangeAddress(
+                            1, 1, 0, columnas.length - 1
+                    )
+            );
+        }
+
+        Row encabezado = hoja.createRow(2);
+        encabezado.setHeightInPoints(25);
 
         for (int i = 0; i < columnas.length; i++) {
 
             Cell celda = encabezado.createCell(i);
             celda.setCellValue(columnas[i]);
-            celda.setCellStyle(estilo);
+            celda.setCellStyle(estilos.encabezado);
         }
 
-        hoja.createFreezePane(0, 1);
+        for (int i = 0; i < totalRegistros; i++) {
+
+            Row fila = hoja.createRow(i + 3);
+
+            CellStyle estiloFila = (i % 2 == 0)
+                    ? estilos.celda
+                    : estilos.celdaAlterna;
+
+            escritor.escribir(fila, i);
+
+            for (int j = 0; j < columnas.length; j++) {
+
+                Cell celda = fila.getCell(j);
+
+                if (celda == null) {
+                    celda = fila.createCell(j);
+                    celda.setCellStyle(estiloFila);
+                }
+            }
+        }
+
         hoja.setAutoFilter(
                 new org.apache.poi.ss.util.CellRangeAddress(
-                        0, 0, 0, columnas.length - 1
+                        2,
+                        Math.max(2, totalRegistros + 2),
+                        0,
+                        columnas.length - 1
                 )
         );
-    }
 
-    private void escribirTexto(Row fila, int columna, String valor) {
-
-        Cell celda = fila.createCell(columna);
-        celda.setCellValue(valor != null ? valor : "");
-    }
-
-    private void escribirNumero(Row fila, int columna, Number valor) {
-
-        Cell celda = fila.createCell(columna);
-
-        if (valor != null) {
-            celda.setCellValue(valor.doubleValue());
-        } else {
-            celda.setBlank();
-        }
-    }
-
-    private String estadoTexto(Boolean estado) {
-
-        if (estado == null) {
-            return "Sin definir";
-        }
-
-        return estado ? "Activo" : "Inactivo";
-    }
-
-    private String fechaTexto(Object fecha) {
-
-        return fecha != null ? fecha.toString() : "";
-    }
-
-    private void ajustarColumnas(Sheet hoja, int cantidad) {
-
-        for (int i = 0; i < cantidad; i++) {
+        for (int i = 0; i < columnas.length; i++) {
             hoja.autoSizeColumn(i);
+
+            int ancho = hoja.getColumnWidth(i);
+
+            if (ancho > 14000) {
+                hoja.setColumnWidth(i, 14000);
+            }
+
+            if (hoja.getColumnWidth(i) < 3500) {
+                hoja.setColumnWidth(i, 3500);
+            }
+        }
+
+        hoja.setDisplayGridlines(false);
+
+        hoja.getPrintSetup().setLandscape(true);
+        hoja.getPrintSetup().setFitWidth((short) 1);
+        hoja.setFitToPage(true);
+    }
+
+    // =====================================================
+    // ESCRITURA SEGURA DE CELDAS
+    // =====================================================
+
+    private void escribir(
+            Row fila,
+            int columna,
+            Object valor,
+            CellStyle estilo) {
+
+        Cell celda = fila.createCell(columna);
+
+        if (valor == null) {
+            celda.setCellValue("");
+        } else if (valor instanceof Number) {
+            celda.setCellValue(((Number) valor).doubleValue());
+        } else if (valor instanceof Boolean) {
+            celda.setCellValue((Boolean) valor);
+        } else {
+            celda.setCellValue(valor.toString());
+        }
+
+        celda.setCellStyle(estilo);
+    }
+
+    @FunctionalInterface
+    private interface FilaExcel {
+        void escribir(Row fila, int indice);
+    }
+
+    // =====================================================
+    // ESTILOS PROFESIONALES MARAV
+    // =====================================================
+
+    private static class EstilosExcel {
+
+        private final CellStyle titulo;
+        private final CellStyle subtitulo;
+        private final CellStyle encabezado;
+        private final CellStyle celda;
+        private final CellStyle celdaAlterna;
+        private final CellStyle moneda;
+
+        EstilosExcel(Workbook workbook) {
+
+            Font fuenteTitulo = workbook.createFont();
+            fuenteTitulo.setBold(true);
+            fuenteTitulo.setFontHeightInPoints((short) 16);
+            fuenteTitulo.setColor(IndexedColors.WHITE.getIndex());
+
+            titulo = workbook.createCellStyle();
+            titulo.setFont(fuenteTitulo);
+            titulo.setFillForegroundColor(
+                    IndexedColors.DARK_GREEN.getIndex()
+            );
+            titulo.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            titulo.setAlignment(HorizontalAlignment.CENTER);
+            titulo.setVerticalAlignment(VerticalAlignment.CENTER);
+
+            Font fuenteSubtitulo = workbook.createFont();
+            fuenteSubtitulo.setItalic(true);
+            fuenteSubtitulo.setColor(IndexedColors.GREY_50_PERCENT.getIndex());
+            fuenteSubtitulo.setFontHeightInPoints((short) 10);
+
+            subtitulo = workbook.createCellStyle();
+            subtitulo.setFont(fuenteSubtitulo);
+            subtitulo.setAlignment(HorizontalAlignment.LEFT);
+            subtitulo.setVerticalAlignment(VerticalAlignment.CENTER);
+
+            Font fuenteEncabezado = workbook.createFont();
+            fuenteEncabezado.setBold(true);
+            fuenteEncabezado.setColor(IndexedColors.WHITE.getIndex());
+            fuenteEncabezado.setFontHeightInPoints((short) 10);
+
+            encabezado = workbook.createCellStyle();
+            encabezado.setFont(fuenteEncabezado);
+            encabezado.setFillForegroundColor(
+                    IndexedColors.GREEN.getIndex()
+            );
+            encabezado.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            encabezado.setAlignment(HorizontalAlignment.CENTER);
+            encabezado.setVerticalAlignment(VerticalAlignment.CENTER);
+            encabezado.setWrapText(true);
+            encabezado.setBorderBottom(BorderStyle.THIN);
+            encabezado.setBorderTop(BorderStyle.THIN);
+            encabezado.setBorderLeft(BorderStyle.THIN);
+            encabezado.setBorderRight(BorderStyle.THIN);
+
+            Font fuenteCelda = workbook.createFont();
+            fuenteCelda.setFontHeightInPoints((short) 10);
+            fuenteCelda.setColor(IndexedColors.BLACK.getIndex());
+
+            celda = workbook.createCellStyle();
+            celda.setFont(fuenteCelda);
+            celda.setVerticalAlignment(VerticalAlignment.CENTER);
+            celda.setBorderBottom(BorderStyle.HAIR);
+            celda.setBorderLeft(BorderStyle.HAIR);
+            celda.setBorderRight(BorderStyle.HAIR);
+
+            celdaAlterna = workbook.createCellStyle();
+            celdaAlterna.cloneStyleFrom(celda);
+            celdaAlterna.setFillForegroundColor(
+                    IndexedColors.LIGHT_GREEN.getIndex()
+            );
+            celdaAlterna.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+            moneda = workbook.createCellStyle();
+            moneda.cloneStyleFrom(celda);
+            moneda.setDataFormat(
+                    workbook.createDataFormat().getFormat(
+                            "$ #,##0.00"
+                    )
+            );
         }
     }
 }
