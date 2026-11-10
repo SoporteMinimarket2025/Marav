@@ -1,14 +1,10 @@
+
+package com.ecomarket.service;
+
 // ======================================================
 // 📧 SERVICIO DE CORREO - MARAV
-// ======================================================
 // Proveedor: Resend
 // Función: Enviar enlaces de recuperación de contraseña
-// ======================================================
-
-        package com.ecomarket.service;
-
-// ======================================================
-// 📚 IMPORTACIONES
 // ======================================================
 
 import com.resend.Resend;
@@ -18,10 +14,6 @@ import com.resend.services.emails.model.CreateEmailResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-// ======================================================
-// ⚙️ SERVICIO
-// ======================================================
 
 @Service
 public class EmailService {
@@ -33,8 +25,13 @@ public class EmailService {
     @Value("${RESEND_API_KEY:}")
     private String apiKey;
 
-    @Value("${RESEND_FROM_EMAIL:onboarding@resend.dev}")
+    // Remitente autorizado por el dominio verificado en Resend.
+    @Value("${RESEND_FROM_EMAIL:soporte@maravtienda.pro}")
     private String remitente;
+
+    // Correo de contacto que MARAV conserva.
+    private static final String CORREO_CONTACTO =
+            "soporte.minimarket2025@gmail.com";
 
     // ==================================================
     // 📩 ENVIAR CORREO DE RECUPERACIÓN
@@ -42,29 +39,22 @@ public class EmailService {
 
     public void enviarRecuperacion(String destinatario, String enlace) {
 
-        // ----------------------------------------------
-        // 1. VALIDAR LA CLAVE API
-        // ----------------------------------------------
-
+        // 1. VALIDAR CLAVE API
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException(
                     "Falta configurar RESEND_API_KEY en Railway."
             );
         }
 
-        // Quitar únicamente espacios externos.
         String apiKeyLimpia = apiKey.trim();
 
-        // No permitir saltos de línea dentro de la clave.
         if (apiKeyLimpia.contains("\n")
                 || apiKeyLimpia.contains("\r")) {
             throw new IllegalStateException(
-                    "RESEND_API_KEY contiene saltos de línea. "
-                            + "Corrige la variable en Railway."
+                    "RESEND_API_KEY contiene saltos de línea."
             );
         }
 
-        // La variable debe contener la clave, no el prefijo Bearer.
         if (apiKeyLimpia.regionMatches(
                 true, 0, "Bearer ", 0, 7)) {
             throw new IllegalStateException(
@@ -72,10 +62,7 @@ public class EmailService {
             );
         }
 
-        // ----------------------------------------------
-        // 2. VALIDAR EL DESTINATARIO
-        // ----------------------------------------------
-
+        // 2. VALIDAR DESTINATARIO
         if (destinatario == null || destinatario.isBlank()) {
             throw new IllegalArgumentException(
                     "El correo destinatario está vacío."
@@ -91,10 +78,7 @@ public class EmailService {
             );
         }
 
-        // ----------------------------------------------
-        // 3. VALIDAR EL ENLACE
-        // ----------------------------------------------
-
+        // 3. VALIDAR ENLACE
         if (enlace == null || enlace.isBlank()) {
             throw new IllegalArgumentException(
                     "El enlace de recuperación está vacío."
@@ -110,10 +94,7 @@ public class EmailService {
             );
         }
 
-        // ----------------------------------------------
-        // 4. VALIDAR EL REMITENTE
-        // ----------------------------------------------
-
+        // 4. VALIDAR REMITENTE
         if (remitente == null || remitente.isBlank()) {
             throw new IllegalStateException(
                     "Falta configurar RESEND_FROM_EMAIL en Railway."
@@ -131,16 +112,11 @@ public class EmailService {
             );
         }
 
-        // ----------------------------------------------
-        // 5. PREPARAR Y ENVIAR EL CORREO
-        // ----------------------------------------------
-
+        // 5. PREPARAR Y ENVIAR CORREO
         try {
 
-            // Crear cliente de Resend.
             Resend resend = new Resend(apiKeyLimpia);
 
-            // Plantilla HTML del correo de MARAV.
             String html = """
                     <!DOCTYPE html>
                     <html lang="es">
@@ -229,6 +205,9 @@ public class EmailService {
                             ">
                                 MARAV - Gestión para pequeños negocios.
                                 <br>
+                                Contacto:
+                                soporte.minimarket2025@gmail.com
+                                <br>
                                 Por seguridad, no compartas este enlace.
                             </p>
 
@@ -238,7 +217,6 @@ public class EmailService {
                     </html>
                     """.formatted(escaparHtml(enlaceLimpio));
 
-            // Construir el correo.
             CreateEmailOptions correo = CreateEmailOptions.builder()
                     .from("MARAV <" + remitenteLimpio + ">")
                     .to(destinatarioLimpio)
@@ -246,18 +224,15 @@ public class EmailService {
                     .html(html)
                     .build();
 
-            // Enviar mediante Resend.
             CreateEmailResponse respuesta =
                     resend.emails().send(correo);
 
-            // Verificar que Resend devuelva un identificador.
             if (respuesta == null || respuesta.getId() == null) {
                 throw new IllegalStateException(
                         "Resend no confirmó el envío del correo."
                 );
             }
 
-            // Registrar el resultado sin exponer la clave API.
             System.out.println(
                     "MARAV: correo aceptado por Resend. ID: "
                             + respuesta.getId()
@@ -265,57 +240,18 @@ public class EmailService {
 
         } catch (ResendException e) {
 
-            // ------------------------------------------
-            // 6. DIAGNÓSTICO DEL ERROR DE RESEND
-            // ------------------------------------------
-
-            System.err.println(
-                    "================================================"
-            );
             System.err.println(
                     "MARAV - ERROR AL ENVIAR CORREO CON RESEND"
             );
+
             System.err.println(
                     "Tipo: " + e.getClass().getName()
             );
+
             System.err.println(
                     "Mensaje: " + e.getMessage()
             );
 
-            // Mostrar la causa inmediata, si existe.
-            Throwable causa = e.getCause();
-
-            if (causa != null) {
-                System.err.println(
-                        "Tipo de causa: "
-                                + causa.getClass().getName()
-                );
-                System.err.println(
-                        "Mensaje de causa: "
-                                + causa.getMessage()
-                );
-            }
-
-            // Imprimir una cadena limitada de causas.
-            Throwable actual = e;
-            int nivel = 0;
-
-            while (actual != null && nivel < 5) {
-                System.err.println(
-                        "Causa nivel " + nivel + ": "
-                                + actual.getClass().getSimpleName()
-                                + " - " + actual.getMessage()
-                );
-
-                actual = actual.getCause();
-                nivel++;
-            }
-
-            System.err.println(
-                    "================================================"
-            );
-
-            // Mantener la excepción original como causa.
             throw new IllegalStateException(
                     "Resend no pudo enviar el correo de recuperación.",
                     e
@@ -324,7 +260,7 @@ public class EmailService {
     }
 
     // ==================================================
-    // 🛡️ ESCAPAR CARACTERES ESPECIALES PARA HTML
+    // 🛡️ ESCAPAR CARACTERES ESPECIALES HTML
     // ==================================================
 
     private String escaparHtml(String texto) {
