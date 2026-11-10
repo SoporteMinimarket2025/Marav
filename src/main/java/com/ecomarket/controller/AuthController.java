@@ -1,5 +1,9 @@
 
-        package com.ecomarket.controller;
+package com.ecomarket.controller;
+
+// =========================================================
+// 📚 IMPORTACIONES
+// =========================================================
 
 import com.ecomarket.dto.RegistroDTO;
 import com.ecomarket.model.Negocio;
@@ -12,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,7 +49,6 @@ public class AuthController {
 
     // =========================================================
     // URL BASE PÚBLICA DE MARAV
-    // En Railway se configura mediante APP_BASE_URL.
     // =========================================================
 
     @Value("${APP_BASE_URL:http://localhost:8080}")
@@ -68,6 +72,7 @@ public class AuthController {
     public String registrar(@RequestBody RegistroDTO dto) {
 
         try {
+
             if (dto == null) {
                 return "DATOS_INVALIDOS";
             }
@@ -100,18 +105,22 @@ public class AuthController {
                 return "EMAIL_EXISTE";
             }
 
-            // Crear y guardar el negocio.
+            // Crear negocio.
             Negocio negocio = new Negocio();
             negocio.setNombre(dto.getNombreNegocio().trim());
+
             negocio = negocioRepo.save(negocio);
 
-            // Crear administrador asociado al negocio.
+            // Crear administrador.
             Usuario usuario = new Usuario();
+
             usuario.setNombre(dto.getNombre().trim());
             usuario.setEmail(email);
+
             usuario.setPassword(
                     passwordEncoder.encode(dto.getPassword())
             );
+
             usuario.setRol("ADMIN");
             usuario.setNegocioId(negocio.getId());
 
@@ -120,9 +129,11 @@ public class AuthController {
             return "REGISTRO_OK";
 
         } catch (Exception e) {
-            System.err.println("Error durante el registro de MARAV.");
+
+            System.err.println("ERROR DURANTE EL REGISTRO DE MARAV");
             System.err.println("Tipo: " + e.getClass().getName());
             System.err.println("Detalle: " + e.getMessage());
+
             e.printStackTrace(System.err);
 
             return "ERROR_SERVIDOR";
@@ -144,7 +155,7 @@ public class AuthController {
 
     @PostMapping("/enviar-recuperacion")
     public String enviarRecuperacion(
-            @RequestParam String email
+            @RequestParam("email") String email
     ) {
 
         if (email == null || email.trim().isEmpty()) {
@@ -161,10 +172,12 @@ public class AuthController {
             return "redirect:/recuperar?error";
         }
 
-        // Generar un token único con vigencia de 15 minutos.
+        // Generar token único.
         String token = UUID.randomUUID().toString();
 
+        // Guardar token durante 15 minutos.
         usuario.setToken(token);
+
         usuario.setTokenExpiracion(
                 LocalDateTime.now().plusMinutes(15)
         );
@@ -172,7 +185,8 @@ public class AuthController {
         usuarioRepo.save(usuario);
 
         try {
-            // Validar la URL configurada para construir el enlace.
+
+            // Validar URL pública.
             if (appBaseUrl == null || appBaseUrl.isBlank()) {
                 throw new IllegalStateException(
                         "APP_BASE_URL no está configurada."
@@ -182,11 +196,16 @@ public class AuthController {
             String baseUrl = appBaseUrl.trim()
                     .replaceAll("/+$", "");
 
+            // Construir enlace de recuperación.
             String enlace = baseUrl
                     + "/reset-password?token="
                     + URLEncoder.encode(
                     token,
                     StandardCharsets.UTF_8
+            );
+
+            System.out.println(
+                    "MARAV: generando enlace de recuperación."
             );
 
             // Enviar correo mediante Resend.
@@ -199,35 +218,34 @@ public class AuthController {
 
         } catch (Exception e) {
 
-            // Registrar la causa real del error en Railway.
-            // No imprimir API keys ni contraseñas.
             System.err.println(
-                    "ERROR COMPLETO AL ENVIAR RECUPERACIÓN EN MARAV"
+                    "ERROR AL ENVIAR RECUPERACIÓN EN MARAV"
             );
+
             System.err.println(
                     "Tipo: " + e.getClass().getName()
             );
+
             System.err.println(
                     "Detalle: " + e.getMessage()
             );
+
             e.printStackTrace(System.err);
 
-            // Si el envío falla, invalidar el token generado.
+            // Invalidar token si falla el envío.
             try {
+
                 usuario.setToken(null);
                 usuario.setTokenExpiracion(null);
+
                 usuarioRepo.save(usuario);
 
             } catch (Exception errorGuardar) {
+
                 System.err.println(
-                        "No se pudo invalidar el token de recuperación."
+                        "No se pudo invalidar el token."
                 );
-                System.err.println(
-                        "Tipo: " + errorGuardar.getClass().getName()
-                );
-                System.err.println(
-                        "Detalle: " + errorGuardar.getMessage()
-                );
+
                 errorGuardar.printStackTrace(System.err);
             }
 
@@ -241,22 +259,39 @@ public class AuthController {
 
     @GetMapping("/reset-password")
     public String resetPassword(
-            @RequestParam String token
+            @RequestParam(value = "token", required = false)
+            String token,
+            Model model
     ) {
 
+        if (token == null || token.isBlank()) {
+            return "redirect:/login?tokenInvalido";
+        }
+
+        String tokenLimpio = token.trim();
+
         Usuario usuario = usuarioRepo
-                .findByToken(token)
+                .findByToken(tokenLimpio)
                 .orElse(null);
 
         if (usuario == null) {
+
+            System.err.println(
+                    "MARAV: no se encontró el token de recuperación."
+            );
+
             return "redirect:/login?tokenInvalido";
         }
 
         if (usuario.getTokenExpiracion() == null
                 || usuario.getTokenExpiracion()
                 .isBefore(LocalDateTime.now())) {
+
             return "redirect:/login?tokenExpirado";
         }
+
+        // Enviar el token a la plantilla HTML.
+        model.addAttribute("token", tokenLimpio);
 
         return "reset-password";
     }
@@ -267,12 +302,20 @@ public class AuthController {
 
     @PostMapping("/guardar-password")
     public String guardarPassword(
-            @RequestParam String token,
-            @RequestParam String password
+            @RequestParam(value = "token", required = false)
+            String token,
+            @RequestParam(value = "password", required = false)
+            String password
     ) {
 
+        if (token == null || token.isBlank()) {
+            return "redirect:/login?tokenInvalido";
+        }
+
+        String tokenLimpio = token.trim();
+
         Usuario usuario = usuarioRepo
-                .findByToken(token)
+                .findByToken(tokenLimpio)
                 .orElse(null);
 
         if (usuario == null) {
@@ -282,6 +325,7 @@ public class AuthController {
         if (usuario.getTokenExpiracion() == null
                 || usuario.getTokenExpiracion()
                 .isBefore(LocalDateTime.now())) {
+
             return "redirect:/login?tokenExpirado";
         }
 
@@ -289,19 +333,21 @@ public class AuthController {
             return "redirect:/login?passwordInvalido";
         }
 
-        // Guardar la contraseña cifrada.
+        // Cifrar nueva contraseña.
         usuario.setPassword(
                 passwordEncoder.encode(password)
         );
 
-        // El token solo se puede utilizar una vez.
+        // Invalidar token para impedir reutilización.
         usuario.setToken(null);
         usuario.setTokenExpiracion(null);
 
         usuarioRepo.save(usuario);
 
+        System.out.println(
+                "MARAV: contraseña actualizada correctamente."
+        );
+
         return "redirect:/login?passwordActualizado";
     }
 }
-
-
